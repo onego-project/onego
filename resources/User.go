@@ -1,4 +1,4 @@
-package users
+package resources
 
 import (
 	"fmt"

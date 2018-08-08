@@ -1,20 +1,18 @@
-package virtualmachine
+package services
 
 import (
 	"context"
 	"fmt"
 	"github.com/beevik/etree"
 	"github.com/onego-project/xmlrpc"
-	"github.com/owlet123/onego/blueprint"
-	"github.com/owlet123/onego/datastore"
-	"github.com/owlet123/onego/host"
-	"github.com/owlet123/onego/ownershiprequest"
-	"github.com/owlet123/onego/permissionrequest"
+	"github.com/onego-project/onego/blueprint"
+	"github.com/onego-project/onego/resources"
+	"github.com/onego-project/onego/requests"
 )
 
 // Service struct
 type Service struct {
-	RPC *RPC
+	RPC *resources.RPC
 }
 
 const (
@@ -126,20 +124,20 @@ func (s Service) call(methodName string, args ...interface{}) ([]*xmlrpc.Result,
 }
 
 // Deploy method
-func (s Service) Deploy(vm VirtualMachine, host host.Host, overCommit bool, datastore datastore.DataStore) error {
+func (s Service) Deploy(vm resources.VirtualMachine, host resources.Host, overCommit bool, datastore resources.DataStore) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), host.GetID(), overCommit, datastore.GetID()}
 	_, err := s.call("one.vm.deploy", args...)
 	return err
 }
 
-func (s Service) actions(vm VirtualMachine, action string) error {
+func (s Service) actions(vm resources.VirtualMachine, action string) error {
 	args := []interface{}{s.RPC.Key, action, vm.GetID()}
 	_, err := s.call("one.vm.action", args...)
 	return err
 }
 
 // Terminate method
-func (s Service) Terminate(vm VirtualMachine, hard bool) error {
+func (s Service) Terminate(vm resources.VirtualMachine, hard bool) error {
 	if hard {
 		return s.actions(vm, vmForceDelete)
 	}
@@ -147,7 +145,7 @@ func (s Service) Terminate(vm VirtualMachine, hard bool) error {
 }
 
 // Undeploy method
-func (s Service) Undeploy(vm VirtualMachine, hard bool) error {
+func (s Service) Undeploy(vm resources.VirtualMachine, hard bool) error {
 	if hard {
 		return s.actions(vm, vmUndeployHard)
 	}
@@ -155,7 +153,7 @@ func (s Service) Undeploy(vm VirtualMachine, hard bool) error {
 }
 
 // Poweroff method
-func (s Service) Poweroff(vm VirtualMachine, hard bool) error {
+func (s Service) Poweroff(vm resources.VirtualMachine, hard bool) error {
 	if hard {
 		return s.actions(vm, vmPoweroffHard)
 	}
@@ -163,7 +161,7 @@ func (s Service) Poweroff(vm VirtualMachine, hard bool) error {
 }
 
 // Reboot method
-func (s Service) Reboot(vm VirtualMachine, hard bool) error {
+func (s Service) Reboot(vm resources.VirtualMachine, hard bool) error {
 	if hard {
 		return s.actions(vm, vmRebootHard)
 	}
@@ -171,49 +169,49 @@ func (s Service) Reboot(vm VirtualMachine, hard bool) error {
 }
 
 // Hold method
-func (s Service) Hold(vm VirtualMachine) error {
+func (s Service) Hold(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmHold)
 }
 
 // Release method
-func (s Service) Release(vm VirtualMachine) error {
+func (s Service) Release(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmRelease)
 }
 
 // Stop method
-func (s Service) Stop(vm VirtualMachine) error {
+func (s Service) Stop(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmStop)
 }
 
 // Suspend method
-func (s Service) Suspend(vm VirtualMachine) error {
+func (s Service) Suspend(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmSuspend)
 }
 
 // Resume method
-func (s Service) Resume(vm VirtualMachine) error {
+func (s Service) Resume(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmResume)
 }
 
 // Reschedule method
-func (s Service) Reschedule(vm VirtualMachine) error {
+func (s Service) Reschedule(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmReschedule)
 }
 
 // Unreschedule method
-func (s Service) Unreschedule(vm VirtualMachine) error {
+func (s Service) Unreschedule(vm resources.VirtualMachine) error {
 	return s.actions(vm, vmUnreschedule)
 }
 
 // Migrate method
-func (s Service) Migrate(vm VirtualMachine, host host.Host, datastore datastore.DataStore, liveMigration bool, overcommit bool) error {
+func (s Service) Migrate(vm resources.VirtualMachine, host resources.Host, datastore resources.DataStore, liveMigration bool, overcommit bool) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), host.GetID(), liveMigration, overcommit, datastore.GetID()}
 	_, err := s.call("one.vm.migrate", args...)
 	return err
 }
 
 // Chmod method
-func (s Service) Chmod(vm VirtualMachine, request permissionrequest.PermissionRequest) error {
+func (s Service) Chmod(vm resources.VirtualMachine, request requests.PermissionRequest) error {
 	args := []interface{}{s.RPC.Key, vm.GetID()}
 	for pGroup := 0; pGroup < 3; pGroup++ {
 		for pType := 0; pType < 3; pType++ {
@@ -226,21 +224,21 @@ func (s Service) Chmod(vm VirtualMachine, request permissionrequest.PermissionRe
 }
 
 // Chown method
-func (s Service) Chown(vm VirtualMachine, request ownershiprequest.OwnershipRequest) error {
+func (s Service) Chown(vm resources.VirtualMachine, request requests.OwnershipRequest) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), request.User, request.Group}
 	_, err := s.call("one.vm.chown", args...)
 	return err
 }
 
 // Rename method
-func (s Service) Rename(vm VirtualMachine, name string) error {
+func (s Service) Rename(vm resources.VirtualMachine, name string) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), name}
 	_, err := s.call("one.vm.rename", args...)
 	return err
 }
 
 // CreateSnapshot method
-func (s Service) CreateSnapshot(vm VirtualMachine, name string) (*Snapshot, error) {
+func (s Service) CreateSnapshot(vm resources.VirtualMachine, name string) (*resources.Snapshot, error) {
 	args := []interface{}{s.RPC.Key, vm.GetID(), name}
 
 	resArr, err := s.call("one.vm.snapshotcreate", args...)
@@ -248,55 +246,55 @@ func (s Service) CreateSnapshot(vm VirtualMachine, name string) (*Snapshot, erro
 		return nil, err
 	}
 
-	snapshot := Snapshot{SnapshotID: int(resArr[1].ResultInt())}
+	snapshot := resources.Snapshot{SnapshotID: int(resArr[1].ResultInt())}
 
 	return &snapshot, nil
 }
 
 // RevertSnapshot method
-func (s Service) RevertSnapshot(vm VirtualMachine, snapshot Snapshot) error {
+func (s Service) RevertSnapshot(vm resources.VirtualMachine, snapshot resources.Snapshot) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), snapshot.SnapshotID}
 	_, err := s.call("one.vm.snapshotrevert", args...)
 	return err
 }
 
 // DeleteSnapshot method
-func (s Service) DeleteSnapshot(vm VirtualMachine, snapshot Snapshot) error {
+func (s Service) DeleteSnapshot(vm resources.VirtualMachine, snapshot resources.Snapshot) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), snapshot.SnapshotID}
 	_, err := s.call("one.vm.snapshotdelete", args...)
 	return err
 }
 
 // Resize method
-func (s Service) Resize(vm VirtualMachine, request blueprint.Interface, overCommit bool) error {
+func (s Service) Resize(vm resources.VirtualMachine, request blueprint.Interface, overCommit bool) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), request.Render(), overCommit}
 	_, err := s.call("one.vm.resize", args...)
 	return err
 }
 
 // UpdateUserTemplate method
-func (s Service) UpdateUserTemplate(vm VirtualMachine, blueprint blueprint.Interface, updateType UpdateType) error {
+func (s Service) UpdateUserTemplate(vm resources.VirtualMachine, blueprint blueprint.Interface, updateType UpdateType) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), blueprint.Render(), updateType}
 	_, err := s.call("one.vm.update", args...)
 	return err
 }
 
 // UpdateTemplate method
-func (s Service) UpdateTemplate(vm VirtualMachine, blueprint blueprint.Interface) error {
+func (s Service) UpdateTemplate(vm resources.VirtualMachine, blueprint blueprint.Interface) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), blueprint.Render()}
 	_, err := s.call("one.vm.updateconf", args...)
 	return err
 }
 
 // Recover method
-func (s Service) Recover(vm VirtualMachine, operation RecoverOperation) error {
+func (s Service) Recover(vm resources.VirtualMachine, operation RecoverOperation) error {
 	args := []interface{}{s.RPC.Key, vm.GetID(), operation}
 	_, err := s.call("one.vm.recover", args...)
 	return err
 }
 
 // RetrieveInfo method
-func (s Service) RetrieveInfo(vm VirtualMachine) (*VirtualMachine, error) {
+func (s Service) RetrieveInfo(vm resources.VirtualMachine) (*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, vm.GetID()}
 	resArr, err := s.call("one.vm.info", args...)
 	if err != nil {
@@ -308,13 +306,13 @@ func (s Service) RetrieveInfo(vm VirtualMachine) (*VirtualMachine, error) {
 		return nil, err
 	}
 
-	vminfo := VirtualMachine{doc.Root()}
+	vminfo := resources.VirtualMachine{doc.Root()}
 
 	return &vminfo, nil
 }
 
 ////  method
-// func (s Service) RetrieveMonitoring(vm VirtualMachine) (*Monitoring, error) {
+// func (s Service) RetrieveMonitoring(vm resources.VirtualMachine) (*Monitoring, error) {
 //	args := []interface{}{s.RPC.Key, vm.GetID()}
 //	resArr, err := s.call("one.vm.monitoring", args...)
 //	if err != nil {
@@ -358,7 +356,7 @@ func (s Service) RetrieveInfo(vm VirtualMachine) (*VirtualMachine, error) {
 //}
 
 // ListAll method
-func (s Service) ListAll(ownershipFilter OwnershipFilter, stateFilter StateFilter) ([]*VirtualMachine, error) {
+func (s Service) ListAll(ownershipFilter OwnershipFilter, stateFilter StateFilter) ([]*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, ownershipFilter, -1, -1, stateFilter}
 	resArr, err := s.call("one.vmpool.info", args...)
 	if err != nil {
@@ -371,16 +369,16 @@ func (s Service) ListAll(ownershipFilter OwnershipFilter, stateFilter StateFilte
 	}
 
 	elements := doc.FindElements("VM_POOL/VM")
-	virtualMachines := make([]*VirtualMachine, len(elements))
+	virtualMachines := make([]*resources.VirtualMachine, len(elements))
 	for i, e := range elements {
-		virtualMachines[i] = &VirtualMachine{e}
+		virtualMachines[i] = &resources.VirtualMachine{e}
 	}
 
 	return virtualMachines, nil
 }
 
 // ListAllForUser method
-func (s Service) ListAllForUser(user int, stateFilter StateFilter) ([]*VirtualMachine, error) {
+func (s Service) ListAllForUser(user int, stateFilter StateFilter) ([]*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, user, -1, -1, stateFilter}
 	resArr, err := s.call("one.vmpool.info", args...)
 	if err != nil {
@@ -393,16 +391,16 @@ func (s Service) ListAllForUser(user int, stateFilter StateFilter) ([]*VirtualMa
 	}
 
 	elements := doc.FindElements("VM_POOL/VM")
-	virtualMachines := make([]*VirtualMachine, len(elements))
+	virtualMachines := make([]*resources.VirtualMachine, len(elements))
 	for i, e := range elements {
-		virtualMachines[i] = &VirtualMachine{e}
+		virtualMachines[i] = &resources.VirtualMachine{e}
 	}
 
 	return virtualMachines, nil
 }
 
 // List method
-func (s Service) List(pageOffset int, pageSize int, ownershipFilter OwnershipFilter, stateFilter StateFilter) ([]*VirtualMachine, error) {
+func (s Service) List(pageOffset int, pageSize int, ownershipFilter OwnershipFilter, stateFilter StateFilter) ([]*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, ownershipFilter, -pageOffset, -pageSize, stateFilter}
 	resArr, err := s.call("one.vmpool.info", args...)
 	if err != nil {
@@ -415,16 +413,16 @@ func (s Service) List(pageOffset int, pageSize int, ownershipFilter OwnershipFil
 	}
 
 	elements := doc.FindElements("VM_POOL/VM")
-	virtualMachines := make([]*VirtualMachine, len(elements))
+	virtualMachines := make([]*resources.VirtualMachine, len(elements))
 	for i, e := range elements {
-		virtualMachines[i] = &VirtualMachine{e}
+		virtualMachines[i] = &resources.VirtualMachine{e}
 	}
 
 	return virtualMachines, nil
 }
 
 // ListForUser method
-func (s Service) ListForUser(user int, pageOffset int, pageSize int, stateFilter StateFilter) ([]*VirtualMachine, error) {
+func (s Service) ListForUser(user int, pageOffset int, pageSize int, stateFilter StateFilter) ([]*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, user, -pageOffset, -pageSize, stateFilter}
 	resArr, err := s.call("one.vmpool.info", args...)
 	if err != nil {
@@ -437,16 +435,16 @@ func (s Service) ListForUser(user int, pageOffset int, pageSize int, stateFilter
 	}
 
 	elements := doc.FindElements("VM_POOL/VM")
-	virtualMachines := make([]*VirtualMachine, len(elements))
+	virtualMachines := make([]*resources.VirtualMachine, len(elements))
 	for i, e := range elements {
-		virtualMachines[i] = &VirtualMachine{e}
+		virtualMachines[i] = &resources.VirtualMachine{e}
 	}
 
 	return virtualMachines, nil
 }
 
 // Allocate method
-func (s Service) Allocate(blueprintInterface blueprint.Interface, onHold bool) (*VirtualMachine, error) {
+func (s Service) Allocate(blueprintInterface blueprint.Interface, onHold bool) (*resources.VirtualMachine, error) {
 	args := []interface{}{s.RPC.Key, blueprintInterface.Render(), onHold}
 
 	resArr, err := s.call("one.vm.allocate", args...)
@@ -454,7 +452,7 @@ func (s Service) Allocate(blueprintInterface blueprint.Interface, onHold bool) (
 		return nil, err
 	}
 
-	vm := CreateVM(int(resArr[1].ResultInt()))
+	vm := resources.CreateVM(int(resArr[1].ResultInt()))
 
 	return vm, nil
 }

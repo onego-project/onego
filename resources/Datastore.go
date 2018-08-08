@@ -1,9 +1,8 @@
-package datastore
+package resources
 
 import (
 	"fmt"
 	"github.com/beevik/etree"
-	"github.com/owlet123/onego/cluster"
 	"strconv"
 )
 
@@ -38,11 +37,11 @@ func (d DataStore) GetName() string {
 }
 
 // GetClusters method
-func (d DataStore) GetClusters() []cluster.Cluster {
+func (d DataStore) GetClusters() []Cluster {
 	elements := d.XMLData.FindElements("CLUSTERS")
-	clusters := make([]cluster.Cluster, len(elements))
+	clusters := make([]Cluster, len(elements))
 	for i, e := range elements {
-		clusters[i] = cluster.Cluster{XMLData: e}
+		clusters[i] = Cluster{XMLData: e}
 	}
 	return clusters
 }

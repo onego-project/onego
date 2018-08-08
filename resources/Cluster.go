@@ -1,4 +1,4 @@
-package cluster
+package resources
 
 import "github.com/beevik/etree"
 
@@ -6,3 +6,6 @@ import "github.com/beevik/etree"
 type Cluster struct {
 	XMLData *etree.Element
 }
+
+
+// id, name, hosts, datastores, vnets, template

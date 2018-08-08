@@ -1,8 +1,8 @@
-package resizerequest
+package requests
 
 import (
 	"fmt"
-	"github.com/owlet123/onego/blueprint"
+	"github.com/onego-project/onego/blueprint"
 )
 
 // ResizeRequest struct

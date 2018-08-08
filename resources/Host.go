@@ -1,9 +1,8 @@
-package host
+package resources
 
 import (
 	"fmt"
 	"github.com/beevik/etree"
-	"github.com/owlet123/onego/cluster"
 	"strconv"
 )
 
@@ -57,11 +56,11 @@ func (h Host) GetVMMad() string {
 }
 
 // GetCluster method
-func (h Host) GetCluster() []cluster.Cluster {
+func (h Host) GetCluster() []Cluster {
 	elements := h.XMLData.FindElements("CLUSTERS")
-	clusters := make([]cluster.Cluster, len(elements))
+	clusters := make([]Cluster, len(elements))
 	for i, e := range elements {
-		clusters[i] = cluster.Cluster{XMLData: e}
+		clusters[i] = Cluster{XMLData: e}
 	}
 	return clusters
 }

@@ -1,4 +1,4 @@
-package permissionrequest
+package requests
 
 // PermissionRequest struct
 type PermissionRequest struct {

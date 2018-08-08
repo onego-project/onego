@@ -1,11 +1,11 @@
-package virtualmachine
+package resources
 
 import (
 	"fmt"
 	"github.com/beevik/etree"
 	"github.com/onego-project/xmlrpc"
 	"strconv"
-	"github.com/owlet123/onego/permissionrequest"
+	"github.com/onego-project/onego/requests"
 )
 
 // VirtualMachine struct
@@ -185,8 +185,8 @@ func (vm VirtualMachine) GetPermissionOtherAdmin() int {
 }
 
 // GetPermissionRequest method
-func (vm VirtualMachine) GetPermissionRequest() *permissionrequest.PermissionRequest {
-	return &permissionrequest.PermissionRequest{
+func (vm VirtualMachine) GetPermissionRequest() *requests.PermissionRequest {
+	return &requests.PermissionRequest{
 		Permissions: [][]int{{vm.GetPermissionUserUse(), vm.GetPermissionUserManage(), vm.GetPermissionUserAdmin()},
 			{vm.GetPermissionGroupUse(), vm.GetPermissionGroupManage(), vm.GetPermissionGroupAdmin()},
 			{vm.GetPermissionOtherUse(), vm.GetPermissionOtherManage(), vm.GetPermissionOtherAdmin()}}}
