@@ -1,0 +1,30 @@
+<GROUP>
+    <ID>102</ID>
+    <NAME>biomed</NAME>
+    <TEMPLATE>
+        <SUNSTONE>
+            <DEFAULT_VIEW><![CDATA[cloud]]></DEFAULT_VIEW>
+            <GROUP_ADMIN_DEFAULT_VIEW><![CDATA[groupadmin]]></GROUP_ADMIN_DEFAULT_VIEW>
+            <GROUP_ADMIN_VIEWS><![CDATA[cloud,groupadmin]]></GROUP_ADMIN_VIEWS>
+            <VIEWS><![CDATA[cloud]]></VIEWS>
+        </SUNSTONE>
+    </TEMPLATE>
+    <USERS>
+        <ID>5</ID>
+    </USERS>
+    <ADMINS>
+        <ID>6</ID>
+        <ID>7</ID>
+        <ID>8</ID>
+    </ADMINS>
+    <DATASTORE_QUOTA/>
+    <NETWORK_QUOTA/>
+    <VM_QUOTA/>
+    <IMAGE_QUOTA/>
+    <DEFAULT_GROUP_QUOTAS>
+        <DATASTORE_QUOTA/>
+        <NETWORK_QUOTA/>
+        <VM_QUOTA/>
+        <IMAGE_QUOTA/>
+    </DEFAULT_GROUP_QUOTAS>
+</GROUP>

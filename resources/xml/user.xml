@@ -1,0 +1,30 @@
+<USER>
+    <ID>22</ID>
+    <GID>120</GID>
+    <GROUPS>
+        <ID>120</ID>
+    </GROUPS>
+    <GNAME>suchCoolGroup</GNAME>
+    <NAME>Karol</NAME>
+    <PASSWORD><![CDATA[6adfb183a4a2c94a2f92dab5ade762a47889a5a1]]></PASSWORD>
+    <AUTH_DRIVER><![CDATA[non-existing-driver]]></AUTH_DRIVER>
+    <ENABLED>1</ENABLED>
+    <LOGIN_TOKEN>
+        <TOKEN>325efc70635143dd1b33a8d73d0a1aa159515dd2</TOKEN>
+        <EXPIRATION_TIME>1497632279</EXPIRATION_TIME>
+        <EGID>-1</EGID>
+    </LOGIN_TOKEN>
+    <TEMPLATE>
+        <EMAIL><![CDATA[pancake@pizza.com]]></EMAIL>
+    </TEMPLATE>
+    <DATASTORE_QUOTA/>
+    <NETWORK_QUOTA/>
+    <VM_QUOTA/>
+    <IMAGE_QUOTA/>
+    <DEFAULT_USER_QUOTAS>
+        <DATASTORE_QUOTA/>
+        <NETWORK_QUOTA/>
+        <VM_QUOTA/>
+        <IMAGE_QUOTA/>
+    </DEFAULT_USER_QUOTAS>
+</USER>
