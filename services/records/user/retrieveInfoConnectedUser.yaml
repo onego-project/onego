@@ -1,0 +1,29 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.user.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>-1</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;USER&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;GROUPS&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;ID&gt;111&lt;/ID&gt;&lt;/GROUPS&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;oneadmin&lt;/NAME&gt;&lt;PASSWORD&gt;&lt;![CDATA[5cec175b165e3d5e62c9e13ce848ef6feac81bff]]&gt;&lt;/PASSWORD&gt;&lt;AUTH_DRIVER&gt;&lt;![CDATA[core]]&gt;&lt;/AUTH_DRIVER&gt;&lt;ENABLED&gt;1&lt;/ENABLED&gt;&lt;TEMPLATE&gt;&lt;SUNSTONE&gt;&lt;TABLE_DEFAULT_PAGE_LENGTH&gt;&lt;![CDATA[100]]&gt;&lt;/TABLE_DEFAULT_PAGE_LENGTH&gt;&lt;/SUNSTONE&gt;&lt;TOKEN_PASSWORD&gt;&lt;![CDATA[69a0a6dfb26c657d38ace31a3e6ad4810cdd3c80]]&gt;&lt;/TOKEN_PASSWORD&gt;&lt;/TEMPLATE&gt;&lt;DATASTORE_QUOTA&gt;&lt;/DATASTORE_QUOTA&gt;&lt;NETWORK_QUOTA&gt;&lt;/NETWORK_QUOTA&gt;&lt;VM_QUOTA&gt;&lt;/VM_QUOTA&gt;&lt;IMAGE_QUOTA&gt;&lt;/IMAGE_QUOTA&gt;&lt;DEFAULT_USER_QUOTAS&gt;&lt;DATASTORE_QUOTA&gt;&lt;/DATASTORE_QUOTA&gt;&lt;NETWORK_QUOTA&gt;&lt;/NETWORK_QUOTA&gt;&lt;VM_QUOTA&gt;&lt;/VM_QUOTA&gt;&lt;IMAGE_QUOTA&gt;&lt;/IMAGE_QUOTA&gt;&lt;/DEFAULT_USER_QUOTAS&gt;&lt;/USER&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1292"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Fri, 07 Sep 2018 11:07:29 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
