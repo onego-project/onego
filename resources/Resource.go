@@ -62,6 +62,24 @@ func (r *Resource) Name() (string, error) {
 	return r.Attribute("NAME")
 }
 
+func (r *Resource) arrayOfIDs(tag string) ([]int, error) {
+	elements := r.XMLData.FindElements(tag + "/ID")
+	if len(elements) == 0 {
+		return make([]int, 0), nil
+	}
+
+	object := make([]int, len(elements))
+
+	for i, e := range elements {
+		id, err := strconv.Atoi(e.Text())
+		if err != nil {
+			return nil, err
+		}
+		object[i] = id
+	}
+	return object, nil
+}
+
 func intToBool(i int) bool {
 	return i == 1
 }
