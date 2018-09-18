@@ -1,6 +1,7 @@
 package resources
 
 import (
+	"github.com/beevik/etree"
 	"strconv"
 )
 
@@ -9,9 +10,14 @@ type Group struct {
 	Resource
 }
 
-// CreateGroup constructs OpenNebula Group.
-func CreateGroup(id int) *Group {
+// CreateGroupWithID constructs OpenNebula Group.
+func CreateGroupWithID(id int) *Group {
 	return &Group{*CreateResource("GROUP", id)}
+}
+
+// CreateGroupFromXML constructs Group with full xml data
+func CreateGroupFromXML(XMLdata *etree.Element) *Group {
+	return &Group{Resource: Resource{XMLData: XMLdata}}
 }
 
 // Users gets list of users ids of the given group.

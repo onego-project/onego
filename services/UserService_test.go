@@ -136,10 +136,10 @@ var _ = ginkgo.Describe("User Service", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
 					secGroups := make([]resources.Group, 2)
-					secGroups[0] = *resources.CreateGroup(116)
-					secGroups[1] = *resources.CreateGroup(120)
+					secGroups[0] = *resources.CreateGroupWithID(116)
+					secGroups[1] = *resources.CreateGroupWithID(120)
 
-					user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroup(118), secGroups)
+					user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroupWithID(118), secGroups)
 					gomega.Expect(err).Should(gomega.BeNil())
 					gomega.Expect(user).ShouldNot(gomega.BeNil())
 
@@ -161,7 +161,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.It("shouldn't create new user", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-					user, err = client.UserService.Allocate(context.TODO(), "Miso", "password", "core", *resources.CreateGroup(-1), nil)
+					user, err = client.UserService.Allocate(context.TODO(), "Miso", "password", "core", *resources.CreateGroupWithID(-1), nil)
 					gomega.Expect(err).ShouldNot(gomega.BeNil())
 					gomega.Expect(user).Should(gomega.BeNil())
 				})
@@ -176,7 +176,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.It("should return that user with name Dusan already exists", func() {
 				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-				user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroup(118), nil)
+				user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroupWithID(118), nil)
 				gomega.Expect(err).ShouldNot(gomega.BeNil())
 				gomega.Expect(user).Should(gomega.BeNil())
 			})
@@ -590,7 +590,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					recName = userMainGroup
 
-					group = resources.CreateGroup(idExistingGroup)
+					group = resources.CreateGroupWithID(idExistingGroup)
 					if group == nil {
 						err = fmt.Errorf("no group to finish test")
 					}
@@ -617,7 +617,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					recName = userMainGroupNonExisting
 
-					group = resources.CreateGroup(idNonExistingGroup)
+					group = resources.CreateGroupWithID(idNonExistingGroup)
 					if group == nil {
 						err = fmt.Errorf("no group to finish test")
 					}
@@ -654,7 +654,7 @@ var _ = ginkgo.Describe("User Service", func() {
 					err = fmt.Errorf("no user to finish test")
 				}
 
-				group = resources.CreateGroup(idExistingGroup)
+				group = resources.CreateGroupWithID(idExistingGroup)
 				if group == nil {
 					err = fmt.Errorf("no group to finish test")
 				}
@@ -698,7 +698,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					recName = userSecGroupAdd
 
-					group = resources.CreateGroup(idExistingNotMainGroup)
+					group = resources.CreateGroupWithID(idExistingNotMainGroup)
 					if group == nil {
 						err = fmt.Errorf("no group to finish test")
 					}
@@ -716,7 +716,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					recName = userSecGroupDel
 
-					group = resources.CreateGroup(idExistingNotMainGroup)
+					group = resources.CreateGroupWithID(idExistingNotMainGroup)
 					if group == nil {
 						err = fmt.Errorf("no group to finish test")
 					}
