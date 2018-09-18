@@ -121,7 +121,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupDelete
 
-				group = resources.CreateGroup(existingGroupID)
+				group = resources.CreateGroupWithID(existingGroupID)
 			})
 
 			ginkgo.It("should delete the given group", func() {
@@ -136,7 +136,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupDeleteFail
 
-				group = resources.CreateGroup(nonExistingGroupID)
+				group = resources.CreateGroupWithID(nonExistingGroupID)
 			})
 
 			ginkgo.It("should return an error that group doesn't exist", func() {
@@ -170,7 +170,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupUpdateMerge
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 
 					blueprintGroup = blueprint.CreateGroupBlueprint()
 					blueprintGroup.SetElement("someTag", "someValue")
@@ -188,7 +188,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupUpdateReplace
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 
 					blueprintGroup = blueprint.CreateGroupBlueprint()
 					blueprintGroup.SetElement("newTag", "newValue")
@@ -206,7 +206,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupUpdateEmpty
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
 				ginkgo.It("should returns that blueprint data is empty", func() {
@@ -222,7 +222,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupUpdateFail
 
-				group = resources.CreateGroup(nonExistingGroupID)
+				group = resources.CreateGroupWithID(nonExistingGroupID)
 
 				blueprintGroup = blueprint.CreateGroupBlueprint()
 				blueprintGroup.SetElement("someTag", "someValue")
@@ -310,7 +310,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupAddAdmin
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 					user = resources.CreateUserWithID(idExistingUser)
 				})
 
@@ -326,7 +326,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupAddAdminUnknown
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 					user = resources.CreateUserWithID(idNonExistingUser)
 				})
 
@@ -342,7 +342,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupAddAdminUserEmpty
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
 				ginkgo.It("should add admin to given group", func() {
@@ -358,7 +358,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupAddAdminFail
 
-				group = resources.CreateGroup(nonExistingGroupID)
+				group = resources.CreateGroupWithID(nonExistingGroupID)
 				user = resources.CreateUserWithID(idExistingUser)
 			})
 
@@ -395,7 +395,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupDelAdmin
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 					user = resources.CreateUserWithID(idExistingUser)
 				})
 
@@ -411,7 +411,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupDelAdminUnknown
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 					user = resources.CreateUserWithID(idNonExistingUser)
 				})
 
@@ -427,7 +427,7 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.BeforeEach(func() {
 					recName = groupDelAdminUserEmpty
 
-					group = resources.CreateGroup(existingGroupID)
+					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
 				ginkgo.It("should remove admin from given group", func() {
@@ -443,7 +443,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupDelAdminFail
 
-				group = resources.CreateGroup(nonExistingGroupID)
+				group = resources.CreateGroupWithID(nonExistingGroupID)
 				user = resources.CreateUserWithID(idExistingUser)
 			})
 

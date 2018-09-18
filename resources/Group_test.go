@@ -22,7 +22,7 @@ var _ = ginkgo.Describe("Group", func() {
 			// create user with data
 			doc = etree.NewDocument()
 			err = doc.ReadFromFile(groupXML)
-			group = &Group{Resource: Resource{XMLData: doc.Root()}}
+			group = CreateGroupFromXML(doc.Root())
 		})
 
 		ginkgo.It("should find all group attributes", func() {
@@ -39,14 +39,14 @@ var _ = ginkgo.Describe("Group", func() {
 		ginkgo.It("should create group", func() {
 			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-			group = CreateGroup(222)
+			group = CreateGroupWithID(222)
 
 			gomega.Expect(group.ID()).To(gomega.Equal(222))
 		})
 
 		ginkgo.Context("when group doesn't have given attribute", func() {
 			ginkgo.BeforeEach(func() {
-				group = CreateGroup(222)
+				group = CreateGroupWithID(222)
 				err = nil
 			})
 

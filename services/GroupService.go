@@ -56,7 +56,7 @@ func (gs *GroupService) RetrieveInfo(ctx context.Context, groupID int) (*resourc
 		return nil, err
 	}
 
-	return &resources.Group{Resource: resources.Resource{XMLData: doc.Root()}}, nil
+	return resources.CreateGroupFromXML(doc.Root()), nil
 }
 
 // List retrieves list of groups in the group pool
@@ -73,7 +73,7 @@ func (gs *GroupService) List(ctx context.Context) ([]*resources.Group, error) {
 
 	groups := make([]*resources.Group, len(elements))
 	for i, e := range elements {
-		groups[i] = &resources.Group{Resource: resources.Resource{XMLData: e}}
+		groups[i] = resources.CreateGroupFromXML(e)
 	}
 
 	return groups, nil
