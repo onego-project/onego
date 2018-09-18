@@ -46,20 +46,15 @@ func (u *User) MainGroup() (int, error) {
 
 // Groups method returns list of groups with main group at index 0
 func (u *User) Groups() ([]int, error) {
-	elements := u.XMLData.FindElements("GROUPS/ID")
-	if len(elements) == 0 {
+	groups, err := u.arrayOfIDs("GROUPS")
+	if err != nil {
+		return nil, err
+	}
+
+	if len(groups) < 1 { // should never happen that user has no group
 		return nil, fmt.Errorf("no group")
 	}
 
-	groups := make([]int, len(elements))
-
-	for i, e := range elements {
-		id, err := strconv.Atoi(e.Text())
-		if err != nil {
-			return nil, err
-		}
-		groups[i] = id
-	}
 	return groups, nil
 }
 
