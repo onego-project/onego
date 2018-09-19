@@ -5,7 +5,7 @@ type GroupBlueprint struct {
 	Blueprint
 }
 
-// CreateGroupBlueprint creates empty GroupBlueprint
-func CreateGroupBlueprint() *GroupBlueprint {
-	return &GroupBlueprint{Blueprint: *CreateBlueprint()}
+// CreateUpdateGroupBlueprint creates empty GroupBlueprint
+func CreateUpdateGroupBlueprint() *GroupBlueprint {
+	return &GroupBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 }

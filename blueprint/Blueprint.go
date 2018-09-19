@@ -16,9 +16,12 @@ type Interface interface {
 	Render() (string, error)
 }
 
-// CreateBlueprint creates empty Blueprint
-func CreateBlueprint() *Blueprint {
-	return &Blueprint{XMLData: etree.NewDocument()}
+// CreateBlueprint creates Blueprint with root
+func CreateBlueprint(rootElement string) *Blueprint {
+	doc := etree.NewDocument()
+	doc.CreateElement(rootElement)
+
+	return &Blueprint{XMLData: doc}
 }
 
 // Render method to render blueprint values to string
@@ -37,14 +40,9 @@ func (bp *Blueprint) Render() (string, error) {
 
 // SetElement sets element to blueprint with tag and value
 func (bp *Blueprint) SetElement(tag, value string) {
-	template := bp.XMLData.FindElement("TEMPLATE")
-	if template == nil {
-		template = bp.XMLData.CreateElement("TEMPLATE")
-	}
-
-	element := template.FindElement(tag)
+	element := bp.XMLData.Root().FindElement(tag)
 	if element == nil {
-		element = template.CreateElement(tag)
+		element = bp.XMLData.Root().CreateElement(tag)
 	}
 	element.SetText(value)
 }

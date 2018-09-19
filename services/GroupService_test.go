@@ -172,7 +172,7 @@ var _ = ginkgo.Describe("Group", func() {
 
 					group = resources.CreateGroupWithID(existingGroupID)
 
-					blueprintGroup = blueprint.CreateGroupBlueprint()
+					blueprintGroup = blueprint.CreateUpdateGroupBlueprint()
 					blueprintGroup.SetElement("someTag", "someValue")
 				})
 
@@ -190,7 +190,7 @@ var _ = ginkgo.Describe("Group", func() {
 
 					group = resources.CreateGroupWithID(existingGroupID)
 
-					blueprintGroup = blueprint.CreateGroupBlueprint()
+					blueprintGroup = blueprint.CreateUpdateGroupBlueprint()
 					blueprintGroup.SetElement("newTag", "newValue")
 				})
 
@@ -224,7 +224,7 @@ var _ = ginkgo.Describe("Group", func() {
 
 				group = resources.CreateGroupWithID(nonExistingGroupID)
 
-				blueprintGroup = blueprint.CreateGroupBlueprint()
+				blueprintGroup = blueprint.CreateUpdateGroupBlueprint()
 				blueprintGroup.SetElement("someTag", "someValue")
 			})
 
@@ -240,7 +240,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.BeforeEach(func() {
 				recName = groupUpdateGroupEmpty
 
-				blueprintGroup = blueprint.CreateGroupBlueprint()
+				blueprintGroup = blueprint.CreateUpdateGroupBlueprint()
 				blueprintGroup.SetElement("someTag", "someValue")
 			})
 

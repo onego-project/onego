@@ -335,7 +335,7 @@ var _ = ginkgo.Describe("User Service", func() {
 						return
 					}
 
-					userBlueprint = blueprint.CreateUserBlueprint()
+					userBlueprint = blueprint.CreateUpdateUserBlueprint()
 					if userBlueprint == nil {
 						err = fmt.Errorf("no user blueprint to finish test")
 						return
@@ -441,7 +441,7 @@ var _ = ginkgo.Describe("User Service", func() {
 					err = fmt.Errorf("no user to finish test")
 				}
 
-				userBlueprint = blueprint.CreateUserBlueprint()
+				userBlueprint = blueprint.CreateUpdateUserBlueprint()
 				if userBlueprint == nil {
 					err = fmt.Errorf("no user blueprint to finish test")
 					return
@@ -461,7 +461,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.BeforeEach(func() {
 				recName = userUpdateNoUser
 
-				userBlueprint = blueprint.CreateUserBlueprint()
+				userBlueprint = blueprint.CreateUpdateUserBlueprint()
 				if userBlueprint == nil {
 					err = fmt.Errorf("no user blueprint to finish test")
 					return
