@@ -5,9 +5,9 @@ type UserBlueprint struct {
 	Blueprint
 }
 
-// CreateUserBlueprint creates empty UserBlueprint
-func CreateUserBlueprint() *UserBlueprint {
-	return &UserBlueprint{Blueprint: *CreateBlueprint()}
+// CreateUpdateUserBlueprint creates empty UserBlueprint
+func CreateUpdateUserBlueprint() *UserBlueprint {
+	return &UserBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 }
 
 // SetEmail sets email of the given user
