@@ -172,6 +172,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/beevik/etree",
+    "github.com/dnaeon/go-vcr/cassette",
     "github.com/dnaeon/go-vcr/recorder",
     "github.com/onego-project/xmlrpc",
     "github.com/onsi/ginkgo",
