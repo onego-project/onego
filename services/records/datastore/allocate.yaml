@@ -1,0 +1,81 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.datastore.allocate</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>&lt;DATASTORE&gt;&lt;NAME&gt;hot_dog&lt;/NAME&gt;&lt;DS_MAD&gt;dummy&lt;/DS_MAD&gt;&lt;TM_MAD&gt;dummy&lt;/TM_MAD&gt;&lt;/DATASTORE&gt;</string></value></param><param><value><int>0</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>105</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "253"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Tue, 18 Sep 2018 14:31:05 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.datastore.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>105</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;DATASTORE&gt;&lt;ID&gt;105&lt;/ID&gt;&lt;UID&gt;0&lt;/UID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;UNAME&gt;oneadmin&lt;/UNAME&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;hot_dog&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;1&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;1&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;0&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;DS_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/DS_MAD&gt;&lt;TM_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/TM_MAD&gt;&lt;BASE_PATH&gt;&lt;![CDATA[/var/lib/one//datastores/105]]&gt;&lt;/BASE_PATH&gt;&lt;TYPE&gt;0&lt;/TYPE&gt;&lt;DISK_TYPE&gt;0&lt;/DISK_TYPE&gt;&lt;STATE&gt;0&lt;/STATE&gt;&lt;CLUSTERS&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;/CLUSTERS&gt;&lt;TOTAL_MB&gt;20480&lt;/TOTAL_MB&gt;&lt;FREE_MB&gt;20480&lt;/FREE_MB&gt;&lt;USED_MB&gt;9720&lt;/USED_MB&gt;&lt;IMAGES&gt;&lt;/IMAGES&gt;&lt;TEMPLATE&gt;&lt;CLONE_TARGET&gt;&lt;![CDATA[SYSTEM]]&gt;&lt;/CLONE_TARGET&gt;&lt;DISK_TYPE&gt;&lt;![CDATA[FILE]]&gt;&lt;/DISK_TYPE&gt;&lt;DS_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/DS_MAD&gt;&lt;LN_TARGET&gt;&lt;![CDATA[NONE]]&gt;&lt;/LN_TARGET&gt;&lt;RESTRICTED_DIRS&gt;&lt;![CDATA[/]]&gt;&lt;/RESTRICTED_DIRS&gt;&lt;SAFE_DIRS&gt;&lt;![CDATA[/var/tmp]]&gt;&lt;/SAFE_DIRS&gt;&lt;TM_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/TM_MAD&gt;&lt;/TEMPLATE&gt;&lt;/DATASTORE&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1705"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Tue, 18 Sep 2018 14:31:06 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.datastore.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>105</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;DATASTORE&gt;&lt;ID&gt;105&lt;/ID&gt;&lt;UID&gt;0&lt;/UID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;UNAME&gt;oneadmin&lt;/UNAME&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;hot_dog&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;1&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;1&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;0&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;DS_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/DS_MAD&gt;&lt;TM_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/TM_MAD&gt;&lt;BASE_PATH&gt;&lt;![CDATA[/var/lib/one//datastores/105]]&gt;&lt;/BASE_PATH&gt;&lt;TYPE&gt;0&lt;/TYPE&gt;&lt;DISK_TYPE&gt;0&lt;/DISK_TYPE&gt;&lt;STATE&gt;0&lt;/STATE&gt;&lt;CLUSTERS&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;/CLUSTERS&gt;&lt;TOTAL_MB&gt;20480&lt;/TOTAL_MB&gt;&lt;FREE_MB&gt;20480&lt;/FREE_MB&gt;&lt;USED_MB&gt;9720&lt;/USED_MB&gt;&lt;IMAGES&gt;&lt;/IMAGES&gt;&lt;TEMPLATE&gt;&lt;CLONE_TARGET&gt;&lt;![CDATA[SYSTEM]]&gt;&lt;/CLONE_TARGET&gt;&lt;DISK_TYPE&gt;&lt;![CDATA[FILE]]&gt;&lt;/DISK_TYPE&gt;&lt;DS_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/DS_MAD&gt;&lt;LN_TARGET&gt;&lt;![CDATA[NONE]]&gt;&lt;/LN_TARGET&gt;&lt;RESTRICTED_DIRS&gt;&lt;![CDATA[/]]&gt;&lt;/RESTRICTED_DIRS&gt;&lt;SAFE_DIRS&gt;&lt;![CDATA[/var/tmp]]&gt;&lt;/SAFE_DIRS&gt;&lt;TM_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/TM_MAD&gt;&lt;/TEMPLATE&gt;&lt;/DATASTORE&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1705"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Tue, 18 Sep 2018 14:31:06 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
