@@ -59,9 +59,9 @@ var _ = ginkgo.Describe("Datastore", func() {
 				gomega.Expect(datastore.DsMad()).To(gomega.Equal("fs"))
 				gomega.Expect(datastore.TmMad()).To(gomega.Equal("shared"))
 				gomega.Expect(datastore.BasePath()).To(gomega.Equal("/var/lib/one//datastores/104"))
-				gomega.Expect(datastore.Type()).To(gomega.Equal(ImageDs))
-				gomega.Expect(datastore.DiskType()).To(gomega.Equal(DatastoreDiskType(0)))
-				gomega.Expect(datastore.State()).To(gomega.Equal(Enabled))
+				gomega.Expect(datastore.Type()).To(gomega.Equal(DatastoreTypeImage))
+				gomega.Expect(datastore.DiskType()).To(gomega.Equal(DiskType(0)))
+				gomega.Expect(datastore.State()).To(gomega.Equal(DatastoreStateReady))
 
 				var clusterIDs []int
 				clusterIDs, err = datastore.Clusters()

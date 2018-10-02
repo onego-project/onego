@@ -18,8 +18,8 @@ func CreateUpdateDatastoreBlueprint() *DatastoreBlueprint {
 }
 
 // SetDiskType sets disk type of the given datastore
-func (ds *DatastoreBlueprint) SetDiskType(diskType resources.DatastoreDiskType) {
-	ds.SetElement("DISK_TYPE", resources.DatastoreDiskTypeMap[diskType])
+func (ds *DatastoreBlueprint) SetDiskType(diskType resources.DiskType) {
+	ds.SetElement("DISK_TYPE", resources.DiskTypeMap[diskType])
 }
 
 // SetDsMad sets DS_MAD of the given datastore

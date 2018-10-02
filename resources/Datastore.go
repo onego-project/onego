@@ -9,73 +9,79 @@ type Datastore struct {
 
 // DatastoreTypeMap contains string representation of DatastoreType
 var DatastoreTypeMap = map[DatastoreType]string{
-	ImageDs:  "IMAGE_DS",
-	SystemDs: "SYSTEM_DS",
-	FileDs:   "FILE_DS",
+	DatastoreTypeImage:  "IMAGE_DS",
+	DatastoreTypeSystem: "SYSTEM_DS",
+	DatastoreTypeFile:   "FILE_DS",
 }
 
 // DatastoreType - type of datastore
 type DatastoreType int
 
 const (
-	// ImageDs - Standard datastore for disk images
-	ImageDs DatastoreType = iota
-	// SystemDs - System datastore for disks of running VMs
-	SystemDs
-	// FileDs - File datastore for context, kernel, initrd files
-	FileDs
+	// DatastoreTypeImage - Standard datastore for disk images
+	DatastoreTypeImage DatastoreType = iota
+	// DatastoreTypeSystem - System datastore for disks of running VMs
+	DatastoreTypeSystem
+	// DatastoreTypeFile - File datastore for context, kernel, initrd files
+	DatastoreTypeFile
 )
 
-// DatastoreDiskTypeMap contains string representation of DatastoreDiskType
-var DatastoreDiskTypeMap = map[DatastoreDiskType]string{
-	File:          "FILE",
-	Block:         "BLOCK",
-	Rbd:           "RBD",
-	RbdCdRom:      "RBD_CDROM",
-	Gluster:       "GLUSTER",
-	GlusterCdRom:  "GLUSTER_CDROM",
-	Sheepdog:      "SHEEPDOG",
-	SheepdogCdRom: "SHEEPDOG_CDROM",
-	Iscsi:         "ISCSI",
-	None:          "",
+// DiskTypeMap contains string representation of DiskType
+var DiskTypeMap = map[DiskType]string{
+	DiskTypeFile:          "FILE",
+	DiskTypeBlock:         "BLOCK",
+	DiskTypeRbd:           "RBD",
+	DiskTypeRbdCdRom:      "RBD_CDROM",
+	DiskTypeGluster:       "GLUSTER",
+	DiskTypeGlusterCdRom:  "GLUSTER_CDROM",
+	DiskTypeSheepdog:      "SHEEPDOG",
+	DiskTypeSheepdogCdRom: "SHEEPDOG_CDROM",
+	DiskTypeIscsi:         "ISCSI",
+	DiskTypeNone:          "",
 }
 
-// DatastoreDiskType - Type of Disks (used by the VMM_MAD). Values: BLOCK, CDROM or FILE
-type DatastoreDiskType int
+// DiskType - Type of Disks (used by the VMM_MAD). Values: BLOCK, CDROM or FILE
+type DiskType int
 
 const (
-	// File - File-based disk
-	File DatastoreDiskType = iota
-	// CdRom - An ISO9660 disk
-	CdRom
-	// Block - Block-device disk
-	Block
-	// Rbd - CEPH RBD disk
-	Rbd
-	// RbdCdRom - CEPH RBD CDROM disk
-	RbdCdRom
-	// Gluster - Gluster Block Device
-	Gluster
-	// GlusterCdRom - Gluster CDROM Device Device
-	GlusterCdRom
-	// Sheepdog - Sheepdog Block Device
-	Sheepdog
-	// SheepdogCdRom - Sheepdog CDROM Device Device
-	SheepdogCdRom
-	// Iscsi - iSCSI Volume (Devices Datastore)
-	Iscsi
-	// None - No disk type, error situation
-	None = 255
+	// DiskTypeFile - DiskTypeFile-based disk
+	DiskTypeFile DiskType = iota
+	// DiskTypeCdRom - An ISO9660 disk
+	DiskTypeCdRom
+	// DiskTypeBlock - Block-device disk
+	DiskTypeBlock
+	// DiskTypeRbd - CEPH RBD disk
+	DiskTypeRbd
+	// DiskTypeRbdCdRom - CEPH RBD CDROM disk
+	DiskTypeRbdCdRom
+	// DiskTypeGluster - Gluster Block Device
+	DiskTypeGluster
+	// DiskTypeGlusterCdRom - Gluster CDROM Device Device
+	DiskTypeGlusterCdRom
+	// DiskTypeSheepdog - Sheepdog Block Device
+	DiskTypeSheepdog
+	// DiskTypeSheepdogCdRom - Sheepdog CDROM Device Device
+	DiskTypeSheepdogCdRom
+	// DiskTypeIscsi - iSCSI Volume (Devices Datastore)
+	DiskTypeIscsi
+	// DiskTypeNone - No disk type, error situation
+	DiskTypeNone = 255
 )
+
+// DatastoreStateMap contains string representation of DatastoreState
+var DatastoreStateMap = map[DatastoreState]string{
+	DatastoreStateReady:    "READY",
+	DatastoreStateDisabled: "DISABLED",
+}
 
 // DatastoreState - state of datastore
 type DatastoreState int
 
 const (
-	// Enabled state of datastore
-	Enabled DatastoreState = iota
-	// Disabled state of datastore
-	Disabled
+	// DatastoreStateReady state of datastore
+	DatastoreStateReady DatastoreState = iota
+	// DatastoreStateDisabled state of datastore
+	DatastoreStateDisabled
 )
 
 // CreateDatastoreWithID constructs Datastore
@@ -125,9 +131,9 @@ func (d *Datastore) Type() (DatastoreType, error) {
 }
 
 // DiskType gets disk type of given datastore
-func (d *Datastore) DiskType() (DatastoreDiskType, error) {
+func (d *Datastore) DiskType() (DiskType, error) {
 	i, err := d.intAttribute("DISK_TYPE")
-	return DatastoreDiskType(i), err
+	return DiskType(i), err
 }
 
 // State gets state of given datastore

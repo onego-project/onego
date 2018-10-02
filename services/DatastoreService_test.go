@@ -300,7 +300,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 							err = fmt.Errorf("no datastore blueprint to finish test")
 							gomega.Expect(err).Should(gomega.BeNil())
 						}
-						datastoreBlueprint.SetType(resources.SystemDs)
+						datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
 
 						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Replace)
 						gomega.Expect(err).Should(gomega.BeNil())
@@ -370,7 +370,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					err = fmt.Errorf("no datastore blueprint to finish test")
 					return
 				}
-				datastoreBlueprint.SetType(resources.SystemDs)
+				datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
@@ -390,7 +390,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					err = fmt.Errorf("no datastore blueprint to finish test")
 					return
 				}
-				datastoreBlueprint.SetType(resources.SystemDs)
+				datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
@@ -715,7 +715,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					gomega.Expect(err).Should(gomega.BeNil())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
-					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreState(0)))
+					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreStateReady))
 				})
 			})
 
@@ -738,7 +738,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					gomega.Expect(err).Should(gomega.BeNil())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
-					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreState(1)))
+					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreStateDisabled))
 				})
 			})
 		})
