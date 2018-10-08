@@ -44,19 +44,27 @@ func CreateResource(tag string, id int) *Resource {
 
 // Attribute gets resource attribute founded on the path
 func (r *Resource) Attribute(path string) (string, error) {
-	if r.XMLData == nil {
-		return "", fmt.Errorf("no xml data, unable to get %s", path)
+	return attributeFromElement(r.XMLData, path)
+}
+
+func (r *Resource) intAttribute(path string) (int, error) {
+	return intAttributeFromElement(r.XMLData, path)
+}
+
+func attributeFromElement(e *etree.Element, path string) (string, error) {
+	if e == nil {
+		return "", fmt.Errorf("no element, unable to get %s", path)
 	}
 
-	element := r.XMLData.FindElement(path)
+	element := e.FindElement(path)
 	if element == nil {
 		return "", fmt.Errorf("unable to find %s", path)
 	}
 	return element.Text(), nil
 }
 
-func (r *Resource) intAttribute(path string) (int, error) {
-	attribute, err := r.Attribute(path)
+func intAttributeFromElement(e *etree.Element, path string) (int, error) {
+	attribute, err := attributeFromElement(e, path)
 	if err != nil {
 		return invalidCode, err
 	}
