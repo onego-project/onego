@@ -14,8 +14,9 @@ before_install:
   - chmod +x $GOPATH/bin/dep
 
 install:
+  - dep ensure -no-vendor -dry-run
   - dep ensure
-  
+
 before_script:
   - go get -u github.com/alecthomas/gometalinter
   - gometalinter --install
