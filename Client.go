@@ -1,9 +1,10 @@
 package onego
 
 import (
+	"net/http"
+
 	"github.com/onego-project/onego/services"
 	"github.com/onego-project/xmlrpc"
-	"net/http"
 )
 
 // Client structure contains the services to manage resources

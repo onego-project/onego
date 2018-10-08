@@ -1,10 +1,11 @@
 package resources
 
 import (
+	"time"
+
 	"github.com/beevik/etree"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
-	"time"
 )
 
 const (

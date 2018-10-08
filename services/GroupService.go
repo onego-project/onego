@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+
 	"github.com/onego-project/onego/blueprint"
 	"github.com/onego-project/onego/resources"
 )
@@ -34,7 +35,8 @@ func (gs *GroupService) Delete(ctx context.Context, group resources.Group) error
 }
 
 // Update replaces the group template contents
-func (gs *GroupService) Update(ctx context.Context, group resources.Group, blueprint blueprint.Interface, updateType UpdateType) error {
+func (gs *GroupService) Update(ctx context.Context, group resources.Group,
+	blueprint blueprint.Interface, updateType UpdateType) error {
 	groupID, err := group.ID()
 	if err != nil {
 		return err
@@ -80,7 +82,8 @@ func (gs *GroupService) List(ctx context.Context) ([]*resources.Group, error) {
 }
 
 // auxiliary method to add or remove admin to/from the Group administrators set
-func (gs *GroupService) manageAdmin(ctx context.Context, methodName string, group resources.Group, admin resources.User) error {
+func (gs *GroupService) manageAdmin(ctx context.Context, methodName string,
+	group resources.Group, admin resources.User) error {
 	groupID, err := group.ID()
 	if err != nil {
 		return err

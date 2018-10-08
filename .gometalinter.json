@@ -1,5 +1,6 @@
 {
   "LineLength": 120,
   "Sort": ["path", "line", "column", "linter"],
-  "Cyclo": 20
+  "Cyclo": 20,
+  "Enable": ["maligned", "deadcode", "errcheck", "gosec", "gochecknoinits", "goconst", "gocyclo", "gofmt", "goimports", "golint", "gotype", "gotypex", "ineffassign", "interfacer", "lll", "megacheck", "misspell", "nakedret", "structcheck", "unconvert", "unparam", "varcheck", "vet", "vetshadow"]
 }

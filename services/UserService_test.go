@@ -4,6 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/onego-project/onego"
@@ -12,8 +15,6 @@ import (
 	"github.com/onego-project/onego/services"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
-	"io/ioutil"
-	"net/http"
 )
 
 const (
@@ -139,7 +140,8 @@ var _ = ginkgo.Describe("User Service", func() {
 					secGroups[0] = *resources.CreateGroupWithID(116)
 					secGroups[1] = *resources.CreateGroupWithID(120)
 
-					user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroupWithID(118), secGroups)
+					user, err = client.UserService.Allocate(context.TODO(), "Dusan",
+						"password", "core", *resources.CreateGroupWithID(118), secGroups)
 					gomega.Expect(err).Should(gomega.BeNil())
 					gomega.Expect(user).ShouldNot(gomega.BeNil())
 
@@ -161,7 +163,8 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.It("shouldn't create new user", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-					user, err = client.UserService.Allocate(context.TODO(), "Miso", "password", "core", *resources.CreateGroupWithID(-1), nil)
+					user, err = client.UserService.Allocate(context.TODO(), "Miso",
+						"password", "core", *resources.CreateGroupWithID(-1), nil)
 					gomega.Expect(err).ShouldNot(gomega.BeNil())
 					gomega.Expect(user).Should(gomega.BeNil())
 				})
@@ -176,7 +179,8 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.It("should return that user with name Dusan already exists", func() {
 				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-				user, err = client.UserService.Allocate(context.TODO(), "Dusan", "password", "core", *resources.CreateGroupWithID(118), nil)
+				user, err = client.UserService.Allocate(context.TODO(), "Dusan",
+					"password", "core", *resources.CreateGroupWithID(118), nil)
 				gomega.Expect(err).ShouldNot(gomega.BeNil())
 				gomega.Expect(user).Should(gomega.BeNil())
 			})
@@ -362,7 +366,8 @@ var _ = ginkgo.Describe("User Service", func() {
 						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
 						gomega.Expect(err).Should(gomega.BeNil())
 						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(gomega.Equal("pancake@pizza.com"))
+						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+							gomega.Equal("pancake@pizza.com"))
 					})
 				})
 
@@ -387,8 +392,10 @@ var _ = ginkgo.Describe("User Service", func() {
 						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
 						gomega.Expect(err).Should(gomega.BeNil())
 						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(gomega.Equal("lasagne@pizza.com"))
-						gomega.Expect(oneUser.Attribute("TEMPLATE/NAME")).To(gomega.Equal("Frantisek Slovak"))
+						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+							gomega.Equal("lasagne@pizza.com"))
+						gomega.Expect(oneUser.Attribute("TEMPLATE/NAME")).To(
+							gomega.Equal("Frantisek Slovak"))
 					})
 				})
 			})
@@ -531,7 +538,7 @@ var _ = ginkgo.Describe("User Service", func() {
 					recName = userAuthDriverNonExisting
 				})
 
-				ginkgo.It("should change authentication driver of given user to non-existing auth. driver", func() {
+				ginkgo.It("should change auth. driver of given user to non-existing auth. driver", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
 					err = client.UserService.ChangeAuthDriver(context.TODO(), *user, nonExistingAuthDriver)

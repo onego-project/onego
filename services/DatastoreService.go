@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+
 	"github.com/onego-project/onego/blueprint"
 	"github.com/onego-project/onego/requests"
 	"github.com/onego-project/onego/resources"
@@ -13,7 +14,8 @@ type DatastoreService struct {
 }
 
 // Allocate to create a new datastore in OpenNebula
-func (ds *DatastoreService) Allocate(ctx context.Context, blueprint blueprint.Interface, cluster resources.Cluster) (*resources.Datastore, error) {
+func (ds *DatastoreService) Allocate(ctx context.Context, blueprint blueprint.Interface,
+	cluster resources.Cluster) (*resources.Datastore, error) {
 	clusterID, err := cluster.ID()
 	if err != nil {
 		return nil, err
@@ -46,7 +48,8 @@ func (ds *DatastoreService) Delete(ctx context.Context, datastore resources.Data
 
 // Update to replace the datastore template contents
 // Update types: Replace or Merge
-func (ds *DatastoreService) Update(ctx context.Context, datastore resources.Datastore, blueprint blueprint.Interface, updateType UpdateType) error {
+func (ds *DatastoreService) Update(ctx context.Context, datastore resources.Datastore,
+	blueprint blueprint.Interface, updateType UpdateType) error {
 	datastoreID, err := datastore.ID()
 	if err != nil {
 		return err
@@ -64,16 +67,20 @@ func (ds *DatastoreService) Update(ctx context.Context, datastore resources.Data
 
 // Chmod to change the permission bits of a datastore
 // If bit is set to -1, it will not change.
-func (ds *DatastoreService) Chmod(ctx context.Context, datastore resources.Datastore, request requests.PermissionRequest) error {
+func (ds *DatastoreService) Chmod(ctx context.Context, datastore resources.Datastore,
+	request requests.PermissionRequest) error {
 	datastoreID, err := datastore.ID()
 	if err != nil {
 		return err
 	}
 
 	_, err = ds.call(ctx, "one.datastore.chmod", datastoreID,
-		request.Permissions[requests.User][requests.Use], request.Permissions[requests.User][requests.Manage], request.Permissions[requests.User][requests.Admin],
-		request.Permissions[requests.Group][requests.Use], request.Permissions[requests.Group][requests.Manage], request.Permissions[requests.Group][requests.Admin],
-		request.Permissions[requests.Other][requests.Use], request.Permissions[requests.Other][requests.Manage], request.Permissions[requests.Other][requests.Admin])
+		request.Permissions[requests.User][requests.Use], request.Permissions[requests.User][requests.Manage],
+		request.Permissions[requests.User][requests.Admin],
+		request.Permissions[requests.Group][requests.Use], request.Permissions[requests.Group][requests.Manage],
+		request.Permissions[requests.Group][requests.Admin],
+		request.Permissions[requests.Other][requests.Use], request.Permissions[requests.Other][requests.Manage],
+		request.Permissions[requests.Other][requests.Admin])
 
 	return err
 }
@@ -81,7 +88,8 @@ func (ds *DatastoreService) Chmod(ctx context.Context, datastore resources.Datas
 // Chown to change the ownership of the datastore
 // If user id is set to -1, the owner is not changed.
 // If group id is set to -1, the group is not changed.
-func (ds *DatastoreService) Chown(ctx context.Context, datastore resources.Datastore, request requests.OwnershipRequest) error {
+func (ds *DatastoreService) Chown(ctx context.Context, datastore resources.Datastore,
+	request requests.OwnershipRequest) error {
 	datastoreID, err := datastore.ID()
 	if err != nil {
 		return err

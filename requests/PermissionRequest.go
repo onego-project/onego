@@ -45,7 +45,8 @@ const (
 // CreatePermissionRequestBuilder constructs PermissionRequestBuilder of PermissionRequest
 func CreatePermissionRequestBuilder() *PermissionRequestBuilder {
 	return &PermissionRequestBuilder{
-		PermissionRequest{[][]permissionChangeType{{noChange, noChange, noChange}, {noChange, noChange, noChange}, {noChange, noChange, noChange}}}}
+		PermissionRequest{[][]permissionChangeType{{noChange, noChange, noChange},
+			{noChange, noChange, noChange}, {noChange, noChange, noChange}}}}
 }
 
 // Allow allows certain permission group to perform the specified action.

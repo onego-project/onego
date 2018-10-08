@@ -4,6 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/onego-project/onego"
@@ -13,8 +16,6 @@ import (
 	"github.com/onego-project/onego/services"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
-	"io/ioutil"
-	"net/http"
 )
 
 const (
@@ -396,7 +397,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-				err = client.DatastoreService.Update(context.TODO(), resources.Datastore{}, datastoreBlueprint, services.Merge)
+				err = client.DatastoreService.Update(context.TODO(), resources.Datastore{},
+					datastoreBlueprint, services.Merge)
 				gomega.Expect(err).ShouldNot(gomega.BeNil())
 			})
 		})
@@ -425,7 +427,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ginkgo.It("should change permission of given datastore", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-					permRequest := requests.CreatePermissionRequestBuilder().Deny(requests.User, requests.Manage).Allow(requests.Other, requests.Admin).Build()
+					permRequest := requests.CreatePermissionRequestBuilder().Deny(requests.User,
+						requests.Manage).Allow(requests.Other, requests.Admin).Build()
 
 					err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
 					gomega.Expect(err).Should(gomega.BeNil())
@@ -474,7 +477,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
 				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User, requests.Manage).Deny(requests.Other, requests.Admin).Build()
+				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User,
+					requests.Manage).Deny(requests.Other, requests.Admin).Build()
 
 				err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
 				gomega.Expect(err).ShouldNot(gomega.BeNil())
@@ -489,7 +493,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User, requests.Manage).Deny(requests.Other, requests.Admin).Build()
+				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User,
+					requests.Manage).Deny(requests.Other, requests.Admin).Build()
 
 				err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
 				gomega.Expect(err).ShouldNot(gomega.BeNil())
@@ -549,7 +554,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ginkgo.It("should not change permissions of given datastore", func() {
 					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
 
-					err = client.DatastoreService.Chown(context.TODO(), *datastore, requests.CreateOwnershipRequestBuilder().Build())
+					err = client.DatastoreService.Chown(context.TODO(), *datastore,
+						requests.CreateOwnershipRequestBuilder().Build())
 					gomega.Expect(err).Should(gomega.BeNil())
 				})
 			})
