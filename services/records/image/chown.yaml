@@ -1,0 +1,55 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.image.chown</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>378</int></value></param><param><value><int>31</int></value></param><param><value><int>120</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>378</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "253"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Mon, 08 Oct 2018 19:18:53 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.image.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>378</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;IMAGE&gt;&lt;ID&gt;378&lt;/ID&gt;&lt;UID&gt;31&lt;/UID&gt;&lt;GID&gt;120&lt;/GID&gt;&lt;UNAME&gt;Dusan&lt;/UNAME&gt;&lt;GNAME&gt;suchCoolGroup&lt;/GNAME&gt;&lt;NAME&gt;monkey&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;0&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;0&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;1&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;TYPE&gt;0&lt;/TYPE&gt;&lt;DISK_TYPE&gt;0&lt;/DISK_TYPE&gt;&lt;PERSISTENT&gt;0&lt;/PERSISTENT&gt;&lt;REGTIME&gt;1538650132&lt;/REGTIME&gt;&lt;SOURCE&gt;&lt;![CDATA[/var/lib/one//datastores/101/5995f01c3c35883b297eed95a12a271b]]&gt;&lt;/SOURCE&gt;&lt;PATH&gt;&lt;![CDATA[]]&gt;&lt;/PATH&gt;&lt;FSTYPE&gt;&lt;![CDATA[raw]]&gt;&lt;/FSTYPE&gt;&lt;SIZE&gt;2252&lt;/SIZE&gt;&lt;STATE&gt;3&lt;/STATE&gt;&lt;RUNNING_VMS&gt;0&lt;/RUNNING_VMS&gt;&lt;CLONING_OPS&gt;0&lt;/CLONING_OPS&gt;&lt;CLONING_ID&gt;-1&lt;/CLONING_ID&gt;&lt;TARGET_SNAPSHOT&gt;-1&lt;/TARGET_SNAPSHOT&gt;&lt;DATASTORE_ID&gt;110&lt;/DATASTORE_ID&gt;&lt;DATASTORE&gt;test&lt;/DATASTORE&gt;&lt;VMS&gt;&lt;/VMS&gt;&lt;CLONES&gt;&lt;/CLONES&gt;&lt;APP_CLONES&gt;&lt;/APP_CLONES&gt;&lt;TEMPLATE&gt;&lt;DISK_TYPE&gt;&lt;![CDATA[BLOCK]]&gt;&lt;/DISK_TYPE&gt;&lt;/TEMPLATE&gt;&lt;SNAPSHOTS&gt;&lt;/SNAPSHOTS&gt;&lt;/IMAGE&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1655"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Mon, 08 Oct 2018 19:18:54 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
