@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+
 	"github.com/onego-project/onego/blueprint"
 	"github.com/onego-project/onego/resources"
 )
@@ -12,7 +13,8 @@ type UserService struct {
 }
 
 // Allocate allocates a new user in OpenNebula and returns User
-func (us *UserService) Allocate(ctx context.Context, username, password, authDriver string, mainGroup resources.Group, secondaryGroups []resources.Group) (*resources.User, error) {
+func (us *UserService) Allocate(ctx context.Context, username, password, authDriver string,
+	mainGroup resources.Group, secondaryGroups []resources.Group) (*resources.User, error) {
 	groups := make([]int, len(secondaryGroups)+1)
 
 	groupID, err := mainGroup.ID()
@@ -60,7 +62,8 @@ func (us *UserService) ChangePassword(ctx context.Context, user resources.User, 
 }
 
 // Update replaces the user template contents
-func (us *UserService) Update(ctx context.Context, user resources.User, blueprint blueprint.Interface, updateType UpdateType) error {
+func (us *UserService) Update(ctx context.Context, user resources.User,
+	blueprint blueprint.Interface, updateType UpdateType) error {
 	userID, err := user.ID()
 	if err != nil {
 		return err
@@ -75,7 +78,8 @@ func (us *UserService) Update(ctx context.Context, user resources.User, blueprin
 	return err
 }
 
-// ChangeAuthDriver changes the authentication driver for the given user; last argument of call avoids to change password via this method
+// ChangeAuthDriver changes the authentication driver for the given user;
+// last argument of call avoids to change password via this method.
 func (us *UserService) ChangeAuthDriver(ctx context.Context, user resources.User, authDriver string) error {
 	userID, err := user.ID()
 	if err != nil {
@@ -87,7 +91,8 @@ func (us *UserService) ChangeAuthDriver(ctx context.Context, user resources.User
 }
 
 // auxiliary method to change main group or add/remove secondary group
-func (us *UserService) manageGroups(ctx context.Context, methodName string, user resources.User, group resources.Group) error {
+func (us *UserService) manageGroups(ctx context.Context, methodName string,
+	user resources.User, group resources.Group) error {
 	userID, err := user.ID()
 	if err != nil {
 		return err

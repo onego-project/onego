@@ -44,7 +44,8 @@ var _ = ginkgo.Describe("DatastoreBlueprint", func() {
 		ginkgo.It("should set DISK_TYPE tag to specified value", func() {
 			blueprint.SetDiskType(diskType)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/DISK_TYPE").Text()).To(gomega.Equal(resources.DiskTypeMap[diskType]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/DISK_TYPE").Text()).To(gomega.Equal(
+				resources.DiskTypeMap[diskType]))
 		})
 	})
 
@@ -89,7 +90,8 @@ var _ = ginkgo.Describe("DatastoreBlueprint", func() {
 		ginkgo.It("should set TYPE tag to specified value", func() {
 			blueprint.SetType(datastoreType)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/TYPE").Text()).To(gomega.Equal(resources.DatastoreTypeMap[datastoreType]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/TYPE").Text()).To(gomega.Equal(
+				resources.DatastoreTypeMap[datastoreType]))
 		})
 	})
 })

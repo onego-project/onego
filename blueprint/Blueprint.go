@@ -3,6 +3,7 @@ package blueprint
 import (
 	"bytes"
 	"fmt"
+
 	"github.com/beevik/etree"
 )
 

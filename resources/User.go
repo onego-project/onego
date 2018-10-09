@@ -2,9 +2,10 @@ package resources
 
 import (
 	"fmt"
-	"github.com/beevik/etree"
 	"strconv"
 	"time"
+
+	"github.com/beevik/etree"
 )
 
 // User structure represents user and inherits XML data and methods from Resource structure
