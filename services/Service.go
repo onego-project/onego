@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/onego-project/onego/requests"
+
 	"github.com/beevik/etree"
 	"github.com/onego-project/xmlrpc"
 )
@@ -87,4 +89,34 @@ func (s *Service) list(ctx context.Context, methodName string) (*etree.Document,
 	}
 
 	return doc, nil
+}
+
+func (s *Service) chmod(ctx context.Context, methodName string, resourceID int,
+	request requests.PermissionRequest) error {
+	_, err := s.call(ctx, methodName, resourceID,
+		request.Permissions[requests.User][requests.Use], request.Permissions[requests.User][requests.Manage],
+		request.Permissions[requests.User][requests.Admin],
+		request.Permissions[requests.Group][requests.Use], request.Permissions[requests.Group][requests.Manage],
+		request.Permissions[requests.Group][requests.Admin],
+		request.Permissions[requests.Other][requests.Use], request.Permissions[requests.Other][requests.Manage],
+		request.Permissions[requests.Other][requests.Admin])
+
+	return err
+}
+
+func (s *Service) chown(ctx context.Context, methodName string, resourceID int,
+	request requests.OwnershipRequest) error {
+	userID, err := request.User.ID()
+	if err != nil {
+		return err
+	}
+
+	groupID, err := request.Group.ID()
+	if err != nil {
+		return err
+	}
+
+	_, err = s.call(ctx, methodName, resourceID, userID, groupID)
+
+	return err
 }

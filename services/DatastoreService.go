@@ -74,15 +74,7 @@ func (ds *DatastoreService) Chmod(ctx context.Context, datastore resources.Datas
 		return err
 	}
 
-	_, err = ds.call(ctx, "one.datastore.chmod", datastoreID,
-		request.Permissions[requests.User][requests.Use], request.Permissions[requests.User][requests.Manage],
-		request.Permissions[requests.User][requests.Admin],
-		request.Permissions[requests.Group][requests.Use], request.Permissions[requests.Group][requests.Manage],
-		request.Permissions[requests.Group][requests.Admin],
-		request.Permissions[requests.Other][requests.Use], request.Permissions[requests.Other][requests.Manage],
-		request.Permissions[requests.Other][requests.Admin])
-
-	return err
+	return ds.chmod(ctx, "one.datastore.chmod", datastoreID, request)
 }
 
 // Chown to change the ownership of the datastore
@@ -95,19 +87,7 @@ func (ds *DatastoreService) Chown(ctx context.Context, datastore resources.Datas
 		return err
 	}
 
-	userID, err := request.User.ID()
-	if err != nil {
-		return err
-	}
-
-	groupID, err := request.Group.ID()
-	if err != nil {
-		return err
-	}
-
-	_, err = ds.call(ctx, "one.datastore.chown", datastoreID, userID, groupID)
-
-	return err
+	return ds.chown(ctx, "one.datastore.chown", datastoreID, request)
 }
 
 // Rename to rename a datastore

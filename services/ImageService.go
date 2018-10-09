@@ -132,15 +132,7 @@ func (is *ImageService) Chmod(ctx context.Context, image resources.Image, reques
 		return err
 	}
 
-	_, err = is.call(ctx, "one.image.chmod", imageID,
-		request.Permissions[requests.User][requests.Use], request.Permissions[requests.User][requests.Manage],
-		request.Permissions[requests.User][requests.Admin],
-		request.Permissions[requests.Group][requests.Use], request.Permissions[requests.Group][requests.Manage],
-		request.Permissions[requests.Group][requests.Admin],
-		request.Permissions[requests.Other][requests.Use], request.Permissions[requests.Other][requests.Manage],
-		request.Permissions[requests.Other][requests.Admin])
-
-	return err
+	return is.chmod(ctx, "one.image.chmod", imageID, request)
 }
 
 // Chown changes the ownership of an image.
@@ -150,19 +142,7 @@ func (is *ImageService) Chown(ctx context.Context, image resources.Image, reques
 		return err
 	}
 
-	userID, err := request.User.ID()
-	if err != nil {
-		return err
-	}
-
-	groupID, err := request.Group.ID()
-	if err != nil {
-		return err
-	}
-
-	_, err = is.call(ctx, "one.image.chown", imageID, userID, groupID)
-
-	return err
+	return is.chown(ctx, "one.image.chown", imageID, request)
 }
 
 // Rename renames an image.
