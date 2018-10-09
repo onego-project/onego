@@ -2,8 +2,9 @@ package resources
 
 import (
 	"fmt"
-	"github.com/beevik/etree"
 	"strconv"
+
+	"github.com/beevik/etree"
 )
 
 // Resource structure contains XML data and main methods for open nebula resources
@@ -111,7 +112,8 @@ func (r *Resource) createPermission(perm string) (*PermissionGroup, error) {
 		}
 	}
 
-	return &PermissionGroup{Use: intToBool(resPermTypeArray[0]), Manage: intToBool(resPermTypeArray[1]), Admin: intToBool(resPermTypeArray[2])}, nil
+	return &PermissionGroup{Use: intToBool(resPermTypeArray[0]), Manage: intToBool(resPermTypeArray[1]),
+		Admin: intToBool(resPermTypeArray[2])}, nil
 }
 
 func (r *Resource) permissions() (*Permissions, error) {

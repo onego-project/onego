@@ -3,6 +3,8 @@ package services_test
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/onego-project/onego"
 	"github.com/onego-project/onego/blueprint"
@@ -10,7 +12,6 @@ import (
 	"github.com/onego-project/onego/services"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
-	"net/http"
 )
 
 const (
