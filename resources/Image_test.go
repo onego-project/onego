@@ -29,7 +29,7 @@ var _ = ginkgo.Describe("Image", func() {
 			})
 
 			ginkgo.It("should find all image attributes", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 				gomega.Expect(image).ShouldNot(gomega.BeNil())
 
 				gomega.Expect(image.ID()).To(gomega.Equal(123))
@@ -37,17 +37,17 @@ var _ = ginkgo.Describe("Image", func() {
 
 				var userID int
 				userID, err = image.User()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(userID).To(gomega.Equal(1881))
 
 				var groupID int
 				groupID, err = image.Group()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(groupID).To(gomega.Equal(8118))
 
 				var permissions *Permissions
 				permissions, err = image.Permissions()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(permissions.User.Use).To(gomega.Equal(true))
 				gomega.Expect(permissions.User.Manage).To(gomega.Equal(true))
 				gomega.Expect(permissions.User.Admin).To(gomega.Equal(false))
@@ -74,24 +74,24 @@ var _ = ginkgo.Describe("Image", func() {
 
 				var datastoreID int
 				datastoreID, err = image.Datastore()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(datastoreID).To(gomega.Equal(101))
 
 				var vmIDs []int
 				vmIDs, err = image.VirtualMachines()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(vmIDs[0]).To(gomega.Equal(84))
 				gomega.Expect(vmIDs).To(gomega.HaveLen(2))
 
 				var cloneIDs []int
 				cloneIDs, err = image.Clones()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(cloneIDs[0]).To(gomega.Equal(55))
 				gomega.Expect(cloneIDs).To(gomega.HaveLen(3))
 
 				var appCloneIDs []int
 				appCloneIDs, err = image.AppClones()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(appCloneIDs[0]).To(gomega.Equal(22))
 				gomega.Expect(appCloneIDs).To(gomega.HaveLen(4))
 			})
@@ -99,7 +99,7 @@ var _ = ginkgo.Describe("Image", func() {
 			ginkgo.It("should find image snapshots", func() {
 				var snapshots []*ImageSnapshot
 				snapshots, err = image.Snapshots()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				snapshot1 := snapshots[0]
 				gomega.Expect(snapshot1.ID).To(gomega.Equal(42))
@@ -144,84 +144,84 @@ var _ = ginkgo.Describe("Image", func() {
 
 				ginkgo.It("should return that image doesn't have name", func() {
 					_, err = image.Name()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have user", func() {
 					_, err = image.User()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have group", func() {
 					_, err = image.Group()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have permissions", func() {
 					_, err = image.Permissions()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have TYPE", func() {
 					_, err = image.Type()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have DISK_TYPE", func() {
 					_, err = image.DiskType()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have PERSISTENT", func() {
 					_, err = image.Persistent()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have REGTIME", func() {
 					_, err = image.RegistrationTime()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have SOURCE", func() {
 					_, err = image.Source()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have PATH", func() {
 					_, err = image.Path()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have FSTYPE", func() {
 					_, err = image.FileSystemType()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have SIZE", func() {
 					_, err = image.Size()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have STATE", func() {
 					_, err = image.State()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have RUNNING_VMS", func() {
 					_, err = image.RunningVMs()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have DATASTORE", func() {
 					_, err = image.Datastore()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that image doesn't have VMS", func() {
 					var vms []int
 
 					vms, err = image.VirtualMachines()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(vms).Should(gomega.HaveLen(0))
 				})
 
@@ -229,7 +229,7 @@ var _ = ginkgo.Describe("Image", func() {
 					var clones []int
 
 					clones, err = image.Clones()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(clones).Should(gomega.HaveLen(0))
 				})
 
@@ -237,7 +237,7 @@ var _ = ginkgo.Describe("Image", func() {
 					var appClones []int
 
 					appClones, err = image.AppClones()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(appClones).Should(gomega.HaveLen(0))
 				})
 
@@ -245,7 +245,7 @@ var _ = ginkgo.Describe("Image", func() {
 					var snapshots []*ImageSnapshot
 
 					snapshots, err = image.Snapshots()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(snapshots).Should(gomega.HaveLen(0))
 				})
 			})

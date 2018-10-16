@@ -155,20 +155,20 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should create new image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = resources.CreateDatastoreWithID(110)
 
 					image, err = client.ImageService.Allocate(context.TODO(), imageBlueprint, *datastore)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(image).ShouldNot(gomega.BeNil())
 
 					// check whether Image really exists in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage.Name()).To(gomega.Equal("myFirstImage"))
 				})
 			})
@@ -179,12 +179,12 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = resources.CreateDatastoreWithID(33)
 
 					image, err = client.ImageService.Allocate(context.TODO(), imageBlueprint, *datastore)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(image).Should(gomega.BeNil())
 				})
 			})
@@ -195,12 +195,12 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = &resources.Datastore{}
 
 					image, err = client.ImageService.Allocate(context.TODO(), imageBlueprint, *datastore)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(image).Should(gomega.BeNil())
 				})
 			})
@@ -211,14 +211,14 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = resources.CreateDatastoreWithID(33)
 
 					imageBlueprint = &blueprint.ImageBlueprint{}
 
 					image, err = client.ImageService.Allocate(context.TODO(), imageBlueprint, *datastore)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(image).Should(gomega.BeNil())
 				})
 			})
@@ -230,10 +230,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image already exists", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				image, err = client.ImageService.Allocate(context.TODO(), imageBlueprint, *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(image).Should(gomega.BeNil())
 			})
 		})
@@ -260,20 +260,20 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should create new image clone", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = resources.CreateDatastoreWithID(110)
 
 					clone, err = client.ImageService.Clone(context.TODO(), *image, "Golias", *datastore)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(clone).ShouldNot(gomega.BeNil())
 
 					// check whether Image really exists in OpenNebula
 					cloneID, err = clone.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), cloneID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage.Name()).To(gomega.Equal("Golias"))
 				})
 			})
@@ -289,12 +289,12 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					datastore = resources.CreateDatastoreWithID(33)
 
 					clone, err = client.ImageService.Clone(context.TODO(), *image, "asdf", *datastore)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(clone).Should(gomega.BeNil())
 				})
 			})
@@ -306,10 +306,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image already exists", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				clone, err = client.ImageService.Clone(context.TODO(), *image, "asdfgr", *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(clone).Should(gomega.BeNil())
 			})
 		})
@@ -322,10 +322,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				clone, err = client.ImageService.Clone(context.TODO(), *image, "asdfg", *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(clone).Should(gomega.BeNil())
 			})
 		})
@@ -349,17 +349,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should delete image", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Delete(context.TODO(), *image)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				// check whether image was really deleted in OpenNebula
 				imageID, err = image.ID()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(oneImage).Should(gomega.BeNil())
 			})
 		})
@@ -375,10 +375,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Delete(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -390,10 +390,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Delete(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -422,24 +422,24 @@ var _ = ginkgo.Describe("Image Service", func() {
 					})
 
 					ginkgo.It("should merge data of given image", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 						if imageBlueprint == nil {
 							err = fmt.Errorf("no image blueprint to finish test")
-							gomega.Expect(err).Should(gomega.BeNil())
+							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						imageBlueprint.SetDescription("dummy")
 
 						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether image data was really updated in OpenNebula
 						imageID, err = image.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneImage.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal("dummy"))
 					})
@@ -451,24 +451,24 @@ var _ = ginkgo.Describe("Image Service", func() {
 					})
 
 					ginkgo.It("should replace data of given image", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 						if imageBlueprint == nil {
 							err = fmt.Errorf("no image blueprint to finish test")
-							gomega.Expect(err).Should(gomega.BeNil())
+							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						imageBlueprint.SetDiskType(resources.DiskTypeBlock)
 
 						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether image data was really replaced in OpenNebula
 						imageID, err = image.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneImage.Attribute("TEMPLATE/DISK_TYPE")).To(gomega.Equal("BLOCK"))
 					})
@@ -492,10 +492,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 					})
 
 					ginkgo.It("should merge data of given image", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 
@@ -505,10 +505,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 					})
 
 					ginkgo.It("should replace data of given image", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 			})
@@ -532,10 +532,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -552,11 +552,11 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Update(context.TODO(), resources.Image{},
 					imageBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -579,17 +579,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should change type of given image", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.ChangeType(context.TODO(), *image, resources.ImageTypeOs)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				// check whether image type was really changed in OpenNebula
 				imageID, err = image.ID()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 				gomega.Expect(oneImage.Type()).To(gomega.Equal(resources.ImageTypeOs))
 			})
@@ -606,10 +606,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.ChangeType(context.TODO(), *image, resources.ImageTypeDataBlock)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -621,10 +621,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.ChangeType(context.TODO(), *image, resources.ImageTypeKernel)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -651,25 +651,25 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should change permission of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					permRequest = requests.CreatePermissionRequestBuilder().Deny(requests.User,
 						requests.Manage).Allow(requests.Other, requests.Admin).Build()
 
 					err = client.ImageService.Chmod(context.TODO(), *image, permRequest)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					var perm *resources.Permissions
 					perm, err = oneImage.Permissions()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					gomega.Expect(perm.User.Manage).To(gomega.Equal(false))
 					gomega.Expect(perm.Other.Admin).To(gomega.Equal(true))
@@ -682,10 +682,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should not change permissions of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.Chmod(context.TODO(), *image, requests.CreatePermissionRequestBuilder().Build())
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -701,13 +701,13 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				permRequest = requests.CreatePermissionRequestBuilder().Allow(requests.User,
 					requests.Manage).Deny(requests.Other, requests.Admin).Build()
 
 				err = client.ImageService.Chmod(context.TODO(), *image, permRequest)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -719,10 +719,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Chmod(context.TODO(), *image, requests.PermissionRequest{})
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -752,7 +752,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should change owner of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					user = resources.CreateUserWithID(31)
 					group = resources.CreateGroupWithID(120)
@@ -760,14 +760,14 @@ var _ = ginkgo.Describe("Image Service", func() {
 					ownershipReq = requests.CreateOwnershipRequestBuilder().User(*user).Group(*group).Build()
 
 					err = client.ImageService.Chown(context.TODO(), *image, ownershipReq)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chown was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.User()).To(gomega.Equal(31))
@@ -781,11 +781,11 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should not change permissions of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.Chown(context.TODO(), *image,
 						requests.CreateOwnershipRequestBuilder().Build())
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -801,10 +801,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Chown(context.TODO(), *image, requests.OwnershipRequest{})
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -816,10 +816,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Chown(context.TODO(), *image, requests.OwnershipRequest{})
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -845,11 +845,11 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should change name of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					// get image name
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					newName := "monkey2"
@@ -857,14 +857,14 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 					// change name
 					err = client.ImageService.Rename(context.TODO(), *image, newName)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether name was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.Name()).To(gomega.Equal("monkey2"))
@@ -877,10 +877,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should not change name of given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.Rename(context.TODO(), *image, "")
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -896,10 +896,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Rename(context.TODO(), *image, "mastodont")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -911,10 +911,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Rename(context.TODO(), *image, "rex")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -940,17 +940,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should enable given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.Enable(context.TODO(), *image)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.State()).To(gomega.Equal(resources.ImageStateReady))
@@ -963,17 +963,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should disable given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.Disable(context.TODO(), *image)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.State()).To(gomega.Equal(resources.ImageStateDisabled))
@@ -992,10 +992,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Disable(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -1007,10 +1007,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.Disable(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -1036,17 +1036,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should make persistent given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.MakePersistent(context.TODO(), *image)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether persistence was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.Persistent()).To(gomega.Equal(true))
@@ -1059,17 +1059,17 @@ var _ = ginkgo.Describe("Image Service", func() {
 				})
 
 				ginkgo.It("should make non-persistent given image", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.ImageService.MakeNonPersistent(context.TODO(), *image)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether persistence was really changed in OpenNebula
 					imageID, err = image.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneImage.Persistent()).To(gomega.Equal(false))
@@ -1088,10 +1088,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.MakeNonPersistent(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -1103,10 +1103,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that image has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.ImageService.MakeNonPersistent(context.TODO(), *image)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -1120,10 +1120,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return image with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				image, err = client.ImageService.RetrieveInfo(context.TODO(), 378)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(image).ShouldNot(gomega.BeNil())
 				gomega.Expect(image.ID()).To(gomega.Equal(378))
 				gomega.Expect(image.Name()).To(gomega.Equal("monkey"))
@@ -1136,10 +1136,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that given image doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				image, err = client.ImageService.RetrieveInfo(context.TODO(), 110)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(image).Should(gomega.BeNil())
 			})
 		})
@@ -1154,10 +1154,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return list of all images with full info belongs to primary group", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAll(context.TODO(), services.OwnershipFilterPrimaryGroup)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).ShouldNot(gomega.BeNil())
 				gomega.Expect(images).To(gomega.HaveLen(2))
 			})
@@ -1169,10 +1169,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return list of all images with full info belongs to the user", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAll(context.TODO(), services.OwnershipFilterUser)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).ShouldNot(gomega.BeNil())
 				gomega.Expect(images).To(gomega.HaveLen(4))
 				gomega.Expect(images[0].ID()).To(gomega.Equal(0))
@@ -1188,10 +1188,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return list of all images with full info belongs to all", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAll(context.TODO(), services.OwnershipFilterAll)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).ShouldNot(gomega.BeNil())
 				gomega.Expect(images).To(gomega.HaveLen(5))
 			})
@@ -1203,10 +1203,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return list of all images with full info belongs to the user and any of his groups", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAll(context.TODO(), services.OwnershipFilterUserGroup)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).ShouldNot(gomega.BeNil())
 				gomega.Expect(images).To(gomega.HaveLen(5))
 			})
@@ -1222,10 +1222,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return images with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAllForUser(context.TODO(), *resources.CreateUserWithID(31))
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).ShouldNot(gomega.BeNil())
 				gomega.Expect(images).To(gomega.HaveLen(1))
 				gomega.Expect(images[0].ID()).To(gomega.Equal(378))
@@ -1238,10 +1238,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return empty list of images (length 0)", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAllForUser(context.TODO(), *resources.CreateUserWithID(42))
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(images).Should(gomega.Equal(make([]*resources.Image, 0)))
 				gomega.Expect(images).Should(gomega.HaveLen(0))
 			})
@@ -1253,10 +1253,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return that user doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.ListAllForUser(context.TODO(), resources.User{})
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(images).Should(gomega.BeNil())
 			})
 		})
@@ -1273,7 +1273,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			})
 
 			ginkgo.It("should return images with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				images, err = client.ImageService.List(context.TODO(), 3, 2, services.OwnershipFilterUserGroup)
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
@@ -1291,10 +1291,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.It("should return that pagination is wrong", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			images, err = client.ImageService.List(context.TODO(), -2, -2, services.OwnershipFilterPrimaryGroup)
-			gomega.Expect(err).ShouldNot(gomega.BeNil())
+			gomega.Expect(err).To(gomega.HaveOccurred())
 			gomega.Expect(images).Should(gomega.BeNil())
 		})
 	})
