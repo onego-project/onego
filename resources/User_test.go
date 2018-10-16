@@ -30,7 +30,7 @@ var _ = ginkgo.Describe("User", func() {
 		})
 
 		ginkgo.It("should find all user attributes", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 			gomega.Expect(user).ShouldNot(gomega.BeNil())
 
 			gomega.Expect(user.ID()).To(gomega.Equal(22))
@@ -42,7 +42,7 @@ var _ = ginkgo.Describe("User", func() {
 			gomega.Expect(user.Enabled()).To(gomega.BeTrue())
 
 			loginTokens, err = user.LoginTokens()
-			gomega.Expect(err).Should(gomega.BeNil())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			gomega.Expect(loginTokens).To(gomega.HaveLen(1))
 			gomega.Expect(loginTokens[0].EGID).To(gomega.Equal(-1))
 			expTime := time.Unix(int64(1497632279), 0)
@@ -53,7 +53,7 @@ var _ = ginkgo.Describe("User", func() {
 
 	ginkgo.Describe("create user", func() {
 		ginkgo.It("should create user", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			user = CreateUserWithID(42)
 
@@ -67,53 +67,53 @@ var _ = ginkgo.Describe("User", func() {
 			})
 
 			ginkgo.It("should return that user doesn't have name", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.Name()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that user doesn't have password", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.Password()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that user doesn't have AuthDriver", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.AuthDriver()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that user doesn't have main group", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.MainGroup()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that user doesn't have groups", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.Groups()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that user doesn't have Enabled", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = user.Enabled()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return empty array of LoginTokens and no error", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				var loginTokens []LoginToken
 				loginTokens, err = user.LoginTokens()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(loginTokens).Should(gomega.HaveLen(0))
 			})
 		})

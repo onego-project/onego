@@ -134,7 +134,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should create new user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					secGroups := make([]resources.Group, 2)
 					secGroups[0] = *resources.CreateGroupWithID(116)
@@ -142,15 +142,15 @@ var _ = ginkgo.Describe("User Service", func() {
 
 					user, err = client.UserService.Allocate(context.TODO(), "Dusan",
 						"password", "core", *resources.CreateGroupWithID(118), secGroups)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(user).ShouldNot(gomega.BeNil())
 
 					// check whether User really exists in OpenNebula
 					userID, err = user.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneUser.Name()).To(gomega.Equal("Dusan"))
 				})
 			})
@@ -161,11 +161,11 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					user, err = client.UserService.Allocate(context.TODO(), "Miso",
 						"password", "core", *resources.CreateGroupWithID(-1), nil)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(user).Should(gomega.BeNil())
 				})
 			})
@@ -177,11 +177,11 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with name Dusan already exists", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				user, err = client.UserService.Allocate(context.TODO(), "Dusan",
 					"password", "core", *resources.CreateGroupWithID(118), nil)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(user).Should(gomega.BeNil())
 			})
 		})
@@ -203,17 +203,17 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should delete user", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.Delete(context.TODO(), *user)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				// check whether User was really deleted in OpenNebula
 				userID, err = user.ID()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(oneUser).Should(gomega.BeNil())
 			})
 		})
@@ -229,10 +229,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.Delete(context.TODO(), *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -244,10 +244,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.Delete(context.TODO(), *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -269,10 +269,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should change password of given user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangePassword(context.TODO(), *user, "helloworld")
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -282,10 +282,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should return error that password cannot be empty", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangePassword(context.TODO(), *user, "")
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -301,10 +301,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangePassword(context.TODO(), *user, "helloworld")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -314,10 +314,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangePassword(context.TODO(), resources.User{}, "helloworld")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -352,19 +352,19 @@ var _ = ginkgo.Describe("User Service", func() {
 					})
 
 					ginkgo.It("should merge data of given user", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						userBlueprint.SetEmail("pancake@pizza.com")
 
 						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether User data was really updated in OpenNebula
 						userID, err = user.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("pancake@pizza.com"))
@@ -377,20 +377,20 @@ var _ = ginkgo.Describe("User Service", func() {
 					})
 
 					ginkgo.It("should replace data of given user", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						userBlueprint.SetEmail("lasagne@pizza.com")
 						userBlueprint.SetFullName("Frantisek Slovak")
 
 						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether User data was really replaced in OpenNebula
 						userID, err = user.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("lasagne@pizza.com"))
@@ -417,10 +417,10 @@ var _ = ginkgo.Describe("User Service", func() {
 					})
 
 					ginkgo.It("should merge data of given user", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 
@@ -430,10 +430,10 @@ var _ = ginkgo.Describe("User Service", func() {
 					})
 
 					ginkgo.It("should replace data of given user", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 			})
@@ -457,10 +457,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -477,10 +477,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.Update(context.TODO(), resources.User{}, userBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -504,17 +504,17 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should change authentication driver of given user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeAuthDriver(context.TODO(), *user, existingAuthDriver)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether User auth. driver was really changed in OpenNebula
 					userID, err = user.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
 					gomega.Expect(oneUser.AuthDriver()).To(gomega.Equal(existingAuthDriver))
 				})
@@ -526,10 +526,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should change authentication driver of given user to empty", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeAuthDriver(context.TODO(), *user, "")
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -539,10 +539,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should change auth. driver of given user to non-existing auth. driver", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeAuthDriver(context.TODO(), *user, nonExistingAuthDriver)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -558,10 +558,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangeAuthDriver(context.TODO(), *user, existingAuthDriver)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -571,10 +571,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangeAuthDriver(context.TODO(), resources.User{}, existingAuthDriver)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -604,17 +604,17 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should change main group of given user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeMainGroup(context.TODO(), *user, *group)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether User main group was really changed in OpenNebula
 					userID, err = user.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
 					gomega.Expect(oneUser.MainGroup()).To(gomega.Equal(idExistingGroup))
 				})
@@ -631,10 +631,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should return error that main group cannot be non-existing", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeMainGroup(context.TODO(), *user, *group)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 
@@ -644,10 +644,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should return error that main group cannot be empty", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.ChangeMainGroup(context.TODO(), *user, resources.Group{})
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -668,10 +668,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangeMainGroup(context.TODO(), *user, *group)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -681,10 +681,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that user has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.UserService.ChangeMainGroup(context.TODO(), resources.User{}, *group)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -712,10 +712,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should add secondary group of given user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.AddSecondaryGroup(context.TODO(), *user, *group)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -730,10 +730,10 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.It("should remove given group of given user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.UserService.RemoveSecondaryGroup(context.TODO(), *user, *group)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -748,10 +748,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return user with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				user, err = client.UserService.RetrieveInfo(context.TODO(), idExistingUser)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(user).ShouldNot(gomega.BeNil())
 				gomega.Expect(user.ID()).To(gomega.Equal(idExistingUser))
 				gomega.Expect(user.Name()).To(gomega.Equal("Karol"))
@@ -764,10 +764,10 @@ var _ = ginkgo.Describe("User Service", func() {
 			})
 
 			ginkgo.It("should return that given user doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				user, err = client.UserService.RetrieveInfo(context.TODO(), idNonExistingUser)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(user).Should(gomega.BeNil())
 			})
 		})
@@ -781,10 +781,10 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.It("should return an info of connected user", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			user, err = client.UserService.RetrieveConnectedUserInfo(context.TODO())
-			gomega.Expect(err).Should(gomega.BeNil())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			gomega.Expect(user).ShouldNot(gomega.BeNil())
 		})
 	})
@@ -795,12 +795,12 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.It("should return an array of users with full info", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			var users []*resources.User
 
 			users, err = client.UserService.List(context.TODO())
-			gomega.Expect(err).Should(gomega.BeNil())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			gomega.Expect(users).ShouldNot(gomega.BeNil())
 		})
 	})

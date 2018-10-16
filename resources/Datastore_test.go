@@ -27,7 +27,7 @@ var _ = ginkgo.Describe("Datastore", func() {
 			})
 
 			ginkgo.It("should find all datastore attributes", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 				gomega.Expect(datastore).ShouldNot(gomega.BeNil())
 
 				gomega.Expect(datastore.ID()).To(gomega.Equal(104))
@@ -35,17 +35,17 @@ var _ = ginkgo.Describe("Datastore", func() {
 
 				var userID int
 				userID, err = datastore.User()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(userID).To(gomega.Equal(0))
 
 				var groupID int
 				groupID, err = datastore.Group()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(groupID).To(gomega.Equal(111))
 
 				var permissions *Permissions
 				permissions, err = datastore.Permissions()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(permissions.User.Use).To(gomega.Equal(true))
 				gomega.Expect(permissions.User.Manage).To(gomega.Equal(true))
 				gomega.Expect(permissions.User.Admin).To(gomega.Equal(false))
@@ -65,7 +65,7 @@ var _ = ginkgo.Describe("Datastore", func() {
 
 				var clusterIDs []int
 				clusterIDs, err = datastore.Clusters()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(clusterIDs[0]).To(gomega.Equal(0))
 
 				gomega.Expect(datastore.TotalMB()).To(gomega.Equal(9714))
@@ -93,82 +93,82 @@ var _ = ginkgo.Describe("Datastore", func() {
 
 				ginkgo.It("should return that datastore doesn't have name", func() {
 					_, err = datastore.Name()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have user", func() {
 					_, err = datastore.User()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have group", func() {
 					_, err = datastore.Group()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have permissions", func() {
 					_, err = datastore.Permissions()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have DS_MAD", func() {
 					_, err = datastore.DsMad()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have TM_MAD", func() {
 					_, err = datastore.TmMad()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have base path", func() {
 					_, err = datastore.BasePath()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have type", func() {
 					_, err = datastore.Type()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have disk type", func() {
 					_, err = datastore.DiskType()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have state", func() {
 					_, err = datastore.State()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have clusters", func() {
 					var clusters []int
 
 					clusters, err = datastore.Clusters()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(clusters).Should(gomega.HaveLen(0))
 				})
 
 				ginkgo.It("should return that datastore doesn't have total MB", func() {
 					_, err = datastore.TotalMB()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have free MB", func() {
 					_, err = datastore.FreeMB()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have used MB", func() {
 					_, err = datastore.UsedMB()
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 
 				ginkgo.It("should return that datastore doesn't have images", func() {
 					var images []int
 
 					images, err = datastore.Images()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(images).Should(gomega.HaveLen(0))
 				})
 			})
