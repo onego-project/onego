@@ -3,9 +3,10 @@ package services_test
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
@@ -113,7 +114,7 @@ var _ = ginkgo.Describe("User Service", func() {
 		// create onego client
 		client = onego.CreateClient(endpoint, token, clientHTTP)
 		if client == nil {
-			err = fmt.Errorf("no client")
+			err = errors.ErrNoClient
 			return
 		}
 	})
@@ -198,7 +199,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -224,7 +225,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idNonExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -259,7 +260,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.BeforeEach(func() {
 				user = resources.CreateUserWithID(33)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -296,7 +297,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idNonExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -335,13 +336,13 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					user = resources.CreateUserWithID(33)
 					if user == nil {
-						err = fmt.Errorf("no user to finish test")
+						err = errors.ErrNoUser
 						return
 					}
 
 					userBlueprint = blueprint.CreateUpdateUserBlueprint()
 					if userBlueprint == nil {
-						err = fmt.Errorf("no user blueprint to finish test")
+						err = errors.ErrNoUserBlueprint
 						return
 					}
 				})
@@ -404,7 +405,7 @@ var _ = ginkgo.Describe("User Service", func() {
 				ginkgo.BeforeEach(func() {
 					user = resources.CreateUserWithID(idExistingUser)
 					if user == nil {
-						err = fmt.Errorf("no user to finish test")
+						err = errors.ErrNoUser
 						return
 					}
 
@@ -445,12 +446,12 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idNonExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 
 				userBlueprint = blueprint.CreateUpdateUserBlueprint()
 				if userBlueprint == nil {
-					err = fmt.Errorf("no user blueprint to finish test")
+					err = errors.ErrNoUserBlueprint
 					return
 				}
 				userBlueprint.SetEmail("pancake@pizza.com")
@@ -470,7 +471,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				userBlueprint = blueprint.CreateUpdateUserBlueprint()
 				if userBlueprint == nil {
-					err = fmt.Errorf("no user blueprint to finish test")
+					err = errors.ErrNoUserBlueprint
 					return
 				}
 				userBlueprint.SetEmail("pancake@pizza.com")
@@ -494,7 +495,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.BeforeEach(func() {
 				user = resources.CreateUserWithID(33)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -553,7 +554,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idNonExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -589,7 +590,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.BeforeEach(func() {
 				user = resources.CreateUserWithID(33)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -599,7 +600,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 					group = resources.CreateGroupWithID(idExistingGroup)
 					if group == nil {
-						err = fmt.Errorf("no group to finish test")
+						err = errors.ErrNoGroup
 					}
 				})
 
@@ -626,7 +627,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 					group = resources.CreateGroupWithID(idNonExistingGroup)
 					if group == nil {
-						err = fmt.Errorf("no group to finish test")
+						err = errors.ErrNoGroup
 					}
 				})
 
@@ -658,12 +659,12 @@ var _ = ginkgo.Describe("User Service", func() {
 
 				user = resources.CreateUserWithID(idNonExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 
 				group = resources.CreateGroupWithID(idExistingGroup)
 				if group == nil {
-					err = fmt.Errorf("no group to finish test")
+					err = errors.ErrNoGroup
 				}
 			})
 
@@ -697,7 +698,7 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.BeforeEach(func() {
 				user = resources.CreateUserWithID(idExistingUser)
 				if user == nil {
-					err = fmt.Errorf("no user to finish test")
+					err = errors.ErrNoUser
 				}
 			})
 
@@ -707,7 +708,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 					group = resources.CreateGroupWithID(idExistingNotMainGroup)
 					if group == nil {
-						err = fmt.Errorf("no group to finish test")
+						err = errors.ErrNoGroup
 					}
 				})
 
@@ -725,7 +726,7 @@ var _ = ginkgo.Describe("User Service", func() {
 
 					group = resources.CreateGroupWithID(idExistingNotMainGroup)
 					if group == nil {
-						err = fmt.Errorf("no group to finish test")
+						err = errors.ErrNoGroup
 					}
 				})
 

@@ -3,9 +3,10 @@ package services_test
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
@@ -92,7 +93,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		// create onego client
 		client = onego.CreateClient(endpoint, token, clientHTTP)
 		if client == nil {
-			err = fmt.Errorf("no client")
+			err = errors.ErrNoClient
 			return
 		}
 	})
@@ -187,7 +188,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(105)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -213,7 +214,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -254,7 +255,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ginkgo.BeforeEach(func() {
 					datastore = resources.CreateDatastoreWithID(104)
 					if datastore == nil {
-						err = fmt.Errorf("no datastore to finish test")
+						err = errors.ErrNoDatastore
 						return
 					}
 				})
@@ -269,7 +270,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 						datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 						if datastoreBlueprint == nil {
-							err = fmt.Errorf("no datastore blueprint to finish test")
+							err = errors.ErrNoDatastoreBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						datastoreBlueprint.SetDsMad("dummy")
@@ -298,7 +299,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 						datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 						if datastoreBlueprint == nil {
-							err = fmt.Errorf("no datastore blueprint to finish test")
+							err = errors.ErrNoDatastoreBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
@@ -322,7 +323,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ginkgo.BeforeEach(func() {
 					datastore = resources.CreateDatastoreWithID(104)
 					if datastore == nil {
-						err = fmt.Errorf("no datastore to finish test")
+						err = errors.ErrNoDatastore
 						return
 					}
 
@@ -363,12 +364,12 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 
 				datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 				if datastoreBlueprint == nil {
-					err = fmt.Errorf("no datastore blueprint to finish test")
+					err = errors.ErrNoDatastoreBlueprint
 					return
 				}
 				datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
@@ -388,7 +389,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 				if datastoreBlueprint == nil {
-					err = fmt.Errorf("no datastore blueprint to finish test")
+					err = errors.ErrNoDatastoreBlueprint
 					return
 				}
 				datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
@@ -415,7 +416,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.BeforeEach(func() {
 				datastore = resources.CreateDatastoreWithID(106)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -470,7 +471,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -513,7 +514,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.BeforeEach(func() {
 				datastore = resources.CreateDatastoreWithID(106)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -567,7 +568,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -614,7 +615,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.BeforeEach(func() {
 				datastore = resources.CreateDatastoreWithID(106)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -661,7 +662,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -698,7 +699,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.BeforeEach(func() {
 				datastore = resources.CreateDatastoreWithID(106)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 
@@ -755,7 +756,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
-					err = fmt.Errorf("no datastore to finish test")
+					err = errors.ErrNoDatastore
 				}
 			})
 

@@ -2,9 +2,9 @@ package services
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/onego-project/onego/blueprint"
+	"github.com/onego-project/onego/errors"
 	"github.com/onego-project/onego/resources"
 )
 
@@ -70,7 +70,7 @@ func (gs *GroupService) List(ctx context.Context) ([]*resources.Group, error) {
 
 	elements := doc.FindElements("GROUP_POOL/GROUP")
 	if len(elements) == 0 {
-		return nil, fmt.Errorf("no group in group pool")
+		return nil, &errors.XMLElementError{Path: "group in group pool"}
 	}
 
 	groups := make([]*resources.Group, len(elements))

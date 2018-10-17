@@ -2,7 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/onego-project/onego/requests"
 
@@ -50,12 +51,12 @@ func (s *Service) call(ctx context.Context, methodName string, args ...interface
 	resArr := result.ResultArray()
 	if !resArr[successIndex].ResultBoolean() {
 		if len(resArr) == 4 {
-			return nil, fmt.Errorf("%s, error code: %d, id of the object that caused the error %d",
-				resArr[resultIndex].ResultString(), resArr[errorCodeIndex].ResultInt(),
-				resArr[idObjectCausedErrorIndex].ResultInt())
+			return nil, &errors.OpenNebulaError{Code: int(resArr[errorCodeIndex].ResultInt()),
+				Message:  resArr[resultIndex].ResultString(),
+				ObjectID: int(resArr[idObjectCausedErrorIndex].ResultInt())}
 		}
-		return nil, fmt.Errorf("%s, code: %d", resArr[resultIndex].ResultString(),
-			resArr[errorCodeIndex].ResultInt())
+		return nil, &errors.OpenNebulaError{Code: int(resArr[errorCodeIndex].ResultInt()),
+			Message: resArr[resultIndex].ResultString(), ObjectID: errors.NoObjectID}
 	}
 
 	return resArr, nil

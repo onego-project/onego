@@ -1,8 +1,9 @@
 package resources
 
 import (
-	"fmt"
 	"time"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/beevik/etree"
 )
@@ -226,7 +227,7 @@ func (i *Image) Snapshots() ([]*ImageSnapshot, error) {
 
 func createImageSnapshotFromElement(element *etree.Element) (*ImageSnapshot, error) {
 	if element == nil {
-		return nil, fmt.Errorf("empty snapshot element")
+		return nil, &errors.XMLElementError{Path: "snapshot"}
 	}
 
 	// occurrence 0 - 1 (we can ignore error)

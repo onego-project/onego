@@ -3,9 +3,10 @@ package services_test
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/onego-project/onego/requests"
 	"github.com/onego-project/onego/services"
@@ -123,7 +124,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 		// create onego client
 		client = onego.CreateClient(endpoint, token, clientHTTP)
 		if client == nil {
-			err = fmt.Errorf("no client")
+			err = errors.ErrNoClient
 			return
 		}
 	})
@@ -255,7 +256,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 					image = resources.CreateImageWithID(378)
 					if image == nil {
-						err = fmt.Errorf("no image to finish test")
+						err = errors.ErrNoImage
 					}
 				})
 
@@ -284,7 +285,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 					image = resources.CreateImageWithID(378)
 					if image == nil {
-						err = fmt.Errorf("no image to finish test")
+						err = errors.ErrNoImage
 					}
 				})
 
@@ -344,7 +345,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(377)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -370,7 +371,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -411,7 +412,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 				ginkgo.BeforeEach(func() {
 					image = resources.CreateImageWithID(378)
 					if image == nil {
-						err = fmt.Errorf("no image to finish test")
+						err = errors.ErrNoImage
 						return
 					}
 				})
@@ -426,7 +427,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 						imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 						if imageBlueprint == nil {
-							err = fmt.Errorf("no image blueprint to finish test")
+							err = errors.ErrNoImageBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						imageBlueprint.SetDescription("dummy")
@@ -455,7 +456,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 						imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 						if imageBlueprint == nil {
-							err = fmt.Errorf("no image blueprint to finish test")
+							err = errors.ErrNoImageBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						imageBlueprint.SetDiskType(resources.DiskTypeBlock)
@@ -479,7 +480,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 				ginkgo.BeforeEach(func() {
 					image = resources.CreateImageWithID(378)
 					if image == nil {
-						err = fmt.Errorf("no image to finish test")
+						err = errors.ErrNoImage
 						return
 					}
 
@@ -520,12 +521,12 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 
 				imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 				if imageBlueprint == nil {
-					err = fmt.Errorf("no image blueprint to finish test")
+					err = errors.ErrNoImageBlueprint
 					return
 				}
 				imageBlueprint.SetDescription("dummy")
@@ -545,7 +546,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 				if imageBlueprint == nil {
-					err = fmt.Errorf("no image blueprint to finish test")
+					err = errors.ErrNoImageBlueprint
 					return
 				}
 				imageBlueprint.SetDescription("dummy")
@@ -574,7 +575,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -601,7 +602,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -641,7 +642,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.BeforeEach(func() {
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -696,7 +697,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -742,7 +743,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.BeforeEach(func() {
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -796,7 +797,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -835,7 +836,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.BeforeEach(func() {
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -891,7 +892,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -930,7 +931,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.BeforeEach(func() {
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -987,7 +988,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -1026,7 +1027,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.BeforeEach(func() {
 				image = resources.CreateImageWithID(378)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
@@ -1083,7 +1084,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 				image = resources.CreateImageWithID(110)
 				if image == nil {
-					err = fmt.Errorf("no image to finish test")
+					err = errors.ErrNoImage
 				}
 			})
 
