@@ -124,20 +124,20 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should create new datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					cluster = resources.CreateClusterWithID(0)
 
 					datastore, err = client.DatastoreService.Allocate(context.TODO(), datastoreBlueprint, *cluster)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(datastore).ShouldNot(gomega.BeNil())
 
 					// check whether Datastore really exists in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore.Name()).To(gomega.Equal("hot_dog"))
 				})
 			})
@@ -148,12 +148,12 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("shouldn't create new user", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					cluster = resources.CreateClusterWithID(33)
 
 					datastore, err = client.DatastoreService.Allocate(context.TODO(), datastoreBlueprint, *cluster)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 					gomega.Expect(datastore).Should(gomega.BeNil())
 				})
 			})
@@ -165,10 +165,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with name hot_dog already exists", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				datastore, err = client.DatastoreService.Allocate(context.TODO(), datastoreBlueprint, *cluster)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(datastore).Should(gomega.BeNil())
 			})
 		})
@@ -192,17 +192,17 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should delete datastore", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Delete(context.TODO(), *datastore)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				// check whether datastore was really deleted in OpenNebula
 				datastoreID, err = datastore.ID()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(oneDatastore).Should(gomega.BeNil())
 			})
 		})
@@ -218,10 +218,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Delete(context.TODO(), *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -233,10 +233,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Delete(context.TODO(), *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -265,24 +265,24 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					})
 
 					ginkgo.It("should merge data of given datastore", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 						if datastoreBlueprint == nil {
 							err = fmt.Errorf("no datastore blueprint to finish test")
-							gomega.Expect(err).Should(gomega.BeNil())
+							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						datastoreBlueprint.SetDsMad("dummy")
 
 						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether datastore data was really updated in OpenNebula
 						datastoreID, err = datastore.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneDatastore.Attribute("TEMPLATE/DS_MAD")).To(gomega.Equal("dummy"))
 					})
@@ -294,24 +294,24 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					})
 
 					ginkgo.It("should replace data of given datastore", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 						if datastoreBlueprint == nil {
 							err = fmt.Errorf("no datastore blueprint to finish test")
-							gomega.Expect(err).Should(gomega.BeNil())
+							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
 						datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
 
 						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Replace)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						// check whether datastore data was really replaced in OpenNebula
 						datastoreID, err = datastore.ID()
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-						gomega.Expect(err).Should(gomega.BeNil())
+						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 						gomega.Expect(oneDatastore.Attribute("TEMPLATE/TYPE")).To(gomega.Equal("SYSTEM_DS"))
 					})
@@ -335,10 +335,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					})
 
 					ginkgo.It("should merge data of given datastore", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 
@@ -348,10 +348,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					})
 
 					ginkgo.It("should replace data of given datastore", func() {
-						gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Replace)
-						gomega.Expect(err).ShouldNot(gomega.BeNil())
+						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
 			})
@@ -375,10 +375,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -395,11 +395,11 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Update(context.TODO(), resources.Datastore{},
 					datastoreBlueprint, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -425,25 +425,25 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should change permission of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					permRequest := requests.CreatePermissionRequestBuilder().Deny(requests.User,
 						requests.Manage).Allow(requests.Other, requests.Admin).Build()
 
 					err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
 					var perm *resources.Permissions
 					perm, err = oneDatastore.Permissions()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					gomega.Expect(perm.User.Manage).To(gomega.Equal(false))
 					gomega.Expect(perm.Other.Admin).To(gomega.Equal(true))
@@ -456,10 +456,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should not change permissions of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Chmod(context.TODO(), *datastore, requests.CreatePermissionRequestBuilder().Build())
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -475,13 +475,13 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User,
 					requests.Manage).Deny(requests.Other, requests.Admin).Build()
 
 				err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -491,13 +491,13 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				permRequest := requests.CreatePermissionRequestBuilder().Allow(requests.User,
 					requests.Manage).Deny(requests.Other, requests.Admin).Build()
 
 				err = client.DatastoreService.Chmod(context.TODO(), *datastore, permRequest)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -523,7 +523,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should change owner of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					user := resources.CreateUserWithID(31)
 					group := resources.CreateGroupWithID(120)
@@ -531,14 +531,14 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					ownershipReq := requests.CreateOwnershipRequestBuilder().User(*user).Group(*group).Build()
 
 					err = client.DatastoreService.Chown(context.TODO(), *datastore, ownershipReq)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chown was really changed in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneDatastore.User()).To(gomega.Equal(31))
@@ -552,11 +552,11 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should not change permissions of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Chown(context.TODO(), *datastore,
 						requests.CreateOwnershipRequestBuilder().Build())
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -572,7 +572,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				user := resources.CreateUserWithID(31)
 				group := resources.CreateGroupWithID(120)
@@ -580,7 +580,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ownershipReq := requests.CreateOwnershipRequestBuilder().User(*user).Group(*group).Build()
 
 				err = client.DatastoreService.Chown(context.TODO(), *datastore, ownershipReq)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -590,7 +590,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				user := resources.CreateUserWithID(31)
 				group := resources.CreateGroupWithID(120)
@@ -598,7 +598,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				ownershipReq := requests.CreateOwnershipRequestBuilder().User(*user).Group(*group).Build()
 
 				err = client.DatastoreService.Chown(context.TODO(), *datastore, ownershipReq)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -624,17 +624,17 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should change name of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Rename(context.TODO(), *datastore, "monkey")
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneDatastore.Name()).To(gomega.Equal("monkey"))
@@ -647,10 +647,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should not change name of given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Rename(context.TODO(), *datastore, "")
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -666,10 +666,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Rename(context.TODO(), *datastore, "mastodont")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -679,10 +679,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Rename(context.TODO(), *datastore, "rex")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -708,17 +708,17 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should enable given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Enable(context.TODO(), *datastore)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreStateReady))
@@ -731,17 +731,17 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 				})
 
 				ginkgo.It("should disable given datastore", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.DatastoreService.Disable(context.TODO(), *datastore)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					// check whether chmod was really changed in OpenNebula
 					datastoreID, err = datastore.ID()
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 					oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
 
 					gomega.Expect(oneDatastore.State()).To(gomega.Equal(resources.DatastoreStateDisabled))
@@ -760,10 +760,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Disable(context.TODO(), *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -773,10 +773,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that datastore has no ID", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.DatastoreService.Disable(context.TODO(), *datastore)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -790,10 +790,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return datastore with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				datastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), 106)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(datastore).ShouldNot(gomega.BeNil())
 				gomega.Expect(datastore.ID()).To(gomega.Equal(106))
 				gomega.Expect(datastore.Name()).To(gomega.Equal("monkey"))
@@ -806,10 +806,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			})
 
 			ginkgo.It("should return that given datastore doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				datastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), 110)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(datastore).Should(gomega.BeNil())
 			})
 		})
@@ -821,12 +821,12 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.It("should return an array of datastores with full info", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			var datastores []*resources.Datastore
 
 			datastores, err = client.DatastoreService.List(context.TODO())
-			gomega.Expect(err).Should(gomega.BeNil())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			gomega.Expect(datastores).ShouldNot(gomega.BeNil())
 		})
 	})

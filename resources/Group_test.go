@@ -26,7 +26,7 @@ var _ = ginkgo.Describe("Group", func() {
 		})
 
 		ginkgo.It("should find all group attributes", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 			gomega.Expect(group).ShouldNot(gomega.BeNil())
 
 			gomega.Expect(group.ID()).To(gomega.Equal(102))
@@ -37,7 +37,7 @@ var _ = ginkgo.Describe("Group", func() {
 
 	ginkgo.Describe("create group", func() {
 		ginkgo.It("should create group", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			group = CreateGroupWithID(222)
 
@@ -51,28 +51,28 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return that group doesn't have name", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				_, err = group.Name()
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
 			ginkgo.It("should return that group doesn't have users", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				var users []int
 				users, err = group.Users()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(users).ShouldNot(gomega.BeNil())
 				gomega.Expect(users).To(gomega.HaveLen(0))
 			})
 
 			ginkgo.It("should return that group doesn't have admins", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				var admins []int
 				admins, err = group.Admins()
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(admins).ShouldNot(gomega.BeNil())
 				gomega.Expect(admins).To(gomega.HaveLen(0))
 			})

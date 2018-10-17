@@ -92,10 +92,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should create new group", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				group, err = client.GroupService.Allocate(context.TODO(), "the_best_group")
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(group).ShouldNot(gomega.BeNil())
 			})
 		})
@@ -106,10 +106,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("shouldn't create new group", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				group, err = client.GroupService.Allocate(context.TODO(), "the_best_group")
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(group).Should(gomega.BeNil())
 			})
 		})
@@ -126,10 +126,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should delete the given group", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.Delete(context.TODO(), *group)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			})
 		})
 
@@ -141,10 +141,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.Delete(context.TODO(), *group)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -154,10 +154,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group is empty", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.Delete(context.TODO(), resources.Group{})
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -178,10 +178,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should merge data", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -196,10 +196,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should replace data", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Replace)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -211,10 +211,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should returns that blueprint data is empty", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.Update(context.TODO(), *group, &blueprint.GroupBlueprint{}, services.Merge)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -230,10 +230,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -246,10 +246,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group is empty", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.Update(context.TODO(), resources.Group{}, blueprintGroup, services.Merge)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -263,10 +263,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return group with full info", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				group, err = client.GroupService.RetrieveInfo(context.TODO(), existingGroupID)
-				gomega.Expect(err).Should(gomega.BeNil())
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(group).ShouldNot(gomega.BeNil())
 			})
 		})
@@ -277,10 +277,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return that given group doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				group, err = client.GroupService.RetrieveInfo(context.TODO(), nonExistingGroupID)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(group).Should(gomega.BeNil())
 			})
 		})
@@ -292,12 +292,12 @@ var _ = ginkgo.Describe("Group", func() {
 		})
 
 		ginkgo.It("should return an array of groups with full info", func() {
-			gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 			var groups []*resources.Group
 
 			groups, err = client.GroupService.List(context.TODO())
-			gomega.Expect(err).Should(gomega.BeNil())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			gomega.Expect(groups).ShouldNot(gomega.BeNil())
 		})
 	})
@@ -316,10 +316,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should add admin to given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.AddAdmin(context.TODO(), *group, *user)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -332,10 +332,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should add admin to given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.AddAdmin(context.TODO(), *group, *user)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 
@@ -347,10 +347,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should add admin to given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.AddAdmin(context.TODO(), *group, resources.User{})
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -364,10 +364,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.AddAdmin(context.TODO(), *group, *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -379,10 +379,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group is empty", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.AddAdmin(context.TODO(), resources.Group{}, *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
@@ -401,10 +401,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should remove admin from given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.RemoveAdmin(context.TODO(), *group, *user)
-					gomega.Expect(err).Should(gomega.BeNil())
+					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				})
 			})
 
@@ -417,10 +417,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should remove admin from given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.RemoveAdmin(context.TODO(), *group, *user)
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 
@@ -432,10 +432,10 @@ var _ = ginkgo.Describe("Group", func() {
 				})
 
 				ginkgo.It("should remove admin from given group", func() {
-					gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 					err = client.GroupService.RemoveAdmin(context.TODO(), *group, resources.User{})
-					gomega.Expect(err).ShouldNot(gomega.BeNil())
+					gomega.Expect(err).To(gomega.HaveOccurred())
 				})
 			})
 		})
@@ -449,10 +449,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group doesn't exist", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.RemoveAdmin(context.TODO(), *group, *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 
@@ -464,10 +464,10 @@ var _ = ginkgo.Describe("Group", func() {
 			})
 
 			ginkgo.It("should return an error that group is empty", func() {
-				gomega.Expect(err).Should(gomega.BeNil()) // no error during BeforeEach
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				err = client.GroupService.RemoveAdmin(context.TODO(), resources.Group{}, *user)
-				gomega.Expect(err).ShouldNot(gomega.BeNil())
+				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
 	})
