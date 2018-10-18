@@ -2,8 +2,9 @@ package services_test
 
 import (
 	"context"
-	"fmt"
 	"net/http"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/onego-project/onego"
@@ -74,7 +75,7 @@ var _ = ginkgo.Describe("Group", func() {
 		// create onego client
 		client = onego.CreateClient(endpoint, token, clientHTTP)
 		if client == nil {
-			err = fmt.Errorf("no client")
+			err = errors.ErrNoClient
 			return
 		}
 	})

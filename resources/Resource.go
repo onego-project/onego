@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/beevik/etree"
+	"github.com/onego-project/onego/errors"
 )
 
 // Resource structure contains XML data and main methods for open nebula resources
@@ -53,12 +54,12 @@ func (r *Resource) intAttribute(path string) (int, error) {
 
 func attributeFromElement(e *etree.Element, path string) (string, error) {
 	if e == nil {
-		return "", fmt.Errorf("no element, unable to get %s", path)
+		return "", &errors.XMLElementError{Path: path}
 	}
 
 	element := e.FindElement(path)
 	if element == nil {
-		return "", fmt.Errorf("unable to find %s", path)
+		return "", &errors.XMLElementError{Path: path}
 	}
 	return element.Text(), nil
 }

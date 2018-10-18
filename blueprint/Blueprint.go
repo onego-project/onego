@@ -2,7 +2,8 @@ package blueprint
 
 import (
 	"bytes"
-	"fmt"
+
+	"github.com/onego-project/onego/errors"
 
 	"github.com/beevik/etree"
 )
@@ -28,7 +29,7 @@ func CreateBlueprint(rootElement string) *Blueprint {
 // Render method to render blueprint values to string
 func (bp *Blueprint) Render() (string, error) {
 	if bp.XMLData == nil {
-		return "", fmt.Errorf("blueprint XML data is empty")
+		return "", errors.ErrBlueprintXMLEmpty
 	}
 
 	var buffer bytes.Buffer

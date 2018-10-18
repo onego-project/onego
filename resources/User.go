@@ -1,11 +1,11 @@
 package resources
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/beevik/etree"
+	"github.com/onego-project/onego/errors"
 )
 
 // User structure represents user and inherits XML data and methods from Resource structure
@@ -53,7 +53,7 @@ func (u *User) Groups() ([]int, error) {
 	}
 
 	if len(groups) < 1 { // should never happen that user has no group
-		return nil, fmt.Errorf("no group")
+		return nil, &errors.XMLElementError{Path: "group"}
 	}
 
 	return groups, nil
@@ -80,12 +80,12 @@ func (u *User) LoginTokens() ([]LoginToken, error) {
 	for i, e := range elements {
 		tokenElement := e.FindElement("TOKEN")
 		if tokenElement == nil {
-			return nil, fmt.Errorf("no token in login token")
+			return nil, &errors.XMLElementError{Path: "token in login token"}
 		}
 
 		expTimeElement := e.FindElement("EXPIRATION_TIME")
 		if expTimeElement == nil {
-			return nil, fmt.Errorf("no expiration time in login token")
+			return nil, &errors.XMLElementError{Path: "expiration time in login token"}
 		}
 
 		expTime, err := strconv.ParseInt(expTimeElement.Text(), base10, bitSize64)
@@ -103,7 +103,7 @@ func (u *User) LoginTokens() ([]LoginToken, error) {
 
 		egidElement := e.FindElement("EGID")
 		if egidElement == nil {
-			return nil, fmt.Errorf("no egid in login token")
+			return nil, &errors.XMLElementError{Path: "egid in login token"}
 		}
 
 		egid, err := strconv.Atoi(egidElement.Text())
