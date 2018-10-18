@@ -1,0 +1,74 @@
+<HOST>
+    <ID>934</ID>
+    <NAME>gorbag.ics</NAME>
+    <STATE>2</STATE>
+    <IM_MAD><![CDATA[kvm]]></IM_MAD>
+    <VM_MAD><![CDATA[kvm]]></VM_MAD>
+    <LAST_MON_TIME>1539689293</LAST_MON_TIME>
+    <CLUSTER_ID>118</CLUSTER_ID>
+    <CLUSTER>gorbag</CLUSTER>
+    <HOST_SHARE>
+        <DISK_USAGE>0</DISK_USAGE>
+        <MEM_USAGE>125829120</MEM_USAGE>
+        <CPU_USAGE>3500</CPU_USAGE>
+        <MAX_DISK>368</MAX_DISK>
+        <MAX_MEM>127608968</MAX_MEM>
+        <MAX_CPU>4000</MAX_CPU>
+        <FREE_DISK>239</FREE_DISK>
+        <FREE_MEM>45884464</FREE_MEM>
+        <FREE_CPU>3880</FREE_CPU>
+        <USED_DISK>110</USED_DISK>
+        <USED_MEM>85918808</USED_MEM>
+        <USED_CPU>120</USED_CPU>
+        <RUNNING_VMS>18</RUNNING_VMS>
+        <DATASTORES>
+            <DS>
+                <FREE_MB><![CDATA[77657]]></FREE_MB>
+                <ID><![CDATA[151]]></ID>
+                <TOTAL_MB><![CDATA[715972]]></TOTAL_MB>
+                <USED_MB><![CDATA[177188]]></USED_MB>
+                <VMS_ALLOCATED_MB><![CDATA[177115]]></VMS_ALLOCATED_MB>
+                <VMS_REQUIRED_MB><![CDATA[601850]]></VMS_REQUIRED_MB>
+            </DS>
+        </DATASTORES>
+        <PCI_DEVICES>
+            <PCI>
+                <ADDRESS><![CDATA[0000:02:00:0]]></ADDRESS>
+                <BUS><![CDATA[02]]></BUS>
+                <CLASS><![CDATA[0300]]></CLASS>
+                <CLASS_NAME><![CDATA[VGA compatible controller]]></CLASS_NAME>
+                <DEVICE><![CDATA[100c]]></DEVICE>
+                <DEVICE_NAME><![CDATA[GK110B [GeForce GTX TITAN Black]]]></DEVICE_NAME>
+                <DOMAIN><![CDATA[0000]]></DOMAIN>
+                <FUNCTION><![CDATA[0]]></FUNCTION>
+                <SHORT_ADDRESS><![CDATA[02:00.0]]></SHORT_ADDRESS>
+                <SLOT><![CDATA[00]]></SLOT>
+                <TYPE><![CDATA[10de:100c:0300]]></TYPE>
+                <VENDOR><![CDATA[10de]]></VENDOR>
+                <VENDOR_NAME><![CDATA[NVIDIA Corporation]]></VENDOR_NAME>
+                <VMID><![CDATA[-1]]></VMID>
+            </PCI>
+            <PCI>
+                <ADDRESS><![CDATA[0000:02:00:1]]></ADDRESS>
+                <BUS><![CDATA[02]]></BUS>
+                <CLASS><![CDATA[0403]]></CLASS>
+                <CLASS_NAME><![CDATA[Audio device]]></CLASS_NAME>
+                <DEVICE><![CDATA[0e1a]]></DEVICE>
+                <DEVICE_NAME><![CDATA[GK110 HDMI Audio]]></DEVICE_NAME>
+                <DOMAIN><![CDATA[0000]]></DOMAIN>
+                <FUNCTION><![CDATA[1]]></FUNCTION>
+                <SHORT_ADDRESS><![CDATA[02:00.1]]></SHORT_ADDRESS>
+                <SLOT><![CDATA[00]]></SLOT>
+                <TYPE><![CDATA[10de:0e1a:0403]]></TYPE>
+                <VENDOR><![CDATA[10de]]></VENDOR>
+                <VENDOR_NAME><![CDATA[NVIDIA Corporation]]></VENDOR_NAME>
+                <VMID><![CDATA[-1]]></VMID>
+            </PCI>
+        </PCI_DEVICES>
+    </HOST_SHARE>
+    <VMS>
+        <ID>42810</ID>
+        <ID>42868</ID>
+    </VMS>
+    <TEMPLATE/>
+</HOST>
