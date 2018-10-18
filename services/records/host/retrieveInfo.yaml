@@ -1,0 +1,30 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.host.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>6</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;HOST&gt;&lt;ID&gt;6&lt;/ID&gt;&lt;NAME&gt;the_best_host_ever&lt;/NAME&gt;&lt;STATE&gt;3&lt;/STATE&gt;&lt;IM_MAD&gt;&lt;![CDATA[chcem]]&gt;&lt;/IM_MAD&gt;&lt;VM_MAD&gt;&lt;![CDATA[kavu]]&gt;&lt;/VM_MAD&gt;&lt;LAST_MON_TIME&gt;1539949791&lt;/LAST_MON_TIME&gt;&lt;CLUSTER_ID&gt;101&lt;/CLUSTER_ID&gt;&lt;CLUSTER&gt;hello&lt;/CLUSTER&gt;&lt;HOST_SHARE&gt;&lt;DISK_USAGE&gt;0&lt;/DISK_USAGE&gt;&lt;MEM_USAGE&gt;0&lt;/MEM_USAGE&gt;&lt;CPU_USAGE&gt;0&lt;/CPU_USAGE&gt;&lt;MAX_DISK&gt;0&lt;/MAX_DISK&gt;&lt;MAX_MEM&gt;0&lt;/MAX_MEM&gt;&lt;MAX_CPU&gt;0&lt;/MAX_CPU&gt;&lt;FREE_DISK&gt;0&lt;/FREE_DISK&gt;&lt;FREE_MEM&gt;0&lt;/FREE_MEM&gt;&lt;FREE_CPU&gt;0&lt;/FREE_CPU&gt;&lt;USED_DISK&gt;0&lt;/USED_DISK&gt;&lt;USED_MEM&gt;0&lt;/USED_MEM&gt;&lt;USED_CPU&gt;0&lt;/USED_CPU&gt;&lt;RUNNING_VMS&gt;0&lt;/RUNNING_VMS&gt;&lt;DATASTORES&gt;&lt;/DATASTORES&gt;&lt;PCI_DEVICES&gt;&lt;/PCI_DEVICES&gt;&lt;/HOST_SHARE&gt;&lt;VMS&gt;&lt;/VMS&gt;&lt;TEMPLATE&gt;&lt;ARCH&gt;&lt;![CDATA[ble]]&gt;&lt;/ARCH&gt;&lt;CLUSTER_NAME&gt;&lt;![CDATA[dummy]]&gt;&lt;/CLUSTER_NAME&gt;&lt;ERROR&gt;&lt;![CDATA[Fri
+      Oct 19 11:49:51 2018 : Error monitoring Host the_best_host_ever (6): -]]&gt;&lt;/ERROR&gt;&lt;HOSTNAME&gt;&lt;![CDATA[ahoj]]&gt;&lt;/HOSTNAME&gt;&lt;IM_MAD&gt;&lt;![CDATA[chcem]]&gt;&lt;/IM_MAD&gt;&lt;PRIORITY&gt;&lt;![CDATA[alebo]]&gt;&lt;/PRIORITY&gt;&lt;RESERVED_CPU&gt;&lt;![CDATA[aj]]&gt;&lt;/RESERVED_CPU&gt;&lt;RESERVED_MEM&gt;&lt;![CDATA[MONITORING_MONITORED]]&gt;&lt;/RESERVED_MEM&gt;&lt;VM_MAD&gt;&lt;![CDATA[kavu]]&gt;&lt;/VM_MAD&gt;&lt;/TEMPLATE&gt;&lt;/HOST&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1816"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Fri, 19 Oct 2018 12:09:38 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
