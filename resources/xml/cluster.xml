@@ -1,0 +1,23 @@
+<CLUSTER>
+    <ID>120</ID>
+    <NAME>duilin</NAME>
+    <HOSTS>
+        <ID>937</ID>
+        <ID>938</ID>
+        <ID>939</ID>
+        <ID>940</ID>
+    </HOSTS>
+    <DATASTORES>
+        <ID>2</ID>
+        <ID>105</ID>
+        <ID>120</ID>
+    </DATASTORES>
+    <VNETS>
+        <ID>1382</ID>
+        <ID>1383</ID>
+    </VNETS>
+    <TEMPLATE>
+        <RESERVED_CPU><![CDATA[0]]></RESERVED_CPU>
+        <RESERVED_MEM><![CDATA[4194304]]></RESERVED_MEM>
+    </TEMPLATE>
+</CLUSTER>
