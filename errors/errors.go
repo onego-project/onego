@@ -50,6 +50,12 @@ var ErrNoHost = errors.New("no host to finish test")
 // ErrNoHostBlueprint error
 var ErrNoHostBlueprint = errors.New("no host blueprint to finish test")
 
+// ErrNoCluster error
+var ErrNoCluster = errors.New("no cluster to finish test")
+
+// ErrNoClusterBlueprint error
+var ErrNoClusterBlueprint = errors.New("no cluster blueprint to finish test")
+
 // NoObjectID to distinguish errors from OpenNebula with 3 or 4 arguments
 var NoObjectID = -1
 

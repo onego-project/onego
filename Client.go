@@ -14,6 +14,7 @@ type Client struct {
 	DatastoreService services.DatastoreService
 	ImageService     services.ImageService
 	HostService      services.HostService
+	ClusterService   services.ClusterService
 }
 
 // CreateClient creates Client with endpoint, token and http client
@@ -24,5 +25,6 @@ func CreateClient(endpoint, token string, client *http.Client) *Client {
 		GroupService:     services.GroupService{Service: services.Service{RPC: rpc}},
 		DatastoreService: services.DatastoreService{Service: services.Service{RPC: rpc}},
 		ImageService:     services.ImageService{Service: services.Service{RPC: rpc}},
-		HostService:      services.HostService{Service: services.Service{RPC: rpc}}}
+		HostService:      services.HostService{Service: services.Service{RPC: rpc}},
+		ClusterService:   services.ClusterService{Service: services.Service{RPC: rpc}}}
 }
