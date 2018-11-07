@@ -1,6 +1,8 @@
 package resources
 
 import (
+	"bytes"
+	"encoding/xml"
 	"fmt"
 	"strconv"
 
@@ -167,4 +169,17 @@ func parseIntsFromElement(element *etree.Element, parseInts []string) ([]int, er
 	}
 
 	return parsedInts, nil
+}
+
+// RenderInterfaceToXMLString renders structures to XML as string.
+func RenderInterfaceToXMLString(r interface{}) (string, error) {
+	buf := new(bytes.Buffer)
+
+	enc := xml.NewEncoder(buf)
+
+	if err := enc.Encode(r); err != nil {
+		return "", err
+	}
+
+	return buf.String(), nil
 }

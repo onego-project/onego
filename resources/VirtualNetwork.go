@@ -27,6 +27,17 @@ type AddressRange struct {
 	Leases     []*Lease `xml:"LEASES,omitempty"`
 }
 
+// Reservation structure to reserve network address in OpenNebula virtual network.
+type Reservation struct {
+	XMLName          xml.Name `xml:"TEMPLATE,omitempty"`
+	Size             *int     `xml:"SIZE,omitempty"`
+	Name             string   `xml:"NAME,omitempty"`
+	AddressRangeID   *int     `xml:"AR_ID,omitempty"`
+	VirtualNetworkID *int     `xml:"NETWORK_ID,omitempty"`
+	Mac              string   `xml:"MAC,omitempty"`
+	IP               *net.IP  `xml:"IP,omitempty"`
+}
+
 // Lease structure represents Lease in Address Range
 type Lease struct {
 	XMLName          xml.Name `xml:"LEASE,omitempty"`
