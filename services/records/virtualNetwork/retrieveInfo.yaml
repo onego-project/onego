@@ -1,0 +1,29 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vn.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>12</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;VNET&gt;&lt;ID&gt;12&lt;/ID&gt;&lt;UID&gt;31&lt;/UID&gt;&lt;GID&gt;120&lt;/GID&gt;&lt;UNAME&gt;Dusan&lt;/UNAME&gt;&lt;GNAME&gt;suchCoolGroup&lt;/GNAME&gt;&lt;NAME&gt;my_vnet&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;0&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;0&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;1&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;CLUSTERS&gt;&lt;ID&gt;101&lt;/ID&gt;&lt;/CLUSTERS&gt;&lt;BRIDGE&gt;&lt;![CDATA[asdf]]&gt;&lt;/BRIDGE&gt;&lt;PARENT_NETWORK_ID/&gt;&lt;VN_MAD&gt;&lt;![CDATA[blabla]]&gt;&lt;/VN_MAD&gt;&lt;PHYDEV/&gt;&lt;VLAN_ID/&gt;&lt;VLAN_ID_AUTOMATIC&gt;0&lt;/VLAN_ID_AUTOMATIC&gt;&lt;USED_LEASES&gt;0&lt;/USED_LEASES&gt;&lt;VROUTERS&gt;&lt;/VROUTERS&gt;&lt;TEMPLATE&gt;&lt;BRIDGE&gt;&lt;![CDATA[asdf]]&gt;&lt;/BRIDGE&gt;&lt;PHYDEV&gt;&lt;![CDATA[]]&gt;&lt;/PHYDEV&gt;&lt;VLAN_ID&gt;&lt;![CDATA[]]&gt;&lt;/VLAN_ID&gt;&lt;VN_MAD&gt;&lt;![CDATA[blabla]]&gt;&lt;/VN_MAD&gt;&lt;/TEMPLATE&gt;&lt;AR_POOL&gt;&lt;/AR_POOL&gt;&lt;/VNET&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1395"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Wed, 07 Nov 2018 22:05:18 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""

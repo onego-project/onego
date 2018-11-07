@@ -9,13 +9,14 @@ import (
 
 // Client structure contains the services to manage resources
 type Client struct {
-	UserService      services.UserService
-	TokenService     services.TokenService
-	GroupService     services.GroupService
-	DatastoreService services.DatastoreService
-	ImageService     services.ImageService
-	HostService      services.HostService
-	ClusterService   services.ClusterService
+	UserService           services.UserService
+	TokenService          services.TokenService
+	GroupService          services.GroupService
+	DatastoreService      services.DatastoreService
+	ImageService          services.ImageService
+	HostService           services.HostService
+	ClusterService        services.ClusterService
+	VirtualNetworkService services.VirtualNetworkService
 }
 
 // CreateClient creates Client with endpoint, token and http client
@@ -23,10 +24,11 @@ func CreateClient(endpoint, token string, client *http.Client) *Client {
 	rpc := &services.RPC{Client: xmlrpc.NewClient(endpoint, client), Token: token}
 
 	return &Client{UserService: services.UserService{Service: services.Service{RPC: rpc}},
-		TokenService:     services.TokenService{Service: services.Service{RPC: rpc}},
-		GroupService:     services.GroupService{Service: services.Service{RPC: rpc}},
-		DatastoreService: services.DatastoreService{Service: services.Service{RPC: rpc}},
-		ImageService:     services.ImageService{Service: services.Service{RPC: rpc}},
-		HostService:      services.HostService{Service: services.Service{RPC: rpc}},
-		ClusterService:   services.ClusterService{Service: services.Service{RPC: rpc}}}
+		TokenService:          services.TokenService{Service: services.Service{RPC: rpc}},
+		GroupService:          services.GroupService{Service: services.Service{RPC: rpc}},
+		DatastoreService:      services.DatastoreService{Service: services.Service{RPC: rpc}},
+		ImageService:          services.ImageService{Service: services.Service{RPC: rpc}},
+		HostService:           services.HostService{Service: services.Service{RPC: rpc}},
+		ClusterService:        services.ClusterService{Service: services.Service{RPC: rpc}},
+		VirtualNetworkService: services.VirtualNetworkService{Service: services.Service{RPC: rpc}}}
 }
