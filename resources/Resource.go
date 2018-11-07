@@ -140,3 +140,31 @@ func (r *Resource) permissions() (*Permissions, error) {
 
 	return &Permissions{User: *resPermGroupArray[0], Group: *resPermGroupArray[1], Other: *resPermGroupArray[2]}, nil
 }
+
+func parseStringsFromElement(element *etree.Element, parseStrings []string) ([]string, error) {
+	parsedStrings := make([]string, len(parseStrings))
+	var err error
+
+	for i := 0; i < len(parseStrings); i++ {
+		parsedStrings[i], err = attributeFromElement(element, parseStrings[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return parsedStrings, nil
+}
+
+func parseIntsFromElement(element *etree.Element, parseInts []string) ([]int, error) {
+	parsedInts := make([]int, len(parseInts))
+	var err error
+
+	for i := 0; i < len(parseInts); i++ {
+		parsedInts[i], err = intAttributeFromElement(element, parseInts[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return parsedInts, nil
+}
