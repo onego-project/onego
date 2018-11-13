@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/beevik/etree"
 	"github.com/onego-project/onego/errors"
@@ -182,4 +183,15 @@ func RenderInterfaceToXMLString(r interface{}) (string, error) {
 	}
 
 	return buf.String(), nil
+}
+
+func (r *Resource) registrationTime() (*time.Time, error) {
+	timeInt, err := r.intAttribute("REGTIME")
+	if err != nil {
+		return nil, err
+	}
+
+	regTime := time.Unix(int64(timeInt), 0)
+
+	return &regTime, nil
 }
