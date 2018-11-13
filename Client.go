@@ -19,6 +19,7 @@ type Client struct {
 	VirtualNetworkService services.VirtualNetworkService
 	ReservationService    services.ReservationService
 	AddressRangeService   services.AddressRangeService
+	LeaseService          services.LeaseService
 }
 
 // CreateClient creates Client with endpoint, token and http client
@@ -34,5 +35,6 @@ func CreateClient(endpoint, token string, client *http.Client) *Client {
 		ClusterService:        services.ClusterService{Service: services.Service{RPC: rpc}},
 		VirtualNetworkService: services.VirtualNetworkService{Service: services.Service{RPC: rpc}},
 		ReservationService:    services.ReservationService{Service: services.Service{RPC: rpc}},
-		AddressRangeService:   services.AddressRangeService{Service: services.Service{RPC: rpc}}}
+		AddressRangeService:   services.AddressRangeService{Service: services.Service{RPC: rpc}},
+		LeaseService:          services.LeaseService{Service: services.Service{RPC: rpc}}}
 }
