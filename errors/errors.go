@@ -68,6 +68,12 @@ var ErrAddressRangeSetWrong = errors.New("unable to find address range, it was n
 // ErrAddressRangeNoID error
 var ErrAddressRangeNoID = errors.New("no address range id")
 
+// ErrNoVMTemplate error
+var ErrNoVMTemplate = errors.New("no VMTemplate to finish test")
+
+// ErrNoVMTemplateBlueprint error
+var ErrNoVMTemplateBlueprint = errors.New("no VMTemplate blueprint to finish test")
+
 // NoObjectID to distinguish errors from OpenNebula with 3 or 4 arguments
 var NoObjectID = -1
 
