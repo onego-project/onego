@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.user.login</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>Frantisek</string></value></param><param><value><string></string></value></param><param><value><int>0</int></value></param></params></methodCall>
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.user.login</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>Frantisek</string></value></param><param><value><string>38a1ff857935253ccbfe6f56682c81d117d19b17</string></value></param><param><value><int>0</int></value></param></params></methodCall>
     form: {}
     headers:
       Content-Type:
@@ -10,16 +10,16 @@ interactions:
     url: http://localhost:2633/RPC2
     method: POST
   response:
-    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string></string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>38a1ff857935253ccbfe6f56682c81d117d19b17</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
     headers:
       Connection:
       - Keep-Alive
       Content-Length:
-      - "258"
+      - "298"
       Content-Type:
       - text/xml; charset=utf-8
       Date:
-      - Tue, 13 Nov 2018 15:00:49 UTC
+      - Mon, 19 Nov 2018 14:01:34 UTC
       Keep-Alive:
       - timeout=15, max=30
       Server:

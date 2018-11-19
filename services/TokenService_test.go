@@ -22,7 +22,8 @@ var (
 	userGenerateTokenWrongGroup = "records/user/token/generateTokenWrongGroup"
 	userGenerateTokenEmptyGroup = "records/user/token/generateTokenEmptyGroup"
 
-	userRevokeToken = "records/user/token/revokeToken"
+	userRevokeToken     = "records/user/token/revokeToken"
+	userRevokeAllTokens = "records/user/token/revokeAllTokens"
 )
 
 var _ = ginkgo.Describe("Token Service", func() {
@@ -156,8 +157,24 @@ var _ = ginkgo.Describe("Token Service", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				group = resources.CreateGroupWithID(120)
+				token := "38a1ff857935253ccbfe6f56682c81d117d19b17"
 
-				err = client.TokenService.RevokeToken(context.TODO(), "Frantisek")
+				err = client.TokenService.RevokeToken(context.TODO(), "Frantisek", token)
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			})
+		})
+
+		ginkgo.Context("when revoke token", func() {
+			ginkgo.BeforeEach(func() {
+				recName = userRevokeAllTokens
+			})
+
+			ginkgo.It("should revoke a login token for a given user", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				group = resources.CreateGroupWithID(120)
+
+				err = client.TokenService.RevokeAllTokens(context.TODO(), "Frantisek")
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 			})
 		})
