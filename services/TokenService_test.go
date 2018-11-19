@@ -22,6 +22,9 @@ var (
 	userGenerateTokenWrongGroup = "records/user/token/generateTokenWrongGroup"
 	userGenerateTokenEmptyGroup = "records/user/token/generateTokenEmptyGroup"
 
+	userGenerateUnscopedToken         = "records/user/token/generateUnscopedToken"
+	userGenerateInfiniteUnscopedToken = "records/user/token/generateInfiniteUnscopedToken"
+
 	userRevokeToken     = "records/user/token/revokeToken"
 	userRevokeAllTokens = "records/user/token/revokeAllTokens"
 )
@@ -145,6 +148,34 @@ var _ = ginkgo.Describe("Token Service", func() {
 					resources.Group{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(token).To(gomega.Equal(""))
+			})
+		})
+
+		ginkgo.Context("when generate unscoped token", func() {
+			ginkgo.BeforeEach(func() {
+				recName = userGenerateUnscopedToken
+			})
+
+			ginkgo.It("should generate a login token for a given user", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				token, err = client.TokenService.GenerateUnscopedToken(context.TODO(), "Frantisek", 30)
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(token).NotTo(gomega.Equal(""))
+			})
+		})
+
+		ginkgo.Context("when generate infinite unscoped token", func() {
+			ginkgo.BeforeEach(func() {
+				recName = userGenerateInfiniteUnscopedToken
+			})
+
+			ginkgo.It("should generate an infinite login token for a given user", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				token, err = client.TokenService.GenerateInfiniteUnscopedToken(context.TODO(), "Frantisek")
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(token).NotTo(gomega.Equal(""))
 			})
 		})
 

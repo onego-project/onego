@@ -14,15 +14,12 @@ type TokenService struct {
 const nonExpiringToken = -1
 const resetToken = 0
 
+const noGID = -1
+
 // manageToken generates login token for the given user (expiring or non-expiring).
 func (ts TokenService) manageToken(ctx context.Context, userName string,
-	period int, effectiveGroup resources.Group) (string, error) {
-	groupID, err := effectiveGroup.ID()
-	if err != nil {
-		return "", err
-	}
-
-	resArr, err := ts.call(ctx, "one.user.login", userName, "", period, groupID)
+	period int, effectiveGroupID int) (string, error) {
+	resArr, err := ts.call(ctx, "one.user.login", userName, "", period, effectiveGroupID)
 	if err != nil {
 		return "", err
 	}
@@ -33,13 +30,33 @@ func (ts TokenService) manageToken(ctx context.Context, userName string,
 // GenerateToken generates login token for the given user.
 func (ts TokenService) GenerateToken(ctx context.Context, userName string, period int,
 	effectiveGroup resources.Group) (string, error) {
-	return ts.manageToken(ctx, userName, period, effectiveGroup)
+	effectiveGroupID, err := effectiveGroup.ID()
+	if err != nil {
+		return "", err
+	}
+
+	return ts.manageToken(ctx, userName, period, effectiveGroupID)
 }
 
 // GenerateInfiniteToken generates non-expiring login token for the given user.
 func (ts TokenService) GenerateInfiniteToken(ctx context.Context, userName string,
 	effectiveGroup resources.Group) (string, error) {
-	return ts.manageToken(ctx, userName, nonExpiringToken, effectiveGroup)
+	effectiveGroupID, err := effectiveGroup.ID()
+	if err != nil {
+		return "", err
+	}
+
+	return ts.manageToken(ctx, userName, nonExpiringToken, effectiveGroupID)
+}
+
+// GenerateUnscopedToken generates login token for the given user.
+func (ts TokenService) GenerateUnscopedToken(ctx context.Context, userName string, period int) (string, error) {
+	return ts.manageToken(ctx, userName, period, noGID)
+}
+
+// GenerateInfiniteUnscopedToken generates non-expiring login token for the given user.
+func (ts TokenService) GenerateInfiniteUnscopedToken(ctx context.Context, userName string) (string, error) {
+	return ts.manageToken(ctx, userName, nonExpiringToken, noGID)
 }
 
 // RevokeToken resets login token for the given user.
