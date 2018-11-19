@@ -48,3 +48,8 @@ func (bp *Blueprint) SetElement(tag, value string) {
 	}
 	element.SetText(value)
 }
+
+// SetName sets name to blueprint.
+func (bp *Blueprint) SetName(value string) {
+	bp.SetElement("NAME", value)
+}
