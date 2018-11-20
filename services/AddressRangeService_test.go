@@ -239,7 +239,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 				recName = vnArDelete
 			})
 
-			ginkgo.It("should create new address range in virtual network", func() {
+			ginkgo.It("should delete the given address range from virtual network", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
 				vnID := 3
