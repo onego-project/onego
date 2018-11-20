@@ -11,7 +11,8 @@ type ReservationService struct {
 	Service
 }
 
-func (rs *ReservationService) reserve(ctx context.Context, parent resources.VirtualNetwork,
+// Reserve reserves network addresses.
+func (rs *ReservationService) Reserve(ctx context.Context, parent resources.VirtualNetwork,
 	reservation resources.Reservation) (*resources.VirtualNetwork, error) {
 	vnID, err := parent.ID()
 	if err != nil {
@@ -33,23 +34,17 @@ func (rs *ReservationService) reserve(ctx context.Context, parent resources.Virt
 	return vns.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
-// Reserve reserves network addresses.
-func (rs *ReservationService) Reserve(ctx context.Context, parent resources.VirtualNetwork,
-	reservation resources.Reservation) (*resources.VirtualNetwork, error) {
-	return rs.reserve(ctx, parent, reservation)
-}
-
 // ReserveToExisting reserves network addresses to existing reservation (virtual network).
 func (rs *ReservationService) ReserveToExisting(ctx context.Context, parent resources.VirtualNetwork,
 	size, addressRangeID, virtualNetworkID int) (*resources.VirtualNetwork, error) {
-	return rs.reserve(ctx, parent, resources.Reservation{Size: &size, AddressRangeID: &addressRangeID,
+	return rs.Reserve(ctx, parent, resources.Reservation{Size: &size, AddressRangeID: &addressRangeID,
 		VirtualNetworkID: &virtualNetworkID})
 }
 
 // ReserveAsNew reserves network addresses as new reservation (virtual network).
 func (rs *ReservationService) ReserveAsNew(ctx context.Context, parent resources.VirtualNetwork, size int,
 	name string) (*resources.VirtualNetwork, error) {
-	return rs.reserve(ctx, parent, resources.Reservation{Size: &size, Name: name})
+	return rs.Reserve(ctx, parent, resources.Reservation{Size: &size, Name: name})
 }
 
 // Free frees a reserved address range from a virtual network.
