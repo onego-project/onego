@@ -143,7 +143,7 @@ var _ = ginkgo.Describe("VirtualNetwork", func() {
 
 					objectIDs, err = virtualNetwork.Clusters()
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
-					gomega.Expect(objectIDs).Should(gomega.HaveLen(0))
+					gomega.Expect(objectIDs).Should(gomega.BeEmpty())
 				})
 
 				ginkgo.It("should return that virtualNetwork doesn't have BRIDGE", func() {
@@ -186,7 +186,7 @@ var _ = ginkgo.Describe("VirtualNetwork", func() {
 
 					objectIDs, err = virtualNetwork.VirtualRouters()
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
-					gomega.Expect(objectIDs).Should(gomega.HaveLen(0))
+					gomega.Expect(objectIDs).Should(gomega.BeEmpty())
 				})
 
 				ginkgo.It("should return that virtualNetwork doesn't have AddressRanges", func() {
@@ -194,7 +194,7 @@ var _ = ginkgo.Describe("VirtualNetwork", func() {
 
 					objects, err = virtualNetwork.AddressRanges()
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
-					gomega.Expect(objects).Should(gomega.HaveLen(0))
+					gomega.Expect(objects).Should(gomega.BeEmpty())
 				})
 			})
 		})
