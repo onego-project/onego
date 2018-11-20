@@ -10,6 +10,7 @@ import (
 // Client structure contains the services to manage resources
 type Client struct {
 	UserService      services.UserService
+	TokenService     services.TokenService
 	GroupService     services.GroupService
 	DatastoreService services.DatastoreService
 	ImageService     services.ImageService
@@ -22,6 +23,7 @@ func CreateClient(endpoint, token string, client *http.Client) *Client {
 	rpc := &services.RPC{Client: xmlrpc.NewClient(endpoint, client), Token: token}
 
 	return &Client{UserService: services.UserService{Service: services.Service{RPC: rpc}},
+		TokenService:     services.TokenService{Service: services.Service{RPC: rpc}},
 		GroupService:     services.GroupService{Service: services.Service{RPC: rpc}},
 		DatastoreService: services.DatastoreService{Service: services.Service{RPC: rpc}},
 		ImageService:     services.ImageService{Service: services.Service{RPC: rpc}},
