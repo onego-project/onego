@@ -116,8 +116,8 @@ func (r *Resource) createPermission(perm string) (*PermissionGroup, error) {
 	var resPermTypeArray [len(permissionTypeArray)]int
 	var err error
 
-	for i := 0; i < len(permissionTypeArray); i++ {
-		resPermTypeArray[i], err = r.intAttribute("PERMISSIONS/" + perm + "_" + permissionTypeArray[i])
+	for i, permType := range permissionTypeArray {
+		resPermTypeArray[i], err = r.intAttribute("PERMISSIONS/" + perm + "_" + permType)
 		if err != nil {
 			return nil, err
 		}
@@ -133,8 +133,8 @@ func (r *Resource) permissions() (*Permissions, error) {
 	var resPermGroupArray [len(permissionGroupArray)]*PermissionGroup
 	var err error
 
-	for i := 0; i < len(permissionGroupArray); i++ {
-		resPermGroupArray[i], err = r.createPermission(permissionGroupArray[i])
+	for i, permGroup := range permissionGroupArray {
+		resPermGroupArray[i], err = r.createPermission(permGroup)
 		if err != nil {
 			return nil, err
 		}
@@ -147,8 +147,8 @@ func parseStringsFromElement(element *etree.Element, parseStrings []string) ([]s
 	parsedStrings := make([]string, len(parseStrings))
 	var err error
 
-	for i := 0; i < len(parseStrings); i++ {
-		parsedStrings[i], err = attributeFromElement(element, parseStrings[i])
+	for i, parseString := range parseStrings {
+		parsedStrings[i], err = attributeFromElement(element, parseString)
 		if err != nil {
 			return nil, err
 		}
@@ -161,8 +161,8 @@ func parseIntsFromElement(element *etree.Element, parseInts []string) ([]int, er
 	parsedInts := make([]int, len(parseInts))
 	var err error
 
-	for i := 0; i < len(parseInts); i++ {
-		parsedInts[i], err = intAttributeFromElement(element, parseInts[i])
+	for i, parseInt := range parseInts {
+		parsedInts[i], err = intAttributeFromElement(element, parseInt)
 		if err != nil {
 			return nil, err
 		}
