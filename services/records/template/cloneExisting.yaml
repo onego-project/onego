@@ -10,7 +10,7 @@ interactions:
     url: http://localhost:2633/RPC2
     method: POST
   response:
-    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>0</boolean></value>\r\n<value><string>[VMTemplateClone]
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>0</boolean></value>\r\n<value><string>[TemplateClone]
       Error allocating a new virtual machine template. NAME is already taken by TEMPLATE
       326.</string></value>\r\n<value><i4>16384</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
     headers:

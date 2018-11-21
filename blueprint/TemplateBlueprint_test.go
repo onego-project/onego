@@ -5,13 +5,13 @@ import (
 	"github.com/onsi/gomega"
 )
 
-var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
-	var blueprint *VMTemplateBlueprint
+var _ = ginkgo.Describe("TemplateBlueprint", func() {
+	var blueprint *TemplateBlueprint
 	value := "thisIsTheValue"
 
-	ginkgo.Describe("CreateAllocateVMTemplateBlueprint", func() {
+	ginkgo.Describe("CreateAllocateTemplateBlueprint", func() {
 		ginkgo.BeforeEach(func() {
-			blueprint = CreateAllocateVMTemplateBlueprint()
+			blueprint = CreateAllocateTemplateBlueprint()
 		})
 
 		ginkgo.It("should create a blueprint with VMTEMPLATE element", func() {
@@ -21,9 +21,9 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		})
 	})
 
-	ginkgo.Describe("CreateUpdateVMTemplateBlueprint", func() {
+	ginkgo.Describe("CreateUpdateTemplateBlueprint", func() {
 		ginkgo.BeforeEach(func() {
-			blueprint = CreateUpdateVMTemplateBlueprint()
+			blueprint = CreateUpdateTemplateBlueprint()
 		})
 
 		ginkgo.It("should create a blueprint with TEMPLATE element", func() {
@@ -37,7 +37,7 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 
@@ -52,7 +52,7 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 
@@ -64,14 +64,14 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetDisk", func() {
-		var disk *VMTemplateDiskBlueprint
+		var disk *DiskBlueprint
 
 		ginkgo.BeforeEach(func() {
-			disk = CreateVMTemplateDiskBlueprint()
+			disk = CreateDiskBlueprint()
 			disk.SetImage(value)
 			disk.SetDevicePrefix("123456")
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a DISK tag to specified value", func() {
@@ -83,13 +83,13 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetFeatures", func() {
-		var features *VMTemplateFeaturesBlueprint
+		var features *FeaturesBlueprint
 
 		ginkgo.BeforeEach(func() {
-			features = CreateVMTemplateFeaturesBlueprint()
+			features = CreateFeaturesBlueprint()
 			features.SetGuestAgent(value)
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a FEATURES tag to specified value", func() {
@@ -100,14 +100,14 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetGraphics", func() {
-		var graphics *VMTemplateGraphicsBlueprint
+		var graphics *GraphicsBlueprint
 
 		ginkgo.BeforeEach(func() {
-			graphics = CreateVMTemplateGraphicsBlueprint()
+			graphics = CreateGraphicsBlueprint()
 			graphics.SetListen(value)
 			graphics.SetType("asdf")
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a GRAPHICS tag to specified value", func() {
@@ -122,7 +122,7 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 
@@ -137,7 +137,7 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 
@@ -149,13 +149,13 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetNIC", func() {
-		var nic *VMTemplateNICBlueprint
+		var nic *NICBlueprint
 
 		ginkgo.BeforeEach(func() {
-			nic = CreateVMTemplateNICBlueprint()
+			nic = CreateNICBlueprint()
 			nic.SetNetwork(value)
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a NIC tag to specified value", func() {
@@ -166,13 +166,13 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetOS", func() {
-		var os *VMTemplateOSBlueprint
+		var os *OSBlueprint
 
 		ginkgo.BeforeEach(func() {
-			os = CreateVMTemplateOSBlueprint()
-			os.SetArch(value)
+			os = CreateOSBlueprint()
+			os.SetArchitecture(value)
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a OS tag to specified value", func() {
@@ -182,35 +182,35 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		})
 	})
 
-	ginkgo.Describe("SetRAW", func() {
-		var raw *VMTemplateRAWBlueprint
+	ginkgo.Describe("SetRaw", func() {
+		var raw *RawBlueprint
 
 		ginkgo.BeforeEach(func() {
-			raw = CreateVMTemplateRAWBlueprint()
+			raw = CreateRAWBlueprint()
 			raw.SetData(value)
 			raw.SetType("21258")
 
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
 
 		ginkgo.It("should set a RAW tag to specified value", func() {
-			blueprint.SetRAW(*raw)
+			blueprint.SetRaw(*raw)
 
 			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/RAW/DATA").Text()).To(gomega.Equal(value))
 			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/RAW/TYPE").Text()).To(gomega.Equal("21258"))
 		})
 	})
 
-	ginkgo.Describe("SetSchedRequirements", func() {
+	ginkgo.Describe("SetSchedulingRequirements", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 
 		ginkgo.It("should set a SCHED_REQUIREMENTS tag to specified value", func() {
-			blueprint.SetSchedRequirements(element)
+			blueprint.SetSchedulingRequirements(element)
 
 			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/SCHED_REQUIREMENTS").Text()).To(
 				gomega.Equal(element))
@@ -221,7 +221,7 @@ var _ = ginkgo.Describe("VMTemplateBlueprint", func() {
 		var element string
 
 		ginkgo.BeforeEach(func() {
-			blueprint = &VMTemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
+			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 			element = "xyz"
 		})
 

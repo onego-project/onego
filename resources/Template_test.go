@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	vmTemplateXML = "xml/vmTemplate.xml"
+	vmTemplateXML = "xml/template.xml"
 )
 
-var _ = ginkgo.Describe("VMTemplate", func() {
+var _ = ginkgo.Describe("Template", func() {
 	var (
 		doc        *etree.Document
-		vmTemplate *VMTemplate
+		vmTemplate *Template
 		err        error
 	)
 
@@ -24,10 +24,10 @@ var _ = ginkgo.Describe("VMTemplate", func() {
 			// create user with data
 			doc = etree.NewDocument()
 			err = doc.ReadFromFile(vmTemplateXML)
-			vmTemplate = CreateVMTemplateFromXML(doc.Root())
+			vmTemplate = CreateTemplateFromXML(doc.Root())
 		})
 
-		ginkgo.It("should find all VMTemplate attributes", func() {
+		ginkgo.It("should find all Template attributes", func() {
 			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 			gomega.Expect(vmTemplate).ShouldNot(gomega.BeNil())
 
@@ -62,42 +62,42 @@ var _ = ginkgo.Describe("VMTemplate", func() {
 		})
 	})
 
-	ginkgo.Describe("create VMTemplate", func() {
-		ginkgo.It("should create VMTemplate", func() {
+	ginkgo.Describe("create Template", func() {
+		ginkgo.It("should create Template", func() {
 			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-			vmTemplate = CreateVMTemplateWithID(42)
+			vmTemplate = CreateTemplateWithID(42)
 
 			gomega.Expect(vmTemplate.ID()).To(gomega.Equal(42))
 		})
 
-		ginkgo.Context("when VMTemplate doesn't have given attribute", func() {
+		ginkgo.Context("when Template doesn't have given attribute", func() {
 			ginkgo.BeforeEach(func() {
-				vmTemplate = CreateVMTemplateWithID(42)
+				vmTemplate = CreateTemplateWithID(42)
 				err = nil
 			})
 
-			ginkgo.It("should return that VMTemplate doesn't have name", func() {
+			ginkgo.It("should return that Template doesn't have name", func() {
 				_, err = vmTemplate.Name()
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
-			ginkgo.It("should return that VMTemplate doesn't have user", func() {
+			ginkgo.It("should return that Template doesn't have user", func() {
 				_, err = vmTemplate.User()
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
-			ginkgo.It("should return that VMTemplate doesn't have group", func() {
+			ginkgo.It("should return that Template doesn't have group", func() {
 				_, err = vmTemplate.Group()
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
-			ginkgo.It("should return that VMTemplate doesn't have permissions", func() {
+			ginkgo.It("should return that Template doesn't have permissions", func() {
 				_, err = vmTemplate.Permissions()
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 
-			ginkgo.It("should return that VMTemplate doesn't have registration time", func() {
+			ginkgo.It("should return that Template doesn't have registration time", func() {
 				_, err = vmTemplate.RegistrationTime()
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})

@@ -20,7 +20,7 @@ type Client struct {
 	ReservationService    services.ReservationService
 	AddressRangeService   services.AddressRangeService
 	LeaseService          services.LeaseService
-	VMTemplateService     services.VMTemplateService
+	TemplateService       services.TemplateService
 }
 
 // CreateClient creates Client with endpoint, token and http client
@@ -38,5 +38,5 @@ func CreateClient(endpoint, token string, client *http.Client) *Client {
 		ReservationService:    services.ReservationService{Service: services.Service{RPC: rpc}},
 		AddressRangeService:   services.AddressRangeService{Service: services.Service{RPC: rpc}},
 		LeaseService:          services.LeaseService{Service: services.Service{RPC: rpc}},
-		VMTemplateService:     services.VMTemplateService{Service: services.Service{RPC: rpc}}}
+		TemplateService:       services.TemplateService{Service: services.Service{RPC: rpc}}}
 }
