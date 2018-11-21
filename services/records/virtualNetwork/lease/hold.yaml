@@ -1,0 +1,55 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vn.hold</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>3</int></value></param><param><value><string>&lt;TEMPLATE&gt;&lt;LEASES&gt;&lt;IP&gt;10.0.0.12&lt;/IP&gt;&lt;/LEASES&gt;&lt;LEASES&gt;&lt;IP&gt;10.0.0.12&lt;/IP&gt;&lt;/LEASES&gt;&lt;/TEMPLATE&gt;</string></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>3</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "251"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Tue, 13 Nov 2018 13:42:12 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vn.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>3</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;VNET&gt;&lt;ID&gt;3&lt;/ID&gt;&lt;UID&gt;0&lt;/UID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;UNAME&gt;oneadmin&lt;/UNAME&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;asdf&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;1&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;0&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;0&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;CLUSTERS&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;/CLUSTERS&gt;&lt;BRIDGE&gt;&lt;![CDATA[qwerty]]&gt;&lt;/BRIDGE&gt;&lt;PARENT_NETWORK_ID/&gt;&lt;VN_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/VN_MAD&gt;&lt;PHYDEV/&gt;&lt;VLAN_ID/&gt;&lt;VLAN_ID_AUTOMATIC&gt;0&lt;/VLAN_ID_AUTOMATIC&gt;&lt;USED_LEASES&gt;19&lt;/USED_LEASES&gt;&lt;VROUTERS&gt;&lt;/VROUTERS&gt;&lt;TEMPLATE&gt;&lt;BRIDGE&gt;&lt;![CDATA[qwerty]]&gt;&lt;/BRIDGE&gt;&lt;PHYDEV&gt;&lt;![CDATA[]]&gt;&lt;/PHYDEV&gt;&lt;SECURITY_GROUPS&gt;&lt;![CDATA[0]]&gt;&lt;/SECURITY_GROUPS&gt;&lt;VN_MAD&gt;&lt;![CDATA[dummy]]&gt;&lt;/VN_MAD&gt;&lt;/TEMPLATE&gt;&lt;AR_POOL&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[0]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;4&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.13]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0d]]&gt;&lt;/MAC&gt;&lt;VNET&gt;&lt;![CDATA[9]]&gt;&lt;/VNET&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC&gt;&lt;VNET&gt;&lt;![CDATA[7]]&gt;&lt;/VNET&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[1]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;3&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.11]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0b]]&gt;&lt;/MAC&gt;&lt;VNET&gt;&lt;![CDATA[7]]&gt;&lt;/VNET&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[3]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[4]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[5]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[6]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[7]]&gt;&lt;/AR_ID&gt;&lt;GLOBAL_PREFIX&gt;&lt;![CDATA[]]&gt;&lt;/GLOBAL_PREFIX&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[3]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;ULA_PREFIX&gt;&lt;![CDATA[]]&gt;&lt;/ULA_PREFIX&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;AR&gt;&lt;AR_ID&gt;&lt;![CDATA[8]]&gt;&lt;/AR_ID&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;SIZE&gt;&lt;![CDATA[5]]&gt;&lt;/SIZE&gt;&lt;TYPE&gt;&lt;![CDATA[IP4]]&gt;&lt;/TYPE&gt;&lt;MAC_END&gt;&lt;![CDATA[02:00:0a:00:00:0e]]&gt;&lt;/MAC_END&gt;&lt;IP_END&gt;&lt;![CDATA[10.0.0.14]]&gt;&lt;/IP_END&gt;&lt;USED_LEASES&gt;2&lt;/USED_LEASES&gt;&lt;LEASES&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.10]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0a]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;LEASE&gt;&lt;IP&gt;&lt;![CDATA[10.0.0.12]]&gt;&lt;/IP&gt;&lt;MAC&gt;&lt;![CDATA[02:00:0a:00:00:0c]]&gt;&lt;/MAC&gt;&lt;VM&gt;&lt;![CDATA[-1]]&gt;&lt;/VM&gt;&lt;/LEASE&gt;&lt;/LEASES&gt;&lt;/AR&gt;&lt;/AR_POOL&gt;&lt;/VNET&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "8467"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Tue, 13 Nov 2018 13:42:12 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
