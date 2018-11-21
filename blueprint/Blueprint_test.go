@@ -79,4 +79,29 @@ var _ = ginkgo.Describe("Blueprint", func() {
 			})
 		})
 	})
+
+	ginkgo.Describe("SetName", func() {
+		ginkgo.Context("with already existing element", func() {
+			ginkgo.It("sets name to specified value", func() {
+				blueprint.SetName("BLOB")
+
+				gomega.Expect(blueprint.XMLData.FindElement("ROOT/NAME").Text()).To(gomega.Equal("BLOB"))
+			})
+		})
+
+		ginkgo.Context("without already existing element", func() {
+			ginkgo.BeforeEach(func() {
+				doc := etree.NewDocument()
+				doc.CreateElement("ROOT")
+
+				blueprint = &Blueprint{XMLData: doc}
+			})
+
+			ginkgo.It("creates name and sets it to specified value", func() {
+				blueprint.SetName("BLOB")
+
+				gomega.Expect(blueprint.XMLData.FindElement("ROOT/NAME").Text()).To(gomega.Equal("BLOB"))
+			})
+		})
+	})
 })

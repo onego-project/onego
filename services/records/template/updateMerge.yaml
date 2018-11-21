@@ -1,0 +1,55 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.template.update</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>325</int></value></param><param><value><string>&lt;TEMPLATE&gt;&lt;DESCRIPTION&gt;dummy&lt;/DESCRIPTION&gt;&lt;/TEMPLATE&gt;</string></value></param><param><value><int>1</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>325</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "253"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sun, 18 Nov 2018 21:24:55 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.template.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>325</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;VMTEMPLATE&gt;&lt;ID&gt;325&lt;/ID&gt;&lt;UID&gt;0&lt;/UID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;UNAME&gt;oneadmin&lt;/UNAME&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;test&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;1&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;0&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;0&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;REGTIME&gt;1542574839&lt;/REGTIME&gt;&lt;TEMPLATE&gt;&lt;CONTEXT&gt;&lt;NETWORK&gt;&lt;![CDATA[YES]]&gt;&lt;/NETWORK&gt;&lt;SSH_PUBLIC_KEY&gt;&lt;![CDATA[$USER[SSH_PUBLIC_KEY]]]&gt;&lt;/SSH_PUBLIC_KEY&gt;&lt;/CONTEXT&gt;&lt;DESCRIPTION&gt;&lt;![CDATA[dummy]]&gt;&lt;/DESCRIPTION&gt;&lt;GRAPHICS&gt;&lt;LISTEN&gt;&lt;![CDATA[0.0.0.0]]&gt;&lt;/LISTEN&gt;&lt;TYPE&gt;&lt;![CDATA[VNC]]&gt;&lt;/TYPE&gt;&lt;/GRAPHICS&gt;&lt;/TEMPLATE&gt;&lt;/VMTEMPLATE&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "1229"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sun, 18 Nov 2018 21:24:55 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""

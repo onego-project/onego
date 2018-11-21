@@ -144,14 +144,7 @@ func (i *Image) Persistent() (bool, error) {
 
 // RegistrationTime gets time when Image was registered
 func (i *Image) RegistrationTime() (*time.Time, error) {
-	timeInt, err := i.intAttribute("REGTIME")
-	if err != nil {
-		return nil, err
-	}
-
-	regTime := time.Unix(int64(timeInt), 0)
-
-	return &regTime, nil
+	return i.registrationTime()
 }
 
 // Source gets Image source
