@@ -248,6 +248,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			oneDatastore       *resources.Datastore
 			datastoreID        int
 			datastoreBlueprint *blueprint.DatastoreBlueprint
+			retDatastore       *resources.Datastore
 		)
 
 		ginkgo.Context("when datastore exists", func() {
@@ -275,8 +276,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 						}
 						datastoreBlueprint.SetDsMad("dummy")
 
-						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
+						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore,
+							datastoreBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retDatastore).ShouldNot(gomega.BeNil())
 
 						// check whether datastore data was really updated in OpenNebula
 						datastoreID, err = datastore.ID()
@@ -304,8 +307,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 						}
 						datastoreBlueprint.SetType(resources.DatastoreTypeSystem)
 
-						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Replace)
+						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint,
+							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retDatastore).ShouldNot(gomega.BeNil())
 
 						// check whether datastore data was really replaced in OpenNebula
 						datastoreID, err = datastore.ID()
@@ -338,7 +343,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					ginkgo.It("should merge data of given datastore", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
+						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint,
+							services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
@@ -351,7 +357,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 					ginkgo.It("should replace data of given datastore", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Replace)
+						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint,
+							services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
@@ -378,7 +385,8 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.It("should return that datastore with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint, services.Merge)
+				retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint,
+					services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -398,7 +406,7 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.DatastoreService.Update(context.TODO(), resources.Datastore{},
+				retDatastore, err = client.DatastoreService.Update(context.TODO(), resources.Datastore{},
 					datastoreBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})

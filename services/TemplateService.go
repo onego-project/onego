@@ -60,20 +60,23 @@ func (ts *TemplateService) Delete(ctx context.Context, template resources.Templa
 
 // Update merges or replaces the template contents.
 func (ts *TemplateService) Update(ctx context.Context, template resources.Template, blueprint blueprint.Interface,
-	updateType UpdateType) error {
+	updateType UpdateType) (*resources.Template, error) {
 	templateID, err := template.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = ts.call(ctx, "one.template.update", templateID, blueprintText, updateType)
+	resArr, err := ts.call(ctx, "one.template.update", templateID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return ts.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // Chmod changes the permission bits of a template.

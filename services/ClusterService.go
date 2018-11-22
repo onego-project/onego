@@ -37,20 +37,23 @@ func (cs *ClusterService) Delete(ctx context.Context, cluster resources.Cluster)
 
 // Update replaces the cluster template contents.
 func (cs *ClusterService) Update(ctx context.Context, cluster resources.Cluster, blueprint blueprint.Interface,
-	updateType UpdateType) error {
+	updateType UpdateType) (*resources.Cluster, error) {
 	clusterID, err := cluster.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = cs.call(ctx, "one.cluster.update", clusterID, blueprintText, updateType)
+	resArr, err := cs.call(ctx, "one.cluster.update", clusterID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return cs.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // AddHost adds a host to the given cluster

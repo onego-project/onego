@@ -73,6 +73,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 	ginkgo.Describe("Manage address range in virtual network", func() {
 		var vn *resources.VirtualNetwork
 		var ar *resources.AddressRange
+		var retAR *resources.AddressRange
 		var oneVn *resources.VirtualNetwork
 
 		ginkgo.Context("when add address range", func() {
@@ -137,8 +138,9 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 					Size: &size,
 				}
 
-				err = client.AddressRangeService.Update(context.TODO(), *vn, *ar)
+				retAR, err = client.AddressRangeService.Update(context.TODO(), *vn, *ar)
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(retAR).ShouldNot(gomega.BeNil())
 
 				// check whether reservation really exists in OpenNebula
 				oneVn, err = client.VirtualNetworkService.RetrieveInfo(context.TODO(), vnID)

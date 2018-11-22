@@ -36,19 +36,23 @@ func (gs *GroupService) Delete(ctx context.Context, group resources.Group) error
 
 // Update replaces the group template contents
 func (gs *GroupService) Update(ctx context.Context, group resources.Group,
-	blueprint blueprint.Interface, updateType UpdateType) error {
+	blueprint blueprint.Interface, updateType UpdateType) (*resources.Group, error) {
 	groupID, err := group.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = gs.call(ctx, "one.group.update", groupID, blueprintText, updateType)
-	return err
+	resArr, err := gs.call(ctx, "one.group.update", groupID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
+
+	return gs.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // RetrieveInfo retrieves group by ID. If group id is -1 then the connected user's group info is returned

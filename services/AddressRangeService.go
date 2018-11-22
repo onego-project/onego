@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/xml"
 
-	"github.com/onego-project/xmlrpc"
-
 	"github.com/onego-project/onego/errors"
 
 	"github.com/onego-project/onego/resources"
@@ -21,27 +19,20 @@ type templateAddressRange struct {
 	AR      *resources.AddressRange `xml:"AR"`
 }
 
-func (ars *AddressRangeService) manageAddressRange(ctx context.Context, methodName string, vnID int,
-	ar resources.AddressRange) ([]*xmlrpc.Result, error) {
-	arText, err := resources.RenderInterfaceToXMLString(templateAddressRange{AR: &ar})
-	if err != nil {
-		// error should never occur
-		return nil, err
-	}
-
-	return ars.call(ctx, methodName, vnID, arText)
-}
-
-// Add adds address range to virtual network.
-// AR must contain TYPE, SIZE, IP.
-func (ars *AddressRangeService) Add(ctx context.Context, vn resources.VirtualNetwork,
+func (ars *AddressRangeService) manageAddressRange(ctx context.Context, methodName string, vn resources.VirtualNetwork,
 	ar resources.AddressRange) (*resources.AddressRange, error) {
 	vnID, err := vn.ID()
 	if err != nil {
 		return nil, err
 	}
 
-	resArr, err := ars.manageAddressRange(ctx, "one.vn.add_ar", vnID, ar)
+	arText, err := resources.RenderInterfaceToXMLString(templateAddressRange{AR: &ar})
+	if err != nil {
+		// error should never occur
+		return nil, err
+	}
+
+	resArr, err := ars.call(ctx, methodName, vnID, arText)
 	if err != nil {
 		return nil, err
 	}
@@ -71,17 +62,17 @@ func (ars *AddressRangeService) Add(ctx context.Context, vn resources.VirtualNet
 	return nil, errors.ErrAddressRangeSetWrong
 }
 
+// Add adds address range to virtual network.
+// AR must contain TYPE, SIZE, IP.
+func (ars *AddressRangeService) Add(ctx context.Context, vn resources.VirtualNetwork,
+	ar resources.AddressRange) (*resources.AddressRange, error) {
+	return ars.manageAddressRange(ctx, "one.vn.add_ar", vn, ar)
+}
+
 // Update updates the attributes of an address range.
 func (ars *AddressRangeService) Update(ctx context.Context, vn resources.VirtualNetwork,
-	ar resources.AddressRange) error {
-	vnID, err := vn.ID()
-	if err != nil {
-		return err
-	}
-
-	_, err = ars.manageAddressRange(ctx, "one.vn.update_ar", vnID, ar)
-
-	return err
+	ar resources.AddressRange) (*resources.AddressRange, error) {
+	return ars.manageAddressRange(ctx, "one.vn.update_ar", vn, ar)
 }
 
 // Delete removes an address range from a virtual network.

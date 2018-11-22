@@ -166,6 +166,7 @@ var _ = ginkgo.Describe("Group", func() {
 	ginkgo.Describe("update group", func() {
 		var group *resources.Group
 		var blueprintGroup *blueprint.GroupBlueprint
+		var retGroup *resources.Group
 
 		ginkgo.Context("when group exists", func() {
 			ginkgo.When("when update type is merge", func() {
@@ -181,8 +182,9 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should merge data", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
+					gomega.Expect(retGroup).ShouldNot(gomega.BeNil())
 				})
 			})
 
@@ -199,8 +201,9 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should replace data", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Replace)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Replace)
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
+					gomega.Expect(retGroup).ShouldNot(gomega.BeNil())
 				})
 			})
 
@@ -214,8 +217,10 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should returns that blueprint data is empty", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, &blueprint.GroupBlueprint{}, services.Merge)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, &blueprint.GroupBlueprint{},
+						services.Merge)
 					gomega.Expect(err).To(gomega.HaveOccurred())
+					gomega.Expect(retGroup).Should(gomega.BeNil())
 				})
 			})
 		})
@@ -233,8 +238,9 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.It("should return an error that group doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
+				retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retGroup).Should(gomega.BeNil())
 			})
 		})
 
@@ -249,8 +255,9 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.It("should return an error that group is empty", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.GroupService.Update(context.TODO(), resources.Group{}, blueprintGroup, services.Merge)
+				retGroup, err = client.GroupService.Update(context.TODO(), resources.Group{}, blueprintGroup, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retGroup).Should(gomega.BeNil())
 			})
 		})
 	})

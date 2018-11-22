@@ -325,6 +325,7 @@ var _ = ginkgo.Describe("Template Service", func() {
 			oneTemplate       *resources.Template
 			templateID        int
 			templateBlueprint *blueprint.TemplateBlueprint
+			retTemplate       *resources.Template
 		)
 
 		ginkgo.Context("when template exists", func() {
@@ -352,9 +353,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 						}
 						templateBlueprint.SetDescription("dummy")
 
-						err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
+						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
 
 						// check whether template data was really updated in OpenNebula
 						templateID, err = template.ID()
@@ -383,9 +385,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 						}
 						templateBlueprint.SetCPU("dummy")
 
-						err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
+						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
 
 						// check whether template data was really replaced in OpenNebula
 						templateID, err = template.ID()
@@ -416,9 +419,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 					ginkgo.It("should merge data of given template", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.TemplateService.Update(context.TODO(), *template,
+						retTemplate, err = client.TemplateService.Update(context.TODO(), *template,
 							&blueprint.TemplateBlueprint{}, services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retTemplate).Should(gomega.BeNil())
 					})
 				})
 
@@ -430,9 +434,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 					ginkgo.It("should replace data of given template", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.TemplateService.Update(context.TODO(), *template,
+						retTemplate, err = client.TemplateService.Update(context.TODO(), *template,
 							&blueprint.TemplateBlueprint{}, services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retTemplate).Should(gomega.BeNil())
 					})
 				})
 			})
@@ -458,8 +463,9 @@ var _ = ginkgo.Describe("Template Service", func() {
 			ginkgo.It("should return that template with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint, services.Merge)
+				retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retTemplate).Should(gomega.BeNil())
 			})
 		})
 
@@ -478,9 +484,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.TemplateService.Update(context.TODO(), resources.Template{},
+				retTemplate, err = client.TemplateService.Update(context.TODO(), resources.Template{},
 					templateBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retTemplate).Should(gomega.BeNil())
 			})
 		})
 	})

@@ -49,20 +49,23 @@ func (vns *VirtualNetworkService) Delete(ctx context.Context, vn resources.Virtu
 
 // Update replaces the virtual network template contents.
 func (vns *VirtualNetworkService) Update(ctx context.Context, vn resources.VirtualNetwork,
-	blueprint blueprint.Interface, updateType UpdateType) error {
+	blueprint blueprint.Interface, updateType UpdateType) (*resources.VirtualNetwork, error) {
 	vnID, err := vn.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = vns.call(ctx, "one.vn.update", vnID, blueprintText, updateType)
+	resArr, err := vns.call(ctx, "one.vn.update", vnID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return vns.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // Chmod to change the permission bits of a virtual network.

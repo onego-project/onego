@@ -254,6 +254,7 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 			oneVirtualNetwork       *resources.VirtualNetwork
 			virtualNetworkID        int
 			virtualNetworkBlueprint *blueprint.VirtualNetworkBlueprint
+			retVN                   *resources.VirtualNetwork
 		)
 
 		ginkgo.Context("when virtual network exists", func() {
@@ -281,9 +282,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 						}
 						virtualNetworkBlueprint.SetGateway("dummy")
 
-						err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
+						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retVN).ShouldNot(gomega.BeNil())
 
 						// check whether virtual network data was really updated in OpenNebula
 						virtualNetworkID, err = virtualNetwork.ID()
@@ -313,9 +315,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 						}
 						virtualNetworkBlueprint.SetVnMad("blabla")
 
-						err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
+						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+						gomega.Expect(retVN).ShouldNot(gomega.BeNil())
 
 						// check whether virtual network data was really replaced in OpenNebula
 						virtualNetworkID, err = virtualNetwork.ID()
@@ -350,9 +353,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
+						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retVN).Should(gomega.BeNil())
 					})
 				})
 
@@ -364,9 +368,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
+						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retVN).Should(gomega.BeNil())
 					})
 				})
 			})
@@ -392,9 +397,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 			ginkgo.It("should return that virtualNetwork with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork, virtualNetworkBlueprint,
+				retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork, virtualNetworkBlueprint,
 					services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retVN).Should(gomega.BeNil())
 			})
 		})
 
@@ -413,9 +419,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 			ginkgo.It("should return that virtualNetwork has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Update(context.TODO(), resources.VirtualNetwork{},
+				retVN, err = client.VirtualNetworkService.Update(context.TODO(), resources.VirtualNetwork{},
 					virtualNetworkBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retVN).Should(gomega.BeNil())
 			})
 		})
 	})
