@@ -1,5 +1,7 @@
 package blueprint
 
+import "strconv"
+
 // HostBlueprint to set Host elements
 type HostBlueprint struct {
 	Blueprint
@@ -31,18 +33,18 @@ func (hb *HostBlueprint) SetImMad(imMad string) {
 }
 
 // SetPriority sets PRIORITY of the given Host
-func (hb *HostBlueprint) SetPriority(priority string) {
-	hb.SetElement("PRIORITY", priority)
+func (hb *HostBlueprint) SetPriority(priority int) {
+	hb.SetElement("PRIORITY", strconv.Itoa(priority))
 }
 
 // SetReservedCPU sets RESERVED_CPU of the given Host
-func (hb *HostBlueprint) SetReservedCPU(reservedCPU string) {
-	hb.SetElement("RESERVED_CPU", reservedCPU)
+func (hb *HostBlueprint) SetReservedCPU(reservedCPU int) {
+	hb.SetElement("RESERVED_CPU", strconv.Itoa(reservedCPU))
 }
 
 // SetReservedMemory sets RESERVED_MEM of the given Host
-func (hb *HostBlueprint) SetReservedMemory(reservedMemory string) {
-	hb.SetElement("RESERVED_MEM", reservedMemory)
+func (hb *HostBlueprint) SetReservedMemory(reservedMemory int) {
+	hb.SetElement("RESERVED_MEM", strconv.Itoa(reservedMemory))
 }
 
 // SetStatus sets STATUS of the given Host

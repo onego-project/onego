@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.cluster.update</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>101</int></value></param><param><value><string>&lt;TEMPLATE&gt;&lt;RESERVED_CPU&gt;blabla&lt;/RESERVED_CPU&gt;&lt;/TEMPLATE&gt;</string></value></param><param><value><int>0</int></value></param></params></methodCall>
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.cluster.update</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>101</int></value></param><param><value><string>&lt;TEMPLATE&gt;&lt;RESERVED_CPU&gt;123&lt;/RESERVED_CPU&gt;&lt;/TEMPLATE&gt;</string></value></param><param><value><int>0</int></value></param></params></methodCall>
     form: {}
     headers:
       Content-Type:
@@ -19,7 +19,7 @@ interactions:
       Content-Type:
       - text/xml; charset=utf-8
       Date:
-      - Fri, 19 Oct 2018 13:08:46 UTC
+      - Thu, 22 Nov 2018 13:08:09 UTC
       Keep-Alive:
       - timeout=15, max=30
       Server:
@@ -36,16 +36,42 @@ interactions:
     url: http://localhost:2633/RPC2
     method: POST
   response:
-    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;CLUSTER&gt;&lt;ID&gt;101&lt;/ID&gt;&lt;NAME&gt;hello&lt;/NAME&gt;&lt;HOSTS&gt;&lt;ID&gt;6&lt;/ID&gt;&lt;ID&gt;7&lt;/ID&gt;&lt;/HOSTS&gt;&lt;DATASTORES&gt;&lt;/DATASTORES&gt;&lt;VNETS&gt;&lt;/VNETS&gt;&lt;TEMPLATE&gt;&lt;RESERVED_CPU&gt;&lt;![CDATA[blabla]]&gt;&lt;/RESERVED_CPU&gt;&lt;/TEMPLATE&gt;&lt;/CLUSTER&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;CLUSTER&gt;&lt;ID&gt;101&lt;/ID&gt;&lt;NAME&gt;the_best_cluster_ever&lt;/NAME&gt;&lt;HOSTS&gt;&lt;ID&gt;6&lt;/ID&gt;&lt;ID&gt;7&lt;/ID&gt;&lt;/HOSTS&gt;&lt;DATASTORES&gt;&lt;ID&gt;110&lt;/ID&gt;&lt;/DATASTORES&gt;&lt;VNETS&gt;&lt;ID&gt;12&lt;/ID&gt;&lt;/VNETS&gt;&lt;TEMPLATE&gt;&lt;RESERVED_CPU&gt;&lt;![CDATA[123]]&gt;&lt;/RESERVED_CPU&gt;&lt;/TEMPLATE&gt;&lt;/CLUSTER&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
     headers:
       Connection:
       - Keep-Alive
       Content-Length:
-      - "576"
+      - "636"
       Content-Type:
       - text/xml; charset=utf-8
       Date:
-      - Fri, 19 Oct 2018 13:08:46 UTC
+      - Thu, 22 Nov 2018 13:08:10 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.cluster.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>101</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;CLUSTER&gt;&lt;ID&gt;101&lt;/ID&gt;&lt;NAME&gt;the_best_cluster_ever&lt;/NAME&gt;&lt;HOSTS&gt;&lt;ID&gt;6&lt;/ID&gt;&lt;ID&gt;7&lt;/ID&gt;&lt;/HOSTS&gt;&lt;DATASTORES&gt;&lt;ID&gt;110&lt;/ID&gt;&lt;/DATASTORES&gt;&lt;VNETS&gt;&lt;ID&gt;12&lt;/ID&gt;&lt;/VNETS&gt;&lt;TEMPLATE&gt;&lt;RESERVED_CPU&gt;&lt;![CDATA[123]]&gt;&lt;/RESERVED_CPU&gt;&lt;/TEMPLATE&gt;&lt;/CLUSTER&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "636"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Thu, 22 Nov 2018 13:08:10 UTC
       Keep-Alive:
       - timeout=15, max=30
       Server:

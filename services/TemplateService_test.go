@@ -3,6 +3,7 @@ package services_test
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -374,14 +375,14 @@ var _ = ginkgo.Describe("Template Service", func() {
 							err = errors.ErrNoTemplateBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
-						templateBlueprint.SetCPU("dummy")
+						templateBlueprint.SetCPU(182.64)
 
 						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
-						gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal("dummy"))
+						gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal(fmt.Sprintf("%f", 182.64)))
 					})
 				})
 			})

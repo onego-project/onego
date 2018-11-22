@@ -1,6 +1,9 @@
 package blueprint
 
 import (
+	"fmt"
+	"strconv"
+
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -34,17 +37,17 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetCPU", func() {
-		var element string
+		var element float64
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			element = "xyz"
+			element = 456.78
 		})
 
 		ginkgo.It("should set a CPU tag to specified value", func() {
 			blueprint.SetCPU(element)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/CPU").Text()).To(gomega.Equal(element))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/CPU").Text()).To(gomega.Equal(fmt.Sprintf("%f", element)))
 		})
 	})
 
@@ -105,7 +108,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.BeforeEach(func() {
 			graphics = CreateGraphicsBlueprint()
 			graphics.SetListen(value)
-			graphics.SetType("asdf")
+			graphics.SetType(VNC)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -114,7 +117,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 			blueprint.SetGraphics(*graphics)
 
 			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(value))
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal("asdf"))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsMap[VNC]))
 		})
 	})
 
@@ -134,17 +137,19 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetMemory", func() {
-		var element string
+		var element int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			element = "xyz"
+			element = 45
 		})
 
 		ginkgo.It("should set a MEMORY tag to specified value", func() {
 			blueprint.SetMemory(element)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/MEMORY").Text()).To(gomega.Equal(element))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/MEMORY").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(element))
 		})
 	})
 
@@ -218,17 +223,19 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetVCPU", func() {
-		var element string
+		var element int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			element = "xyz"
+			element = 77
 		})
 
 		ginkgo.It("should set a VCPU tag to specified value", func() {
 			blueprint.SetVCPU(element)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/VCPU").Text()).To(gomega.Equal(element))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/VCPU").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(element))
 		})
 	})
 })

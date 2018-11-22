@@ -53,3 +53,10 @@ func (bp *Blueprint) SetElement(tag, value string) {
 func (bp *Blueprint) SetName(value string) {
 	bp.SetElement("NAME", value)
 }
+
+func boolToString(b bool) string {
+	if b {
+		return "YES"
+	}
+	return "NO"
+}

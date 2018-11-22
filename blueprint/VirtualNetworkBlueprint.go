@@ -1,5 +1,7 @@
 package blueprint
 
+import "strconv"
+
 // VirtualNetworkBlueprint to set VirtualNetwork elements
 type VirtualNetworkBlueprint struct {
 	Blueprint
@@ -21,13 +23,13 @@ func (vnb *VirtualNetworkBlueprint) SetBridge(bridge string) {
 }
 
 // SetFilterIPSpoofing sets filter ip spoofing of the given Virtual Network
-func (vnb *VirtualNetworkBlueprint) SetFilterIPSpoofing(filterIPSpoofing string) {
-	vnb.SetElement("FILTER_IP_SPOOFING", filterIPSpoofing)
+func (vnb *VirtualNetworkBlueprint) SetFilterIPSpoofing(filterIPSpoofing bool) {
+	vnb.SetElement("FILTER_IP_SPOOFING", boolToString(filterIPSpoofing))
 }
 
 // SetFilterMacSpoofing sets filter mac spoofing of the given Virtual Network
-func (vnb *VirtualNetworkBlueprint) SetFilterMacSpoofing(filterMacSpoofing string) {
-	vnb.SetElement("FILTER_MAC_SPOOFING", filterMacSpoofing)
+func (vnb *VirtualNetworkBlueprint) SetFilterMacSpoofing(filterMacSpoofing bool) {
+	vnb.SetElement("FILTER_MAC_SPOOFING", boolToString(filterMacSpoofing))
 }
 
 // SetGateway sets Gateway of the given Virtual Network
@@ -36,8 +38,8 @@ func (vnb *VirtualNetworkBlueprint) SetGateway(gateway string) {
 }
 
 // SetMTU sets MTU of the given Virtual Network
-func (vnb *VirtualNetworkBlueprint) SetMTU(mtu string) {
-	vnb.SetElement("MTU", mtu)
+func (vnb *VirtualNetworkBlueprint) SetMTU(mtu int) {
+	vnb.SetElement("MTU", strconv.Itoa(mtu))
 }
 
 // SetNetworkAddress sets network address of the given Virtual Network
@@ -61,8 +63,8 @@ func (vnb *VirtualNetworkBlueprint) SetSecurityGroups(securityGroups string) {
 }
 
 // SetVirtualLanID sets virtual lan ID of the given Virtual Network
-func (vnb *VirtualNetworkBlueprint) SetVirtualLanID(virtualLanID string) {
-	vnb.SetElement("VLAN_ID", virtualLanID)
+func (vnb *VirtualNetworkBlueprint) SetVirtualLanID(virtualLanID int) {
+	vnb.SetElement("VLAN_ID", strconv.Itoa(virtualLanID))
 }
 
 // SetVnMad sets VN_MAD of the given Virtual Network

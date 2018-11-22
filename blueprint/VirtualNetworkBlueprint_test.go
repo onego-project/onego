@@ -1,6 +1,8 @@
 package blueprint
 
 import (
+	"strconv"
+
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -48,32 +50,34 @@ var _ = ginkgo.Describe("VirtualNetworkBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetFilterIPSpoofing", func() {
-		var value string
+		var value bool
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &VirtualNetworkBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			value = "test-value"
+			value = true
 		})
 
 		ginkgo.It("should set FILTER_IP_SPOOFING tag to specified value", func() {
 			blueprint.SetFilterIPSpoofing(value)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FILTER_IP_SPOOFING").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FILTER_IP_SPOOFING").Text()).To(
+				gomega.Equal(boolToString(value)))
 		})
 	})
 
 	ginkgo.Describe("SetFilterMacSpoofing", func() {
-		var value string
+		var value bool
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &VirtualNetworkBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			value = "test-value"
+			value = false
 		})
 
 		ginkgo.It("should set FILTER_MAC_SPOOFING tag to specified value", func() {
 			blueprint.SetFilterMacSpoofing(value)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FILTER_MAC_SPOOFING").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FILTER_MAC_SPOOFING").Text()).To(
+				gomega.Equal(boolToString(value)))
 		})
 	})
 
@@ -93,17 +97,19 @@ var _ = ginkgo.Describe("VirtualNetworkBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetMTU", func() {
-		var value string
+		var value int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &VirtualNetworkBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			value = "test-value"
+			value = 41
 		})
 
 		ginkgo.It("should set MTU tag to specified value", func() {
 			blueprint.SetMTU(value)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/MTU").Text()).To(gomega.Equal(value))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/MTU").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(value))
 		})
 	})
 
@@ -168,17 +174,19 @@ var _ = ginkgo.Describe("VirtualNetworkBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetVirtualLanID", func() {
-		var value string
+		var value int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &VirtualNetworkBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			value = "test-value"
+			value = 11
 		})
 
 		ginkgo.It("should set VLAN_ID tag to specified value", func() {
 			blueprint.SetVirtualLanID(value)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/VLAN_ID").Text()).To(gomega.Equal(value))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/VLAN_ID").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(value))
 		})
 	})
 
