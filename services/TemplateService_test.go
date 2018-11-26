@@ -322,8 +322,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 	ginkgo.Describe("update template", func() {
 		var (
 			template          *resources.Template
-			oneTemplate       *resources.Template
-			templateID        int
 			templateBlueprint *blueprint.TemplateBlueprint
 			retTemplate       *resources.Template
 		)
@@ -356,16 +354,9 @@ var _ = ginkgo.Describe("Template Service", func() {
 						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
-
-						// check whether template data was really updated in OpenNebula
-						templateID, err = template.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneTemplate, err = client.TemplateService.RetrieveInfo(context.TODO(), templateID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneTemplate).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneTemplate.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal(
+						gomega.Expect(retTemplate.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal(
 							"dummy"))
 					})
 				})
@@ -388,16 +379,9 @@ var _ = ginkgo.Describe("Template Service", func() {
 						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
-
-						// check whether template data was really replaced in OpenNebula
-						templateID, err = template.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneTemplate, err = client.TemplateService.RetrieveInfo(context.TODO(), templateID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneTemplate).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal("dummy"))
+						gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal("dummy"))
 					})
 				})
 			})

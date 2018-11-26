@@ -241,8 +241,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 	ginkgo.Describe("update host", func() {
 		var (
 			host          *resources.Host
-			oneHost       *resources.Host
-			hostID        int
 			hostBlueprint *blueprint.HostBlueprint
 			retHost       *resources.Host
 		)
@@ -274,16 +272,9 @@ var _ = ginkgo.Describe("Host Service", func() {
 
 						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retHost).ShouldNot(gomega.BeNil())
-
-						// check whether host data was really updated in OpenNebula
-						hostID, err = host.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneHost, err = client.HostService.RetrieveInfo(context.TODO(), hostID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneHost).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneHost.Attribute("TEMPLATE/CLUSTER_NAME")).To(gomega.Equal("dummy"))
+						gomega.Expect(retHost.Attribute("TEMPLATE/CLUSTER_NAME")).To(gomega.Equal("dummy"))
 					})
 				})
 
@@ -304,16 +295,9 @@ var _ = ginkgo.Describe("Host Service", func() {
 
 						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retHost).ShouldNot(gomega.BeNil())
-
-						// check whether host data was really replaced in OpenNebula
-						hostID, err = host.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneHost, err = client.HostService.RetrieveInfo(context.TODO(), hostID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneHost).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneHost.Attribute("TEMPLATE/HOSTNAME")).To(gomega.Equal("blabla"))
+						gomega.Expect(retHost.Attribute("TEMPLATE/HOSTNAME")).To(gomega.Equal("blabla"))
 					})
 				})
 			})

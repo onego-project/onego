@@ -402,8 +402,6 @@ var _ = ginkgo.Describe("Image Service", func() {
 	ginkgo.Describe("update image", func() {
 		var (
 			image          *resources.Image
-			oneImage       *resources.Image
-			imageID        int
 			imageBlueprint *blueprint.ImageBlueprint
 			retImage       *resources.Image
 		)
@@ -435,16 +433,9 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retImage).ShouldNot(gomega.BeNil())
-
-						// check whether image data was really updated in OpenNebula
-						imageID, err = image.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneImage.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal("dummy"))
+						gomega.Expect(retImage.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal("dummy"))
 					})
 				})
 
@@ -465,16 +456,9 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retImage).ShouldNot(gomega.BeNil())
-
-						// check whether image data was really replaced in OpenNebula
-						imageID, err = image.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneImage.Attribute("TEMPLATE/DISK_TYPE")).To(gomega.Equal("BLOCK"))
+						gomega.Expect(retImage.Attribute("TEMPLATE/DISK_TYPE")).To(gomega.Equal("BLOCK"))
 					})
 				})
 			})

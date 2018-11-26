@@ -251,8 +251,6 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 	ginkgo.Describe("update virtual network", func() {
 		var (
 			virtualNetwork          *resources.VirtualNetwork
-			oneVirtualNetwork       *resources.VirtualNetwork
-			virtualNetworkID        int
 			virtualNetworkBlueprint *blueprint.VirtualNetworkBlueprint
 			retVN                   *resources.VirtualNetwork
 		)
@@ -285,17 +283,9 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retVN).ShouldNot(gomega.BeNil())
-
-						// check whether virtual network data was really updated in OpenNebula
-						virtualNetworkID, err = virtualNetwork.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneVirtualNetwork, err = client.VirtualNetworkService.RetrieveInfo(context.TODO(),
-							virtualNetworkID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneVirtualNetwork).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneVirtualNetwork.Attribute("TEMPLATE/GATEWAY")).To(gomega.Equal(
+						gomega.Expect(retVN.Attribute("TEMPLATE/GATEWAY")).To(gomega.Equal(
 							"dummy"))
 					})
 				})
@@ -318,17 +308,9 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 						retVN, err = client.VirtualNetworkService.Update(context.TODO(), *virtualNetwork,
 							virtualNetworkBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retVN).ShouldNot(gomega.BeNil())
-
-						// check whether virtual network data was really replaced in OpenNebula
-						virtualNetworkID, err = virtualNetwork.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneVirtualNetwork, err = client.VirtualNetworkService.RetrieveInfo(context.TODO(),
-							virtualNetworkID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneVirtualNetwork).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneVirtualNetwork.Attribute("TEMPLATE/VN_MAD")).To(gomega.Equal(
+						gomega.Expect(retVN.Attribute("TEMPLATE/VN_MAD")).To(gomega.Equal(
 							"blabla"))
 					})
 				})

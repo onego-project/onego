@@ -327,8 +327,6 @@ var _ = ginkgo.Describe("User Service", func() {
 		var (
 			user          *resources.User
 			userBlueprint *blueprint.UserBlueprint
-			oneUser       *resources.User
-			userID        int
 			retUser       *resources.User
 		)
 
@@ -360,16 +358,9 @@ var _ = ginkgo.Describe("User Service", func() {
 
 						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retUser).ShouldNot(gomega.BeNil())
-
-						// check whether User data was really updated in OpenNebula
-						userID, err = user.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+						gomega.Expect(retUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("pancake@pizza.com"))
 					})
 				})
@@ -387,18 +378,11 @@ var _ = ginkgo.Describe("User Service", func() {
 
 						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retUser).ShouldNot(gomega.BeNil())
-
-						// check whether User data was really replaced in OpenNebula
-						userID, err = user.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+						gomega.Expect(retUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("lasagne@pizza.com"))
-						gomega.Expect(oneUser.Attribute("TEMPLATE/NAME")).To(
+						gomega.Expect(retUser.Attribute("TEMPLATE/NAME")).To(
 							gomega.Equal("Frantisek Slovak"))
 					})
 				})

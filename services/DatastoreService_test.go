@@ -245,8 +245,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 	ginkgo.Describe("update datastore", func() {
 		var (
 			datastore          *resources.Datastore
-			oneDatastore       *resources.Datastore
-			datastoreID        int
 			datastoreBlueprint *blueprint.DatastoreBlueprint
 			retDatastore       *resources.Datastore
 		)
@@ -279,16 +277,9 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore,
 							datastoreBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retDatastore).ShouldNot(gomega.BeNil())
-
-						// check whether datastore data was really updated in OpenNebula
-						datastoreID, err = datastore.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneDatastore.Attribute("TEMPLATE/DS_MAD")).To(gomega.Equal("dummy"))
+						gomega.Expect(retDatastore.Attribute("TEMPLATE/DS_MAD")).To(gomega.Equal("dummy"))
 					})
 				})
 
@@ -310,16 +301,9 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 						retDatastore, err = client.DatastoreService.Update(context.TODO(), *datastore, datastoreBlueprint,
 							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
 						gomega.Expect(retDatastore).ShouldNot(gomega.BeNil())
-
-						// check whether datastore data was really replaced in OpenNebula
-						datastoreID, err = datastore.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneDatastore, err = client.DatastoreService.RetrieveInfo(context.TODO(), datastoreID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneDatastore).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneDatastore.Attribute("TEMPLATE/TYPE")).To(gomega.Equal("SYSTEM_DS"))
+						gomega.Expect(retDatastore.Attribute("TEMPLATE/TYPE")).To(gomega.Equal("SYSTEM_DS"))
 					})
 				})
 			})
