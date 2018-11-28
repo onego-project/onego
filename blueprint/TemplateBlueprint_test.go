@@ -1,7 +1,6 @@
 package blueprint
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/onsi/ginkgo"
@@ -47,7 +46,8 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a CPU tag to specified value", func() {
 			blueprint.SetCPU(element)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/CPU").Text()).To(gomega.Equal(fmt.Sprintf("%f", element)))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/CPU").Text()).To(gomega.Equal(
+				strconv.FormatFloat(element, 'f', -1, 64)))
 		})
 	})
 

@@ -1,7 +1,6 @@
 package blueprint
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -22,7 +21,7 @@ func CreateUpdateTemplateBlueprint() *TemplateBlueprint {
 
 // SetCPU sets CPU of a given Template.
 func (tb *TemplateBlueprint) SetCPU(cpu float64) {
-	tb.SetElement("CPU", fmt.Sprintf("%f", cpu))
+	tb.SetElement("CPU", strconv.FormatFloat(cpu, 'f', -1, 64))
 }
 
 // SetDescription sets DESCRIPTION of a given Template.

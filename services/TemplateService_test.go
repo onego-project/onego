@@ -3,9 +3,9 @@ package services_test
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"github.com/onego-project/onego/services"
 
@@ -375,14 +375,17 @@ var _ = ginkgo.Describe("Template Service", func() {
 							err = errors.ErrNoTemplateBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
-						templateBlueprint.SetCPU(182.64)
+						cpu := 182.64
+						templateBlueprint.SetCPU(cpu)
 
 						retTemplate, err = client.TemplateService.Update(context.TODO(), *template, templateBlueprint,
 							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 						gomega.Expect(retTemplate).ShouldNot(gomega.BeNil())
-						gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal(fmt.Sprintf("%f", 182.64)))
+						//gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal(fmt.Sprintf("%f", 182.64)))
+						gomega.Expect(retTemplate.Attribute("TEMPLATE/CPU")).To(gomega.Equal(
+							strconv.FormatFloat(cpu, 'f', -1, 64)))
 					})
 				})
 			})
