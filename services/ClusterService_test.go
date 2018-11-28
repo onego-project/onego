@@ -259,8 +259,8 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 							err = errors.ErrNoClusterBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
-						clusterBlueprint.SetReservedMemory("dummy")
-						clusterBlueprint.SetReservedCPU("bloob")
+						clusterBlueprint.SetReservedMemory(123)
+						clusterBlueprint.SetReservedCPU(321)
 
 						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
 							services.Merge)
@@ -268,9 +268,9 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 						gomega.Expect(retCluster).ShouldNot(gomega.BeNil())
 						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_MEM")).To(
-							gomega.Equal("dummy"))
+							gomega.Equal("123"))
 						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
-							gomega.Equal("bloob"))
+							gomega.Equal("321"))
 					})
 				})
 
@@ -287,7 +287,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 							err = errors.ErrNoClusterBlueprint
 							gomega.Expect(err).NotTo(gomega.HaveOccurred())
 						}
-						clusterBlueprint.SetReservedCPU("blabla")
+						clusterBlueprint.SetReservedCPU(123)
 
 						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
 							services.Replace)
@@ -295,7 +295,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 						gomega.Expect(retCluster).ShouldNot(gomega.BeNil())
 						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
-							gomega.Equal("blabla"))
+							gomega.Equal("123"))
 					})
 				})
 			})
@@ -355,7 +355,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 					err = errors.ErrNoClusterBlueprint
 					return
 				}
-				clusterBlueprint.SetReservedCPU("dummy")
+				clusterBlueprint.SetReservedCPU(321)
 			})
 
 			ginkgo.It("should return that cluster with given ID doesn't exist", func() {
@@ -375,7 +375,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 					err = errors.ErrNoClusterBlueprint
 					return
 				}
-				clusterBlueprint.SetReservedCPU("dummy")
+				clusterBlueprint.SetReservedCPU(321)
 			})
 
 			ginkgo.It("should return that cluster has no ID", func() {

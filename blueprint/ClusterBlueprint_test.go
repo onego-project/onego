@@ -1,6 +1,8 @@
 package blueprint
 
 import (
+	"strconv"
+
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -21,34 +23,36 @@ var _ = ginkgo.Describe("ClusterBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetReservedCPU", func() {
-		var reservedCPU string
+		var reservedCPU int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &ClusterBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			reservedCPU = "12345"
+			reservedCPU = 12345
 		})
 
 		ginkgo.It("should set RESERVED_CPU tag to specified value", func() {
 			blueprint.SetReservedCPU(reservedCPU)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/RESERVED_CPU").Text()).To(
-				gomega.Equal(reservedCPU))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/RESERVED_CPU").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(reservedCPU))
 		})
 	})
 
 	ginkgo.Describe("SetReservedMemory", func() {
-		var reservedMemory string
+		var reservedMemory int
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &ClusterBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
-			reservedMemory = "54321"
+			reservedMemory = 54321
 		})
 
 		ginkgo.It("should set RESERVED_MEM tag to specified value", func() {
 			blueprint.SetReservedMemory(reservedMemory)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/RESERVED_MEM").Text()).To(
-				gomega.Equal(reservedMemory))
+			i, err := strconv.Atoi(blueprint.XMLData.FindElement("TEMPLATE/RESERVED_MEM").Text())
+			gomega.Expect(err).NotTo(gomega.HaveOccurred())
+			gomega.Expect(i).To(gomega.Equal(reservedMemory))
 		})
 	})
 })

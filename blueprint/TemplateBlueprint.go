@@ -1,5 +1,9 @@
 package blueprint
 
+import (
+	"strconv"
+)
+
 // TemplateBlueprint to set Template elements.
 type TemplateBlueprint struct {
 	Blueprint
@@ -16,8 +20,8 @@ func CreateUpdateTemplateBlueprint() *TemplateBlueprint {
 }
 
 // SetCPU sets CPU of a given Template.
-func (tb *TemplateBlueprint) SetCPU(cpu string) {
-	tb.SetElement("CPU", cpu)
+func (tb *TemplateBlueprint) SetCPU(cpu float64) {
+	tb.SetElement("CPU", strconv.FormatFloat(cpu, 'f', -1, 64))
 }
 
 // SetDescription sets DESCRIPTION of a given Template.
@@ -46,8 +50,8 @@ func (tb *TemplateBlueprint) SetLogo(logoPath string) {
 }
 
 // SetMemory sets MEMORY of a given Template.
-func (tb *TemplateBlueprint) SetMemory(memory string) {
-	tb.SetElement("MEMORY", memory)
+func (tb *TemplateBlueprint) SetMemory(memory int) {
+	tb.SetElement("MEMORY", strconv.Itoa(memory))
 }
 
 // SetNIC sets NIC of a given Template.
@@ -71,6 +75,6 @@ func (tb *TemplateBlueprint) SetSchedulingRequirements(schedReqs string) {
 }
 
 // SetVCPU sets VCPU of a given Template.
-func (tb *TemplateBlueprint) SetVCPU(vcpu string) {
-	tb.SetElement("VCPU", vcpu)
+func (tb *TemplateBlueprint) SetVCPU(vcpu int) {
+	tb.SetElement("VCPU", strconv.Itoa(vcpu))
 }
