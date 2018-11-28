@@ -402,9 +402,8 @@ var _ = ginkgo.Describe("Image Service", func() {
 	ginkgo.Describe("update image", func() {
 		var (
 			image          *resources.Image
-			oneImage       *resources.Image
-			imageID        int
 			imageBlueprint *blueprint.ImageBlueprint
+			retImage       *resources.Image
 		)
 
 		ginkgo.Context("when image exists", func() {
@@ -432,17 +431,11 @@ var _ = ginkgo.Describe("Image Service", func() {
 						}
 						imageBlueprint.SetDescription("dummy")
 
-						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
+						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether image data was really updated in OpenNebula
-						imageID, err = image.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneImage.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal("dummy"))
+						gomega.Expect(retImage).ShouldNot(gomega.BeNil())
+						gomega.Expect(retImage.Attribute("TEMPLATE/DESCRIPTION")).To(gomega.Equal("dummy"))
 					})
 				})
 
@@ -461,17 +454,11 @@ var _ = ginkgo.Describe("Image Service", func() {
 						}
 						imageBlueprint.SetDiskType(resources.DiskTypeBlock)
 
-						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
+						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether image data was really replaced in OpenNebula
-						imageID, err = image.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneImage, err = client.ImageService.RetrieveInfo(context.TODO(), imageID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneImage).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneImage.Attribute("TEMPLATE/DISK_TYPE")).To(gomega.Equal("BLOCK"))
+						gomega.Expect(retImage).ShouldNot(gomega.BeNil())
+						gomega.Expect(retImage.Attribute("TEMPLATE/DISK_TYPE")).To(gomega.Equal("BLOCK"))
 					})
 				})
 			})
@@ -495,8 +482,9 @@ var _ = ginkgo.Describe("Image Service", func() {
 					ginkgo.It("should merge data of given image", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
+						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retImage).Should(gomega.BeNil())
 					})
 				})
 
@@ -508,7 +496,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 					ginkgo.It("should replace data of given image", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
+						retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
@@ -535,7 +523,7 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.It("should return that image with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
+				retImage, err = client.ImageService.Update(context.TODO(), *image, imageBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -555,9 +543,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Update(context.TODO(), resources.Image{},
+				retImage, err = client.ImageService.Update(context.TODO(), resources.Image{},
 					imageBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retImage).Should(gomega.BeNil())
 			})
 		})
 	})

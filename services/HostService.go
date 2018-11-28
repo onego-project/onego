@@ -81,20 +81,23 @@ func (hs *HostService) Offline(ctx context.Context, host resources.Host) error {
 
 // Update replaces the host template contents.
 func (hs *HostService) Update(ctx context.Context, host resources.Host, blueprint blueprint.Interface,
-	updateType UpdateType) error {
+	updateType UpdateType) (*resources.Host, error) {
 	hostID, err := host.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = hs.call(ctx, "one.host.update", hostID, blueprintText, updateType)
+	resArr, err := hs.call(ctx, "one.host.update", hostID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return hs.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // Rename renames given host.

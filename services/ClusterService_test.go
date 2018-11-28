@@ -232,9 +232,8 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 	ginkgo.Describe("update cluster", func() {
 		var (
 			cluster          *resources.Cluster
-			oneCluster       *resources.Cluster
-			clusterID        int
 			clusterBlueprint *blueprint.ClusterBlueprint
+			retCluster       *resources.Cluster
 		)
 
 		ginkgo.Context("when cluster exists", func() {
@@ -263,19 +262,14 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 						clusterBlueprint.SetReservedMemory("dummy")
 						clusterBlueprint.SetReservedCPU("bloob")
 
-						err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Merge)
+						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
+							services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether cluster data was really updated in OpenNebula
-						clusterID, err = cluster.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneCluster, err = client.ClusterService.RetrieveInfo(context.TODO(), clusterID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneCluster).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneCluster.Attribute("TEMPLATE/RESERVED_MEM")).To(
+						gomega.Expect(retCluster).ShouldNot(gomega.BeNil())
+						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_MEM")).To(
 							gomega.Equal("dummy"))
-						gomega.Expect(oneCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
+						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
 							gomega.Equal("bloob"))
 					})
 				})
@@ -295,17 +289,12 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 						}
 						clusterBlueprint.SetReservedCPU("blabla")
 
-						err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Replace)
+						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
+							services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether cluster data was really replaced in OpenNebula
-						clusterID, err = cluster.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneCluster, err = client.ClusterService.RetrieveInfo(context.TODO(), clusterID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneCluster).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
+						gomega.Expect(retCluster).ShouldNot(gomega.BeNil())
+						gomega.Expect(retCluster.Attribute("TEMPLATE/RESERVED_CPU")).To(
 							gomega.Equal("blabla"))
 					})
 				})
@@ -330,7 +319,8 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Merge)
+						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
+							services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
@@ -343,7 +333,8 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Replace)
+						retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint,
+							services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
 					})
 				})
@@ -370,7 +361,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 			ginkgo.It("should return that cluster with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Merge)
+				retCluster, err = client.ClusterService.Update(context.TODO(), *cluster, clusterBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -390,7 +381,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.Update(context.TODO(), resources.Cluster{},
+				retCluster, err = client.ClusterService.Update(context.TODO(), resources.Cluster{},
 					clusterBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})

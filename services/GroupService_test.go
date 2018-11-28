@@ -1,8 +1,12 @@
 package services_test
 
 import (
+	"bytes"
 	"context"
+	"io/ioutil"
 	"net/http"
+
+	"github.com/dnaeon/go-vcr/cassette"
 
 	"github.com/onego-project/onego/errors"
 
@@ -67,6 +71,15 @@ var _ = ginkgo.Describe("Group", func() {
 			return
 		}
 
+		rec.SetMatcher(func(r *http.Request, i cassette.Request) bool {
+			var b bytes.Buffer
+			if _, err = b.ReadFrom(r.Body); err != nil {
+				return false
+			}
+			r.Body = ioutil.NopCloser(&b)
+			return cassette.DefaultMatcher(r, i) && (b.String() == "" || b.String() == i.Body)
+		})
+
 		// Create an HTTP client and inject our transport
 		clientHTTP := &http.Client{
 			Transport: rec, // Inject as transport!
@@ -95,7 +108,7 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.It("should create new group", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				group, err = client.GroupService.Allocate(context.TODO(), "the_best_group")
+				group, err = client.GroupService.Allocate(context.TODO(), "groupXYZ")
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(group).ShouldNot(gomega.BeNil())
 			})
@@ -166,6 +179,7 @@ var _ = ginkgo.Describe("Group", func() {
 	ginkgo.Describe("update group", func() {
 		var group *resources.Group
 		var blueprintGroup *blueprint.GroupBlueprint
+		var retGroup *resources.Group
 
 		ginkgo.Context("when group exists", func() {
 			ginkgo.When("when update type is merge", func() {
@@ -181,8 +195,9 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should merge data", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
+					gomega.Expect(retGroup).ShouldNot(gomega.BeNil())
 				})
 			})
 
@@ -199,8 +214,9 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should replace data", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Replace)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Replace)
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
+					gomega.Expect(retGroup).ShouldNot(gomega.BeNil())
 				})
 			})
 
@@ -214,8 +230,10 @@ var _ = ginkgo.Describe("Group", func() {
 				ginkgo.It("should returns that blueprint data is empty", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-					err = client.GroupService.Update(context.TODO(), *group, &blueprint.GroupBlueprint{}, services.Merge)
+					retGroup, err = client.GroupService.Update(context.TODO(), *group, &blueprint.GroupBlueprint{},
+						services.Merge)
 					gomega.Expect(err).To(gomega.HaveOccurred())
+					gomega.Expect(retGroup).Should(gomega.BeNil())
 				})
 			})
 		})
@@ -233,8 +251,9 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.It("should return an error that group doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
+				retGroup, err = client.GroupService.Update(context.TODO(), *group, blueprintGroup, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retGroup).Should(gomega.BeNil())
 			})
 		})
 
@@ -249,8 +268,9 @@ var _ = ginkgo.Describe("Group", func() {
 			ginkgo.It("should return an error that group is empty", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.GroupService.Update(context.TODO(), resources.Group{}, blueprintGroup, services.Merge)
+				retGroup, err = client.GroupService.Update(context.TODO(), resources.Group{}, blueprintGroup, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retGroup).Should(gomega.BeNil())
 			})
 		})
 	})

@@ -241,9 +241,8 @@ var _ = ginkgo.Describe("Host Service", func() {
 	ginkgo.Describe("update host", func() {
 		var (
 			host          *resources.Host
-			oneHost       *resources.Host
-			hostID        int
 			hostBlueprint *blueprint.HostBlueprint
+			retHost       *resources.Host
 		)
 
 		ginkgo.Context("when host exists", func() {
@@ -271,17 +270,11 @@ var _ = ginkgo.Describe("Host Service", func() {
 						}
 						hostBlueprint.SetClusterName("dummy")
 
-						err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
+						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether host data was really updated in OpenNebula
-						hostID, err = host.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneHost, err = client.HostService.RetrieveInfo(context.TODO(), hostID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneHost).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneHost.Attribute("TEMPLATE/CLUSTER_NAME")).To(gomega.Equal("dummy"))
+						gomega.Expect(retHost).ShouldNot(gomega.BeNil())
+						gomega.Expect(retHost.Attribute("TEMPLATE/CLUSTER_NAME")).To(gomega.Equal("dummy"))
 					})
 				})
 
@@ -300,17 +293,11 @@ var _ = ginkgo.Describe("Host Service", func() {
 						}
 						hostBlueprint.SetHostName("blabla")
 
-						err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Replace)
+						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether host data was really replaced in OpenNebula
-						hostID, err = host.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneHost, err = client.HostService.RetrieveInfo(context.TODO(), hostID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneHost).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneHost.Attribute("TEMPLATE/HOSTNAME")).To(gomega.Equal("blabla"))
+						gomega.Expect(retHost).ShouldNot(gomega.BeNil())
+						gomega.Expect(retHost.Attribute("TEMPLATE/HOSTNAME")).To(gomega.Equal("blabla"))
 					})
 				})
 			})
@@ -334,8 +321,9 @@ var _ = ginkgo.Describe("Host Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
+						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retHost).Should(gomega.BeNil())
 					})
 				})
 
@@ -347,8 +335,9 @@ var _ = ginkgo.Describe("Host Service", func() {
 					ginkgo.It("should return an error", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Replace)
+						retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retHost).Should(gomega.BeNil())
 					})
 				})
 			})
@@ -374,8 +363,9 @@ var _ = ginkgo.Describe("Host Service", func() {
 			ginkgo.It("should return that host with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
+				retHost, err = client.HostService.Update(context.TODO(), *host, hostBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retHost).Should(gomega.BeNil())
 			})
 		})
 
@@ -394,9 +384,10 @@ var _ = ginkgo.Describe("Host Service", func() {
 			ginkgo.It("should return that host has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.HostService.Update(context.TODO(), resources.Host{},
+				retHost, err = client.HostService.Update(context.TODO(), resources.Host{},
 					hostBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retHost).Should(gomega.BeNil())
 			})
 		})
 	})

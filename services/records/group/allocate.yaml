@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.group.allocate</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>the_best_group</string></value></param></params></methodCall>
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.group.allocate</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>groupXYZ</string></value></param></params></methodCall>
     form: {}
     headers:
       Content-Type:
@@ -10,7 +10,7 @@ interactions:
     url: http://localhost:2633/RPC2
     method: POST
   response:
-    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>123</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>127</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
     headers:
       Connection:
       - Keep-Alive
@@ -19,7 +19,33 @@ interactions:
       Content-Type:
       - text/xml; charset=utf-8
       Date:
-      - Mon, 03 Sep 2018 12:21:33 UTC
+      - Mon, 26 Nov 2018 12:22:43 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.group.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>127</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;GROUP&gt;&lt;ID&gt;127&lt;/ID&gt;&lt;NAME&gt;groupXYZ&lt;/NAME&gt;&lt;TEMPLATE&gt;&lt;/TEMPLATE&gt;&lt;USERS&gt;&lt;/USERS&gt;&lt;ADMINS&gt;&lt;/ADMINS&gt;&lt;DATASTORE_QUOTA&gt;&lt;/DATASTORE_QUOTA&gt;&lt;NETWORK_QUOTA&gt;&lt;/NETWORK_QUOTA&gt;&lt;VM_QUOTA&gt;&lt;/VM_QUOTA&gt;&lt;IMAGE_QUOTA&gt;&lt;/IMAGE_QUOTA&gt;&lt;DEFAULT_GROUP_QUOTAS&gt;&lt;DATASTORE_QUOTA&gt;&lt;/DATASTORE_QUOTA&gt;&lt;NETWORK_QUOTA&gt;&lt;/NETWORK_QUOTA&gt;&lt;VM_QUOTA&gt;&lt;/VM_QUOTA&gt;&lt;IMAGE_QUOTA&gt;&lt;/IMAGE_QUOTA&gt;&lt;/DEFAULT_GROUP_QUOTAS&gt;&lt;/GROUP&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "812"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Mon, 26 Nov 2018 12:22:44 UTC
       Keep-Alive:
       - timeout=15, max=30
       Server:

@@ -159,20 +159,23 @@ func (is *ImageService) Rename(ctx context.Context, image resources.Image, name 
 
 // Update replaces the image template contents.
 func (is *ImageService) Update(ctx context.Context, image resources.Image, blueprint blueprint.Interface,
-	updateType UpdateType) error {
+	updateType UpdateType) (*resources.Image, error) {
 	imageID, err := image.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = is.call(ctx, "one.image.update", imageID, blueprintText, updateType)
+	resArr, err := is.call(ctx, "one.image.update", imageID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return is.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // DeleteSnapshot deletes a snapshot from the image.

@@ -63,19 +63,23 @@ func (us *UserService) ChangePassword(ctx context.Context, user resources.User, 
 
 // Update replaces the user template contents
 func (us *UserService) Update(ctx context.Context, user resources.User,
-	blueprint blueprint.Interface, updateType UpdateType) error {
+	blueprint blueprint.Interface, updateType UpdateType) (*resources.User, error) {
 	userID, err := user.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = us.call(ctx, "one.user.update", userID, blueprintText, updateType)
-	return err
+	resArr, err := us.call(ctx, "one.user.update", userID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
+
+	return us.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // ChangeAuthDriver changes the authentication driver for the given user;

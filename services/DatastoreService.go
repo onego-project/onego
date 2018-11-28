@@ -49,20 +49,23 @@ func (ds *DatastoreService) Delete(ctx context.Context, datastore resources.Data
 // Update to replace the datastore template contents
 // Update types: Replace or Merge
 func (ds *DatastoreService) Update(ctx context.Context, datastore resources.Datastore,
-	blueprint blueprint.Interface, updateType UpdateType) error {
+	blueprint blueprint.Interface, updateType UpdateType) (*resources.Datastore, error) {
 	datastoreID, err := datastore.ID()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	blueprintText, err := blueprint.Render()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = ds.call(ctx, "one.datastore.update", datastoreID, blueprintText, updateType)
+	resArr, err := ds.call(ctx, "one.datastore.update", datastoreID, blueprintText, updateType)
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return ds.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
 }
 
 // Chmod to change the permission bits of a datastore

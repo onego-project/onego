@@ -327,8 +327,7 @@ var _ = ginkgo.Describe("User Service", func() {
 		var (
 			user          *resources.User
 			userBlueprint *blueprint.UserBlueprint
-			oneUser       *resources.User
-			userID        int
+			retUser       *resources.User
 		)
 
 		ginkgo.Context("when user exists", func() {
@@ -357,17 +356,11 @@ var _ = ginkgo.Describe("User Service", func() {
 
 						userBlueprint.SetEmail("pancake@pizza.com")
 
-						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
+						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether User data was really updated in OpenNebula
-						userID, err = user.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+						gomega.Expect(retUser).ShouldNot(gomega.BeNil())
+						gomega.Expect(retUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("pancake@pizza.com"))
 					})
 				})
@@ -383,19 +376,13 @@ var _ = ginkgo.Describe("User Service", func() {
 						userBlueprint.SetEmail("lasagne@pizza.com")
 						userBlueprint.SetFullName("Frantisek Slovak")
 
-						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
+						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
 						gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-						// check whether User data was really replaced in OpenNebula
-						userID, err = user.ID()
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-
-						oneUser, err = client.UserService.RetrieveInfo(context.TODO(), userID)
-						gomega.Expect(err).NotTo(gomega.HaveOccurred())
-						gomega.Expect(oneUser).ShouldNot(gomega.BeNil())
-						gomega.Expect(oneUser.Attribute("TEMPLATE/EMAIL")).To(
+						gomega.Expect(retUser).ShouldNot(gomega.BeNil())
+						gomega.Expect(retUser.Attribute("TEMPLATE/EMAIL")).To(
 							gomega.Equal("lasagne@pizza.com"))
-						gomega.Expect(oneUser.Attribute("TEMPLATE/NAME")).To(
+						gomega.Expect(retUser.Attribute("TEMPLATE/NAME")).To(
 							gomega.Equal("Frantisek Slovak"))
 					})
 				})
@@ -420,8 +407,9 @@ var _ = ginkgo.Describe("User Service", func() {
 					ginkgo.It("should merge data of given user", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
+						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retUser).Should(gomega.BeNil())
 					})
 				})
 
@@ -433,8 +421,9 @@ var _ = ginkgo.Describe("User Service", func() {
 					ginkgo.It("should replace data of given user", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-						err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
+						retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Replace)
 						gomega.Expect(err).To(gomega.HaveOccurred())
+						gomega.Expect(retUser).Should(gomega.BeNil())
 					})
 				})
 			})
@@ -460,8 +449,9 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.It("should return that user with given ID doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
+				retUser, err = client.UserService.Update(context.TODO(), *user, userBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retUser).Should(gomega.BeNil())
 			})
 		})
 
@@ -480,8 +470,9 @@ var _ = ginkgo.Describe("User Service", func() {
 			ginkgo.It("should return that user has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.UserService.Update(context.TODO(), resources.User{}, userBlueprint, services.Merge)
+				retUser, err = client.UserService.Update(context.TODO(), resources.User{}, userBlueprint, services.Merge)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(retUser).Should(gomega.BeNil())
 			})
 		})
 	})
