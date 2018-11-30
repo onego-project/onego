@@ -90,7 +90,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 		ginkgo.BeforeEach(func() {
 			features = CreateFeaturesBlueprint()
-			features.SetGuestAgent(value)
+			features.SetGuestAgent(true)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -98,7 +98,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a FEATURES tag to specified value", func() {
 			blueprint.SetFeatures(*features)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FEATURES/GUEST_AGENT").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FEATURES/GUEST_AGENT").Text()).To(gomega.Equal("YES"))
 		})
 	})
 
