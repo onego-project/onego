@@ -177,10 +177,13 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 	ginkgo.Describe("SetOS", func() {
 		var os *OSBlueprint
+		var arch ArchitectureType
 
 		ginkgo.BeforeEach(func() {
 			os = CreateOSBlueprint()
-			os.SetArchitecture(value)
+
+			arch = ArchitectureTypeX86_64
+			os.SetArchitecture(arch)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -188,7 +191,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a OS tag to specified value", func() {
 			blueprint.SetOS(*os)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(ArchitectureTypeMap[arch]))
 		})
 	})
 
