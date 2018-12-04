@@ -1,6 +1,7 @@
 package blueprint
 
 import (
+	"net"
 	"strconv"
 
 	"github.com/onsi/ginkgo"
@@ -104,10 +105,14 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 	ginkgo.Describe("SetGraphics", func() {
 		var graphics *GraphicsBlueprint
+		var ip net.IP
 
 		ginkgo.BeforeEach(func() {
 			graphics = CreateGraphicsBlueprint()
-			graphics.SetListen(value)
+
+			ip = net.ParseIP("10.0.0.10")
+			graphics.SetListen(ip)
+
 			graphics.SetType(VNC)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
@@ -116,8 +121,8 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a GRAPHICS tag to specified value", func() {
 			blueprint.SetGraphics(*graphics)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(value))
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsMap[VNC]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(ip.String()))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsTypeMap[VNC]))
 		})
 	})
 
