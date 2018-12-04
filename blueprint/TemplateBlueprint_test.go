@@ -163,7 +163,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 		ginkgo.BeforeEach(func() {
 			nic = CreateNICBlueprint()
-			nic.SetNetwork(value)
+			nic.SetNetworkName(value)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
