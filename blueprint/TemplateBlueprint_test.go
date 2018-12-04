@@ -199,7 +199,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		var raw *RawBlueprint
 
 		ginkgo.BeforeEach(func() {
-			raw = CreateRAWBlueprint()
+			raw = CreateRawBlueprint()
 			raw.SetData(value)
 			raw.SetType("21258")
 
