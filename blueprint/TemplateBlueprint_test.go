@@ -1,6 +1,7 @@
 package blueprint
 
 import (
+	"net"
 	"strconv"
 
 	"github.com/onsi/ginkgo"
@@ -90,7 +91,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 		ginkgo.BeforeEach(func() {
 			features = CreateFeaturesBlueprint()
-			features.SetGuestAgent(value)
+			features.SetGuestAgent(true)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -98,16 +99,20 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a FEATURES tag to specified value", func() {
 			blueprint.SetFeatures(*features)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FEATURES/GUEST_AGENT").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/FEATURES/GUEST_AGENT").Text()).To(gomega.Equal("YES"))
 		})
 	})
 
 	ginkgo.Describe("SetGraphics", func() {
 		var graphics *GraphicsBlueprint
+		var ip net.IP
 
 		ginkgo.BeforeEach(func() {
 			graphics = CreateGraphicsBlueprint()
-			graphics.SetListen(value)
+
+			ip = net.ParseIP("10.0.0.10")
+			graphics.SetListen(ip)
+
 			graphics.SetType(VNC)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
@@ -116,8 +121,8 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a GRAPHICS tag to specified value", func() {
 			blueprint.SetGraphics(*graphics)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(value))
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsMap[VNC]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(ip.String()))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsTypeMap[VNC]))
 		})
 	})
 
@@ -158,7 +163,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 		ginkgo.BeforeEach(func() {
 			nic = CreateNICBlueprint()
-			nic.SetNetwork(value)
+			nic.SetNetworkName(value)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -172,10 +177,13 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 	ginkgo.Describe("SetOS", func() {
 		var os *OSBlueprint
+		var arch ArchitectureType
 
 		ginkgo.BeforeEach(func() {
 			os = CreateOSBlueprint()
-			os.SetArchitecture(value)
+
+			arch = ArchitectureTypeX86_64
+			os.SetArchitecture(arch)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -183,7 +191,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a OS tag to specified value", func() {
 			blueprint.SetOS(*os)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(value))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(ArchitectureTypeMap[arch]))
 		})
 	})
 
@@ -191,7 +199,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		var raw *RawBlueprint
 
 		ginkgo.BeforeEach(func() {
-			raw = CreateRAWBlueprint()
+			raw = CreateRawBlueprint()
 			raw.SetData(value)
 			raw.SetType("21258")
 
