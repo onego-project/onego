@@ -3,6 +3,8 @@ package blueprint
 import (
 	"net"
 
+	"github.com/onego-project/onego/resources"
+
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -39,18 +41,18 @@ var _ = ginkgo.Describe("GraphicsBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetType", func() {
-		var value GraphicsType
+		var value resources.GraphicsType
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &GraphicsBlueprint{Blueprint: *CreateBlueprint("GRAPHICS")}
-			value = SDL
+			value = resources.GraphicsTypeSDL
 		})
 
 		ginkgo.It("should set TYPE tag to specified value", func() {
 			blueprint.SetType(value)
 
 			gomega.Expect(blueprint.XMLData.FindElement("GRAPHICS/TYPE").Text()).To(
-				gomega.Equal(GraphicsTypeMap[value]))
+				gomega.Equal(resources.GraphicsTypeMap[value]))
 		})
 	})
 
