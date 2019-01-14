@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/beevik/etree"
@@ -144,6 +145,9 @@ func (r *Resource) permissions() (*Permissions, error) {
 	return &Permissions{User: *resPermGroupArray[0], Group: *resPermGroupArray[1], Other: *resPermGroupArray[2]}, nil
 }
 
+// parseStringsFromElement creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is not found the function returns nil and error.
+// Otherwise returns the array of strings and nil (no error).
 func parseStringsFromElement(element *etree.Element, parseStrings []string) ([]string, error) {
 	parsedStrings := make([]string, len(parseStrings))
 	var err error
@@ -158,6 +162,27 @@ func parseStringsFromElement(element *etree.Element, parseStrings []string) ([]s
 	return parsedStrings, nil
 }
 
+// parseStringsFromElementWithoutError creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is found in a given element - the value is added to
+// an outgoing array (on a same position as the tag in incoming array).
+// If the tag (string) is not found in the given element - the outgoing value (on a same position
+// as tag) is default. For string it is empty string ("").
+func parseStringsFromElementWithoutError(element *etree.Element, parseStrings []string) []string {
+	parsedStrings := make([]string, len(parseStrings))
+
+	for i, parseString := range parseStrings {
+		s, err := attributeFromElement(element, parseString)
+		if err == nil {
+			parsedStrings[i] = s
+		}
+	}
+
+	return parsedStrings
+}
+
+// parseIntsFromElement creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is not found the function returns nil and error.
+// Otherwise returns the array of pointers to int and nil (no error).
 func parseIntsFromElement(element *etree.Element, parseInts []string) ([]int, error) {
 	parsedInts := make([]int, len(parseInts))
 	var err error
@@ -170,6 +195,64 @@ func parseIntsFromElement(element *etree.Element, parseInts []string) ([]int, er
 	}
 
 	return parsedInts, nil
+}
+
+// parseIntsFromElementWithoutError creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is found in a given element - the value is added to
+// an outgoing array (on a same position as the tag in incoming array).
+// If the tag (string) is not found in the given element - the outgoing value (on a same position
+// as tag) is default. For int pointer it is nil.
+func parseIntsFromElementWithoutError(element *etree.Element, ints []string) []*int {
+	parsed := make([]*int, len(ints))
+
+	for i, parseInt := range ints {
+		p, err := intAttributeFromElement(element, parseInt)
+		if err == nil {
+			parsed[i] = &p
+		}
+	}
+
+	return parsed
+}
+
+// parseTimesFromElement creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is not found the function returns nil and error.
+// Otherwise returns the array of pointers to time and nil (no error).
+func parseTimesFromElement(element *etree.Element, times []string) ([]*time.Time, error) {
+	parsed := make([]*time.Time, len(times))
+
+	for i, t := range times {
+		num, err := intAttributeFromElement(element, t)
+		if err != nil {
+			return nil, err
+		}
+
+		if num != 0 {
+			time := time.Unix(int64(num), 0)
+			parsed[i] = &time
+		}
+	}
+
+	return parsed, nil
+}
+
+// parseTimesFromElementWithoutError creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is found in a given element - the value is added to
+// an outgoing array (on a same position as the tag in incoming array).
+// If the tag (string) is not found in the given element - the outgoing value (on a same position
+// as tag) is default. For time pointer it is nil.
+func parseTimesFromElementWithoutError(element *etree.Element, times []string) []*time.Time {
+	parsed := make([]*time.Time, len(times))
+
+	for i, t := range times {
+		num, err := intAttributeFromElement(element, t)
+		if err == nil && num != 0 {
+			time := time.Unix(int64(num), 0)
+			parsed[i] = &time
+		}
+	}
+
+	return parsed
 }
 
 // RenderInterfaceToXMLString renders structures to XML as string.
@@ -186,12 +269,50 @@ func RenderInterfaceToXMLString(r interface{}) (string, error) {
 }
 
 func (r *Resource) registrationTime() (*time.Time, error) {
-	timeInt, err := r.intAttribute("REGTIME")
+	return r.parseTime("REGTIME")
+}
+
+func (r *Resource) parseTime(path string) (*time.Time, error) {
+	timeInt, err := r.intAttribute(path)
 	if err != nil {
 		return nil, err
 	}
 
-	regTime := time.Unix(int64(timeInt), 0)
+	var t *time.Time
+	if timeInt != 0 {
+		tt := time.Unix(int64(timeInt), 0)
+		t = &tt
+	}
 
-	return &regTime, nil
+	return t, nil
+}
+
+func findDiskTypeByValue(value string) (*DiskType, error) {
+	for key, val := range DiskTypeMap {
+		if val == value {
+			return &key, nil
+		}
+	}
+	return nil, fmt.Errorf("unable to find DiskType of value: %s", value)
+}
+
+func stringToBool(s string) bool {
+	return s == "YES"
+}
+
+// parseIntsFromString creates an array of ints with same length as a number of elements separated by comma in string.
+// The format of incoming string should be "1,2,3,5"
+// If a value in incoming string is not int type the function returns nil and error.
+// Otherwise returns the array of ints and nil (no error).
+func parseIntsFromString(s string) ([]int, error) {
+	str := strings.Split(s, ",")
+	ints := make([]int, len(str))
+	var err error
+	for i, c := range str {
+		ints[i], err = strconv.Atoi(strings.TrimSpace(c))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return ints, err
 }
