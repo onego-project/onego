@@ -49,6 +49,11 @@ func (bp *Blueprint) SetElement(tag, value string) {
 	element.SetText(value)
 }
 
+// AddElement adds element to blueprint.
+func (bp *Blueprint) AddElement(blueprint etree.Document) {
+	bp.XMLData.Root().AddChild(blueprint.Root())
+}
+
 // SetName sets name to blueprint.
 func (bp *Blueprint) SetName(value string) {
 	bp.SetElement("NAME", value)
