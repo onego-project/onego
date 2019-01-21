@@ -452,7 +452,7 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneVirtualNetwork).ShouldNot(gomega.BeNil())
 
-					gomega.Expect(oneVirtualNetwork.Name()).To(gomega.Equal("the_best_virtualNetwork_ever"))
+					gomega.Expect(oneVirtualNetwork.Name()).To(gomega.Equal(newName))
 				})
 			})
 

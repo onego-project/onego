@@ -435,7 +435,7 @@ var _ = ginkgo.Describe("Host Service", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneHost).ShouldNot(gomega.BeNil())
 
-					gomega.Expect(oneHost.Name()).To(gomega.Equal("the_best_host"))
+					gomega.Expect(oneHost.Name()).To(gomega.Equal(newName))
 				})
 			})
 

@@ -8,13 +8,13 @@
   version = "v1.0.1"
 
 [[projects]]
-  branch = "master"
   name = "github.com/dnaeon/go-vcr"
   packages = [
     "cassette",
     "recorder"
   ]
-  revision = "aafff18a5cc28fa0b2f26baf6a14472cda9b54c6"
+  revision = "b3f5a17c396f1f45e232e36c6eed2577da52d22a"
+  version = "v1.0.1"
 
 [[projects]]
   branch = "master"
@@ -144,6 +144,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b95fba339fabe30ddce44cec283a958be249123668059026049f1d3ae630a2cf"
+  inputs-digest = "4b18a2aef37170b62bf979f4c4d16e84a23d3cd1b9af71f118fde701ab0ae2ef"
   solver-name = "gps-cdcl"
   solver-version = 1
