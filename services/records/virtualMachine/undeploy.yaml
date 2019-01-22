@@ -1,0 +1,57 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vm.action</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><string>undeploy</string></value></param><param><value><int>137</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><i4>137</i4></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "253"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Thu, 24 Jan 2019 13:25:00 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vm.info</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>137</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>1</boolean></value>\r\n<value><string>&lt;VM&gt;&lt;ID&gt;137&lt;/ID&gt;&lt;UID&gt;0&lt;/UID&gt;&lt;GID&gt;0&lt;/GID&gt;&lt;UNAME&gt;oneadmin&lt;/UNAME&gt;&lt;GNAME&gt;oneadmin&lt;/GNAME&gt;&lt;NAME&gt;cirros-137&lt;/NAME&gt;&lt;PERMISSIONS&gt;&lt;OWNER_U&gt;1&lt;/OWNER_U&gt;&lt;OWNER_M&gt;1&lt;/OWNER_M&gt;&lt;OWNER_A&gt;0&lt;/OWNER_A&gt;&lt;GROUP_U&gt;0&lt;/GROUP_U&gt;&lt;GROUP_M&gt;0&lt;/GROUP_M&gt;&lt;GROUP_A&gt;0&lt;/GROUP_A&gt;&lt;OTHER_U&gt;0&lt;/OTHER_U&gt;&lt;OTHER_M&gt;0&lt;/OTHER_M&gt;&lt;OTHER_A&gt;0&lt;/OTHER_A&gt;&lt;/PERMISSIONS&gt;&lt;LAST_POLL&gt;1548336308&lt;/LAST_POLL&gt;&lt;STATE&gt;9&lt;/STATE&gt;&lt;LCM_STATE&gt;0&lt;/LCM_STATE&gt;&lt;PREV_STATE&gt;9&lt;/PREV_STATE&gt;&lt;PREV_LCM_STATE&gt;0&lt;/PREV_LCM_STATE&gt;&lt;RESCHED&gt;0&lt;/RESCHED&gt;&lt;STIME&gt;1548154615&lt;/STIME&gt;&lt;ETIME&gt;0&lt;/ETIME&gt;&lt;DEPLOY_ID&gt;one-137&lt;/DEPLOY_ID&gt;&lt;MONITORING&gt;&lt;CPU&gt;&lt;![CDATA[0.0]]&gt;&lt;/CPU&gt;&lt;DISK_SIZE&gt;&lt;ID&gt;&lt;![CDATA[0]]&gt;&lt;/ID&gt;&lt;SIZE&gt;&lt;![CDATA[29]]&gt;&lt;/SIZE&gt;&lt;/DISK_SIZE&gt;&lt;MEMORY&gt;&lt;![CDATA[0]]&gt;&lt;/MEMORY&gt;&lt;NETRX&gt;&lt;![CDATA[0]]&gt;&lt;/NETRX&gt;&lt;NETTX&gt;&lt;![CDATA[1674]]&gt;&lt;/NETTX&gt;&lt;/MONITORING&gt;&lt;TEMPLATE&gt;&lt;AUTOMATIC_DS_REQUIREMENTS&gt;&lt;![CDATA[\"CLUSTERS/ID\"
+      @&gt; 0]]&gt;&lt;/AUTOMATIC_DS_REQUIREMENTS&gt;&lt;AUTOMATIC_REQUIREMENTS&gt;&lt;![CDATA[(CLUSTER_ID
+      = 0) &amp; !(PUBLIC_CLOUD = YES)]]&gt;&lt;/AUTOMATIC_REQUIREMENTS&gt;&lt;CPU&gt;&lt;![CDATA[0.25]]&gt;&lt;/CPU&gt;&lt;DISK&gt;&lt;CLONE&gt;&lt;![CDATA[YES]]&gt;&lt;/CLONE&gt;&lt;CLONE_TARGET&gt;&lt;![CDATA[SYSTEM]]&gt;&lt;/CLONE_TARGET&gt;&lt;CLUSTER_ID&gt;&lt;![CDATA[0]]&gt;&lt;/CLUSTER_ID&gt;&lt;DATASTORE&gt;&lt;![CDATA[default]]&gt;&lt;/DATASTORE&gt;&lt;DATASTORE_ID&gt;&lt;![CDATA[1]]&gt;&lt;/DATASTORE_ID&gt;&lt;DEV_PREFIX&gt;&lt;![CDATA[hd]]&gt;&lt;/DEV_PREFIX&gt;&lt;DISK_ID&gt;&lt;![CDATA[0]]&gt;&lt;/DISK_ID&gt;&lt;DISK_SNAPSHOT_TOTAL_SIZE&gt;&lt;![CDATA[0]]&gt;&lt;/DISK_SNAPSHOT_TOTAL_SIZE&gt;&lt;DISK_TYPE&gt;&lt;![CDATA[FILE]]&gt;&lt;/DISK_TYPE&gt;&lt;DRIVER&gt;&lt;![CDATA[qcow2]]&gt;&lt;/DRIVER&gt;&lt;IMAGE&gt;&lt;![CDATA[cirros]]&gt;&lt;/IMAGE&gt;&lt;IMAGE_ID&gt;&lt;![CDATA[395]]&gt;&lt;/IMAGE_ID&gt;&lt;IMAGE_STATE&gt;&lt;![CDATA[2]]&gt;&lt;/IMAGE_STATE&gt;&lt;IMAGE_UNAME&gt;&lt;![CDATA[oneadmin]]&gt;&lt;/IMAGE_UNAME&gt;&lt;LN_TARGET&gt;&lt;![CDATA[SYSTEM]]&gt;&lt;/LN_TARGET&gt;&lt;READONLY&gt;&lt;![CDATA[NO]]&gt;&lt;/READONLY&gt;&lt;SAVE&gt;&lt;![CDATA[NO]]&gt;&lt;/SAVE&gt;&lt;SIZE&gt;&lt;![CDATA[44]]&gt;&lt;/SIZE&gt;&lt;SOURCE&gt;&lt;![CDATA[/var/lib/one//datastores/1/0b395de4c4096415b4214698b0b470fe]]&gt;&lt;/SOURCE&gt;&lt;TARGET&gt;&lt;![CDATA[hda]]&gt;&lt;/TARGET&gt;&lt;TM_MAD&gt;&lt;![CDATA[ssh]]&gt;&lt;/TM_MAD&gt;&lt;TYPE&gt;&lt;![CDATA[FILE]]&gt;&lt;/TYPE&gt;&lt;/DISK&gt;&lt;GRAPHICS&gt;&lt;LISTEN&gt;&lt;![CDATA[0.0.0.0]]&gt;&lt;/LISTEN&gt;&lt;PORT&gt;&lt;![CDATA[6037]]&gt;&lt;/PORT&gt;&lt;TYPE&gt;&lt;![CDATA[VNC]]&gt;&lt;/TYPE&gt;&lt;/GRAPHICS&gt;&lt;MEMORY&gt;&lt;![CDATA[512]]&gt;&lt;/MEMORY&gt;&lt;TEMPLATE_ID&gt;&lt;![CDATA[339]]&gt;&lt;/TEMPLATE_ID&gt;&lt;VCPU&gt;&lt;![CDATA[1]]&gt;&lt;/VCPU&gt;&lt;VMID&gt;&lt;![CDATA[137]]&gt;&lt;/VMID&gt;&lt;/TEMPLATE&gt;&lt;USER_TEMPLATE&gt;&lt;/USER_TEMPLATE&gt;&lt;HISTORY_RECORDS&gt;&lt;HISTORY&gt;&lt;OID&gt;137&lt;/OID&gt;&lt;SEQ&gt;0&lt;/SEQ&gt;&lt;HOSTNAME&gt;10.4.5.2&lt;/HOSTNAME&gt;&lt;HID&gt;4&lt;/HID&gt;&lt;CID&gt;0&lt;/CID&gt;&lt;STIME&gt;1548319882&lt;/STIME&gt;&lt;ETIME&gt;1548319918&lt;/ETIME&gt;&lt;VM_MAD&gt;&lt;![CDATA[kvm]]&gt;&lt;/VM_MAD&gt;&lt;TM_MAD&gt;&lt;![CDATA[ssh]]&gt;&lt;/TM_MAD&gt;&lt;DS_ID&gt;0&lt;/DS_ID&gt;&lt;PSTIME&gt;1548319882&lt;/PSTIME&gt;&lt;PETIME&gt;1548319883&lt;/PETIME&gt;&lt;RSTIME&gt;1548319883&lt;/RSTIME&gt;&lt;RETIME&gt;1548319918&lt;/RETIME&gt;&lt;ESTIME&gt;0&lt;/ESTIME&gt;&lt;EETIME&gt;0&lt;/EETIME&gt;&lt;REASON&gt;2&lt;/REASON&gt;&lt;ACTION&gt;23&lt;/ACTION&gt;&lt;/HISTORY&gt;&lt;HISTORY&gt;&lt;OID&gt;137&lt;/OID&gt;&lt;SEQ&gt;1&lt;/SEQ&gt;&lt;HOSTNAME&gt;10.4.5.2&lt;/HOSTNAME&gt;&lt;HID&gt;4&lt;/HID&gt;&lt;CID&gt;0&lt;/CID&gt;&lt;STIME&gt;1548319918&lt;/STIME&gt;&lt;ETIME&gt;1548319985&lt;/ETIME&gt;&lt;VM_MAD&gt;&lt;![CDATA[kvm]]&gt;&lt;/VM_MAD&gt;&lt;TM_MAD&gt;&lt;![CDATA[ssh]]&gt;&lt;/TM_MAD&gt;&lt;DS_ID&gt;0&lt;/DS_ID&gt;&lt;PSTIME&gt;0&lt;/PSTIME&gt;&lt;PETIME&gt;0&lt;/PETIME&gt;&lt;RSTIME&gt;1548319918&lt;/RSTIME&gt;&lt;RETIME&gt;1548319985&lt;/RETIME&gt;&lt;ESTIME&gt;0&lt;/ESTIME&gt;&lt;EETIME&gt;0&lt;/EETIME&gt;&lt;REASON&gt;2&lt;/REASON&gt;&lt;ACTION&gt;24&lt;/ACTION&gt;&lt;/HISTORY&gt;&lt;HISTORY&gt;&lt;OID&gt;137&lt;/OID&gt;&lt;SEQ&gt;2&lt;/SEQ&gt;&lt;HOSTNAME&gt;10.4.5.2&lt;/HOSTNAME&gt;&lt;HID&gt;4&lt;/HID&gt;&lt;CID&gt;0&lt;/CID&gt;&lt;STIME&gt;1548319985&lt;/STIME&gt;&lt;ETIME&gt;1548336310&lt;/ETIME&gt;&lt;VM_MAD&gt;&lt;![CDATA[kvm]]&gt;&lt;/VM_MAD&gt;&lt;TM_MAD&gt;&lt;![CDATA[ssh]]&gt;&lt;/TM_MAD&gt;&lt;DS_ID&gt;0&lt;/DS_ID&gt;&lt;PSTIME&gt;0&lt;/PSTIME&gt;&lt;PETIME&gt;0&lt;/PETIME&gt;&lt;RSTIME&gt;1548319985&lt;/RSTIME&gt;&lt;RETIME&gt;1548336308&lt;/RETIME&gt;&lt;ESTIME&gt;1548336308&lt;/ESTIME&gt;&lt;EETIME&gt;1548336310&lt;/EETIME&gt;&lt;REASON&gt;2&lt;/REASON&gt;&lt;ACTION&gt;5&lt;/ACTION&gt;&lt;/HISTORY&gt;&lt;/HISTORY_RECORDS&gt;&lt;/VM&gt;</string></value>\r\n<value><i4>0</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "5461"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Thu, 24 Jan 2019 13:25:30 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""

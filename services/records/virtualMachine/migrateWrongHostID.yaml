@@ -1,0 +1,30 @@
+---
+version: 1
+interactions:
+- request:
+    body: <?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>one.vm.migrate</methodName><params><param><value><string>oneadmin:qwerty123</string></value></param><param><value><int>123</int></value></param><param><value><int>100</int></value></param><param><value><boolean>0</boolean></value></param><param><value><boolean>0</boolean></value></param><param><value><int>0</int></value></param></params></methodCall>
+    form: {}
+    headers:
+      Content-Type:
+      - text/xml
+    url: http://localhost:2633/RPC2
+    method: POST
+  response:
+    body: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodResponse>\r\n<params>\r\n<param><value><array><data>\r\n<value><boolean>0</boolean></value>\r\n<value><string>[VirtualMachineMigrate]
+      Error getting host [100].</string></value>\r\n<value><i4>1024</i4></value>\r\n</data></array></value></param>\r\n</params>\r\n</methodResponse>\r\n"
+    headers:
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - "310"
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Mon, 21 Jan 2019 08:20:42 UTC
+      Keep-Alive:
+      - timeout=15, max=30
+      Server:
+      - Xmlrpc-c_Abyss/1.40.0
+    status: 200 OK
+    code: 200
+    duration: ""

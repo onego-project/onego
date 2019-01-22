@@ -62,6 +62,15 @@ var ErrNoVirtualNetwork = errors.New("no virtual network to finish test")
 // ErrNoVirtualNetworkBlueprint error
 var ErrNoVirtualNetworkBlueprint = errors.New("no virtual network blueprint to finish test")
 
+// ErrNoVirtualMachine error
+var ErrNoVirtualMachine = errors.New("no virtual machine to finish test")
+
+// ErrNoVirtualMachineBlueprint error
+var ErrNoVirtualMachineBlueprint = errors.New("no virtual machine blueprint to finish test")
+
+// ErrNoUserTemplateBlueprint error
+var ErrNoUserTemplateBlueprint = errors.New("no user template blueprint to finish test")
+
 // ErrAddressRangeSetWrong error
 var ErrAddressRangeSetWrong = errors.New("unable to find address range, it was not set correctly")
 
