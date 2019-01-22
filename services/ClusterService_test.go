@@ -1035,7 +1035,7 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 					gomega.Expect(err).NotTo(gomega.HaveOccurred())
 					gomega.Expect(oneCluster).ShouldNot(gomega.BeNil())
 
-					gomega.Expect(oneCluster.Name()).To(gomega.Equal("hello"))
+					gomega.Expect(oneCluster.Name()).To(gomega.Equal(newName))
 				})
 			})
 
