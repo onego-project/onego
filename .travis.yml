@@ -22,6 +22,5 @@ before_script:
   - gometalinter --install
  
 script:
-  - diff <(echo -n) <(gofmt -l $(find -name "*.go" | grep -v /vendor))
   - gometalinter ./... --vendor --deadline 100s
   - go test ./... -v
