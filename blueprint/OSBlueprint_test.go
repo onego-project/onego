@@ -1,6 +1,7 @@
 package blueprint
 
 import (
+	"github.com/onego-project/onego/resources"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -21,17 +22,17 @@ var _ = ginkgo.Describe("OSBlueprint", func() {
 	})
 
 	ginkgo.Describe("SetArchitecture", func() {
-		var value ArchitectureType
+		var value resources.ArchitectureType
 
 		ginkgo.BeforeEach(func() {
 			blueprint = &OSBlueprint{Blueprint: *CreateBlueprint("OS")}
-			value = ArchitectureTypeX86_64
+			value = resources.ArchitectureTypeX86_64
 		})
 
 		ginkgo.It("should set ARCH tag to specified value", func() {
 			blueprint.SetArchitecture(value)
 
-			gomega.Expect(blueprint.XMLData.FindElement("OS/ARCH").Text()).To(gomega.Equal(ArchitectureTypeMap[value]))
+			gomega.Expect(blueprint.XMLData.FindElement("OS/ARCH").Text()).To(gomega.Equal(resources.ArchitectureTypeMap[value]))
 		})
 	})
 })

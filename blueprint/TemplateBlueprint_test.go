@@ -4,6 +4,8 @@ import (
 	"net"
 	"strconv"
 
+	"github.com/onego-project/onego/resources"
+
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )
@@ -113,7 +115,7 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 			ip = net.ParseIP("10.0.0.10")
 			graphics.SetListen(ip)
 
-			graphics.SetType(VNC)
+			graphics.SetType(resources.GraphicsTypeVNC)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
 		})
@@ -122,7 +124,8 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 			blueprint.SetGraphics(*graphics)
 
 			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/LISTEN").Text()).To(gomega.Equal(ip.String()))
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(GraphicsTypeMap[VNC]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/GRAPHICS/TYPE").Text()).To(gomega.Equal(
+				resources.GraphicsTypeMap[resources.GraphicsTypeVNC]))
 		})
 	})
 
@@ -177,12 +180,12 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 
 	ginkgo.Describe("SetOS", func() {
 		var os *OSBlueprint
-		var arch ArchitectureType
+		var arch resources.ArchitectureType
 
 		ginkgo.BeforeEach(func() {
 			os = CreateOSBlueprint()
 
-			arch = ArchitectureTypeX86_64
+			arch = resources.ArchitectureTypeX86_64
 			os.SetArchitecture(arch)
 
 			blueprint = &TemplateBlueprint{Blueprint: *CreateBlueprint("TEMPLATE")}
@@ -191,7 +194,8 @@ var _ = ginkgo.Describe("TemplateBlueprint", func() {
 		ginkgo.It("should set a OS tag to specified value", func() {
 			blueprint.SetOS(*os)
 
-			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(ArchitectureTypeMap[arch]))
+			gomega.Expect(blueprint.XMLData.FindElement("TEMPLATE/OS/ARCH").Text()).To(gomega.Equal(
+				resources.ArchitectureTypeMap[arch]))
 		})
 	})
 
