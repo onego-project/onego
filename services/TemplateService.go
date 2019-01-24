@@ -58,6 +58,30 @@ func (ts *TemplateService) Delete(ctx context.Context, template resources.Templa
 	return err
 }
 
+// Instantiate instantiates a new virtual machine from a template.
+func (ts *TemplateService) Instantiate(ctx context.Context, template resources.Template, name string,
+	onHold bool, blueprint blueprint.Interface, persistent bool) (*resources.VirtualMachine, error) {
+	templateID, err := template.ID()
+	if err != nil {
+		return nil, err
+	}
+
+	blueprintText, err := blueprint.Render()
+	if err != nil {
+		return nil, err
+	}
+
+	resArr, err := ts.call(ctx, "one.template.instantiate", templateID, name, onHold, blueprintText,
+		persistent)
+	if err != nil {
+		return nil, err
+	}
+
+	vmService := VirtualMachineService{Service: ts.Service}
+
+	return vmService.RetrieveInfo(ctx, int(resArr[resultIndex].ResultInt()))
+}
+
 // Update merges or replaces the template contents.
 func (ts *TemplateService) Update(ctx context.Context, template resources.Template, blueprint blueprint.Interface,
 	updateType UpdateType) (*resources.Template, error) {
