@@ -91,7 +91,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 				ip := net.ParseIP("10.0.0.10")
 				ar = &resources.AddressRange{
 					Type: "IP4",
-					IP:   &ip,
+					IP:   ip,
 					Size: &size,
 				}
 
@@ -180,7 +180,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 				ip := net.ParseIP("10.0.0.10")
 				ar = &resources.AddressRange{
 					Type: "IP4",
-					IP:   &ip,
+					IP:   ip,
 					Size: &size,
 				}
 
@@ -202,7 +202,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 				ip := net.ParseIP("10.0.0.10")
 				ar = &resources.AddressRange{
 					Type: "IP4",
-					IP:   &ip,
+					IP:   ip,
 					Size: &size,
 				}
 
@@ -226,7 +226,7 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 				size := 5
 				ip := net.ParseIP("10.0.0.10")
 				ar = &resources.AddressRange{
-					IP:   &ip,
+					IP:   ip,
 					Size: &size,
 				}
 

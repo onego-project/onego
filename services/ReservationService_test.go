@@ -89,7 +89,7 @@ var _ = ginkgo.Describe("Reservation Service", func() {
 				arID := 0
 				ip := net.ParseIP("10.0.0.14")
 				nID := 7
-				reservation = &resources.Reservation{Size: &size, AddressRangeID: &arID, IP: &ip, VirtualNetworkID: &nID}
+				reservation = &resources.Reservation{Size: &size, AddressRangeID: &arID, IP: ip, VirtualNetworkID: &nID}
 
 				resVn, err = client.ReservationService.Reserve(context.TODO(), *vn, *reservation)
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())

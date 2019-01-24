@@ -98,8 +98,7 @@ var _ = ginkgo.Describe("VirtualMachine", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(graphics.Type).To(gomega.Equal(GraphicsTypeVNC))
 
-				ip := net.ParseIP("0.0.0.0")
-				gomega.Expect(graphics.Listen).To(gomega.Equal(&ip))
+				gomega.Expect(graphics.Listen).To(gomega.Equal(net.ParseIP("0.0.0.0")))
 				port := 63402
 				gomega.Expect(graphics.Port).To(gomega.Equal(&port))
 				gomega.Expect(graphics.RandomPassword).To(gomega.Equal(true))
@@ -112,8 +111,7 @@ var _ = ginkgo.Describe("VirtualMachine", func() {
 				gomega.Expect(nics).To(gomega.HaveLen(1))
 				gomega.Expect(nics[0].AddressRangeID).To(gomega.Equal(83))
 
-				ip := net.ParseIP("123.123.123.85")
-				gomega.Expect(nics[0].IP).To(gomega.Equal(ip))
+				gomega.Expect(nics[0].IP).To(gomega.Equal(net.ParseIP("123.123.123.85")))
 				gomega.Expect(nics[0].Mac).To(gomega.Equal("02:00:00:f4:fd:33"))
 			})
 
