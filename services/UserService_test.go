@@ -46,30 +46,23 @@ const (
 
 	userDelete        = "records/user/delete"
 	userDeleteWrongID = "records/user/deleteWrongID"
-	userDeleteNoID    = "records/user/deleteNoID"
 
 	userPassword            = "records/user/password"
 	userPasswordEmpty       = "records/user/passwordEmpty"
-	userPasswordNoUser      = "records/user/passwdNoUser"
 	userPasswordUnknownUser = "records/user/passwdUnknownUser"
 
-	userUpdateMerge        = "records/user/updateMerge"
-	userUpdateReplace      = "records/user/updateReplace"
-	userUpdateEmptyMerge   = "records/user/updateEmptyMerge"
-	userUpdateEmptyReplace = "records/user/updateEmptyReplace"
-	userUpdateNoUser       = "records/user/updateNoUser"
-	userUpdateUnknownUser  = "records/user/updateUnknownUser"
+	userUpdateMerge       = "records/user/updateMerge"
+	userUpdateReplace     = "records/user/updateReplace"
+	userUpdateUnknownUser = "records/user/updateUnknownUser"
 
 	userAuthDriver            = "records/user/authDriver"
 	userAuthDriverNonExisting = "records/user/authDriverNonExisting"
 	userAuthDriverEmpty       = "records/user/authDriverEmpty"
-	userAuthDriverNoUser      = "records/user/authDriverNoUser"
 	userAuthDriverUnknownUser = "records/user/authDriverUnknownUser"
 
 	userMainGroup            = "records/user/mainGroup"
 	userMainGroupNonExisting = "records/user/mainGroupNonExisting"
 	userMainGroupEmpty       = "records/user/mainGroupEmpty"
-	userMainGroupNoUser      = "records/user/mainGroupNoUser"
 	userMainGroupUnknownUser = "records/user/mainGroupUnknownUser"
 
 	userSecGroupAdd = "records/user/secGroupAdd"
@@ -238,16 +231,10 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.Context("when user is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = userDeleteNoID
-
-				user = &resources.User{}
-			})
-
 			ginkgo.It("should return that user has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.UserService.Delete(context.TODO(), *user)
+				err = client.UserService.Delete(context.TODO(), resources.User{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -310,10 +297,6 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.Context("when user is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = userPasswordNoUser
-			})
-
 			ginkgo.It("should return that user has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -400,10 +383,6 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.When("when merge data of given user", func() {
-					ginkgo.BeforeEach(func() {
-						recName = userUpdateEmptyMerge
-					})
-
 					ginkgo.It("should merge data of given user", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -414,10 +393,6 @@ var _ = ginkgo.Describe("User Service", func() {
 				})
 
 				ginkgo.When("when replace data of given user", func() {
-					ginkgo.BeforeEach(func() {
-						recName = userUpdateEmptyReplace
-					})
-
 					ginkgo.It("should replace data of given user", func() {
 						gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -457,8 +432,6 @@ var _ = ginkgo.Describe("User Service", func() {
 
 		ginkgo.Context("when user is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = userUpdateNoUser
-
 				userBlueprint = blueprint.CreateUpdateUserBlueprint()
 				if userBlueprint == nil {
 					err = errors.ErrNoUserBlueprint
@@ -558,10 +531,6 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.Context("when user is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = userAuthDriverNoUser
-			})
-
 			ginkgo.It("should return that user has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -668,10 +637,6 @@ var _ = ginkgo.Describe("User Service", func() {
 		})
 
 		ginkgo.Context("when user is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = userMainGroupNoUser
-			})
-
 			ginkgo.It("should return that user has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

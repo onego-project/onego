@@ -30,50 +30,39 @@ const (
 	imageClone               = "records/image/clone"
 	imageCloneWrongDatastore = "records/image/cloneWrongDatastore"
 	imageCloneExisting       = "records/image/cloneExisting"
-	imageCloneNoID           = "records/image/cloneNoID"
 
 	imageDelete        = "records/image/delete"
 	imageDeleteWrongID = "records/image/deleteWrongID"
-	imageDeleteNoID    = "records/image/deleteNoID"
 
 	imageUpdateMerge        = "records/image/updateMerge"
 	imageUpdateReplace      = "records/image/updateReplace"
 	imageUpdateEmptyMerge   = "records/image/updateEmptyMerge"
 	imageUpdateEmptyReplace = "records/image/updateEmptyReplace"
-	imageUpdateNoUser       = "records/image/updateNoUser"
-	imageUpdateUnknown      = "records/image/updateUnknown"
 
 	imageChangeType        = "records/image/changeType"
 	imageChangeTypeUnknown = "records/image/changeTypeUnknown"
-	imageChangeTypeNoImage = "records/image/changeTypeNoImage"
 
 	imageChmod              = "records/image/chmod"
 	imagePermRequestDefault = "records/image/chmodPermReqDefault"
 	imageChmodUnknown       = "records/image/chmodUnknown"
-	imageChmodNoImage       = "records/image/chmodNoImage"
 
 	imageChown               = "records/image/chown"
 	imageOwnershipReqDefault = "records/image/chownDefault"
 	imageChownUnknown        = "records/image/chownUnknown"
-	imageChownNoImage        = "records/image/chownNoImage"
 
 	imageRename        = "records/image/rename"
 	imageRenameEmpty   = "records/image/renameEmpty"
 	imageRenameUnknown = "records/image/renameUnknown"
-	imageRenameNoImage = "records/image/renameNoImage"
 
 	imageEnable         = "records/image/enable"
 	imageDisable        = "records/image/disable"
 	imageDisableUnknown = "records/image/disableUnknown"
-	imageDisableNoImage = "records/image/disableNoImage"
 
 	imagePersistent           = "records/image/persistent"
 	imageNonpersistent        = "records/image/nonpersistent"
 	imageNonpersistentUnknown = "records/image/nonpersistentUnknown"
-	imageNonpersistentNoImage = "records/image/nonpersistentNoImage"
-
-	imageRetrieveInfo        = "records/image/retrieveInfo"
-	imageRetrieveInfoUnknown = "records/image/retrieveInfoUnknown"
+	//
+	imageRetrieveInfo = "records/image/retrieveInfo"
 
 	imageListAllPrimaryGroup = "records/image/listAllPrimaryGroup"
 	imageListAllUser         = "records/image/listAllUser"
@@ -316,16 +305,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageCloneNoID
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				clone, err = client.ImageService.Clone(context.TODO(), *image, "asdfg", *datastore)
+				clone, err = client.ImageService.Clone(context.TODO(), resources.Image{}, "asdfg", *datastore)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(clone).Should(gomega.BeNil())
 			})
@@ -384,16 +367,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageDeleteNoID
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Delete(context.TODO(), *image)
+				err = client.ImageService.Delete(context.TODO(), resources.Image{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -505,8 +482,6 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 		ginkgo.Context("when image doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = imageUpdateUnknown
-
 				image = resources.CreateImageWithID(110)
 				if image == nil {
 					err = errors.ErrNoImage
@@ -530,8 +505,6 @@ var _ = ginkgo.Describe("Image Service", func() {
 
 		ginkgo.Context("when image is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = imageUpdateNoUser
-
 				imageBlueprint = blueprint.CreateUpdateImageBlueprint()
 				if imageBlueprint == nil {
 					err = errors.ErrNoImageBlueprint
@@ -604,16 +577,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageChangeTypeNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.ChangeType(context.TODO(), *image, resources.ImageTypeKernel)
+				err = client.ImageService.ChangeType(context.TODO(), resources.Image{}, resources.ImageTypeKernel)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -702,16 +669,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageChmodNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Chmod(context.TODO(), *image, requests.PermissionRequest{})
+				err = client.ImageService.Chmod(context.TODO(), resources.Image{}, requests.PermissionRequest{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -799,16 +760,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageChownNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Chown(context.TODO(), *image, requests.OwnershipRequest{})
+				err = client.ImageService.Chown(context.TODO(), resources.Image{}, requests.OwnershipRequest{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -894,16 +849,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageRenameNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Rename(context.TODO(), *image, "rex")
+				err = client.ImageService.Rename(context.TODO(), resources.Image{}, "rex")
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -990,16 +939,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageDisableNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.Disable(context.TODO(), *image)
+				err = client.ImageService.Disable(context.TODO(), resources.Image{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -1086,16 +1029,10 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageNonpersistentNoImage
-
-				image = &resources.Image{}
-			})
-
 			ginkgo.It("should return that image has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ImageService.MakeNonPersistent(context.TODO(), *image)
+				err = client.ImageService.MakeNonPersistent(context.TODO(), resources.Image{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -1121,10 +1058,6 @@ var _ = ginkgo.Describe("Image Service", func() {
 		})
 
 		ginkgo.Context("when image doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = imageRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given image doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

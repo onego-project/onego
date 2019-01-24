@@ -17,16 +17,9 @@ import (
 )
 
 var (
-	vnArAdd        = "records/virtualNetwork/addressRange/addToExisting"
-	vnArUpdate     = "records/virtualNetwork/addressRange/update"
-	vnArAddWrong   = "records/virtualNetwork/addressRange/addWrong"
-	vnArAddNo      = "records/virtualNetwork/addressRange/addNo"
-	vnArAddWrongAR = "records/virtualNetwork/addressRange/addWrongAR"
-
-	vnArDelete        = "records/virtualNetwork/addressRange/delete"
-	vnArDeleteWrong   = "records/virtualNetwork/addressRange/deleteWrong"
-	vnArDeleteNo      = "records/virtualNetwork/addressRange/deleteNo"
-	vnArDeleteWrongAR = "records/virtualNetwork/addressRange/deleteWrongAR"
+	vnArAdd    = "records/virtualNetwork/addressRange/addToExisting"
+	vnArUpdate = "records/virtualNetwork/addressRange/update"
+	vnArDelete = "records/virtualNetwork/addressRange/delete"
 )
 
 var _ = ginkgo.Describe("Address Range Service", func() {
@@ -166,10 +159,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("when vnet has wrong ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArAddWrong
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -191,10 +180,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("when vnet has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArAddNo
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -213,10 +198,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("when missing element (type) in Address Range", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArAddWrongAR
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -275,10 +256,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("delete when vnet has wrong ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArDeleteWrong
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -294,10 +271,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("delete when vnet has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArDeleteNo
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -310,10 +283,6 @@ var _ = ginkgo.Describe("Address Range Service", func() {
 		})
 
 		ginkgo.Context("delete when AR has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnArDeleteWrongAR
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

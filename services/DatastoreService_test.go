@@ -26,37 +26,25 @@ const (
 
 	datastoreDelete        = "records/datastore/delete"
 	datastoreDeleteWrongID = "records/datastore/deleteWrongID"
-	datastoreDeleteNoID    = "records/datastore/deleteNoID"
 
 	datastoreUpdateMerge        = "records/datastore/updateMerge"
 	datastoreUpdateReplace      = "records/datastore/updateReplace"
 	datastoreUpdateEmptyMerge   = "records/datastore/updateEmptyMerge"
 	datastoreUpdateEmptyReplace = "records/datastore/updateEmptyReplace"
-	datastoreUpdateNoUser       = "records/datastore/updateNoUser"
-	datastoreUpdateUnknown      = "records/datastore/updateUnknown"
 
 	datastoreChmod              = "records/datastore/chmod"
 	datastorePermRequestDefault = "records/datastore/chmodPermReqDefault"
-	datastoreChmodUnknown       = "records/datastore/chmodUnknown"
-	datastoreChmodNoDatastore   = "records/datastore/chmodNoDatastore"
 
 	datastoreChown               = "records/datastore/chown"
 	datastoreOwnershipReqDefault = "records/datastore/chownDefault"
-	datastoreChownUnknown        = "records/datastore/chownUnknown"
-	datastoreChownNoDatastore    = "records/datastore/chownNoDatastore"
 
-	datastoreRename            = "records/datastore/rename"
-	datastoreRenameEmpty       = "records/datastore/renameEmpty"
-	datastoreRenameUnknown     = "records/datastore/renameUnknown"
-	datastoreRenameNoDatastore = "records/datastore/renameNoDatastore"
+	datastoreRename      = "records/datastore/rename"
+	datastoreRenameEmpty = "records/datastore/renameEmpty"
 
-	datastoreEnable             = "records/datastore/enable"
-	datastoreDisable            = "records/datastore/disable"
-	datastoreDisableUnknown     = "records/datastore/disableUnknown"
-	datastoreDisableNoDatastore = "records/datastore/disableNoDatastore"
+	datastoreEnable  = "records/datastore/enable"
+	datastoreDisable = "records/datastore/disable"
 
-	datastoreRetrieveInfo        = "records/datastore/retrieveInfo"
-	datastoreRetrieveInfoUnknown = "records/datastore/retrieveInfoUnknown"
+	datastoreRetrieveInfo = "records/datastore/retrieveInfo"
 
 	datastoreList = "records/datastore/list"
 )
@@ -227,16 +215,10 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreDeleteNoID
-
-				datastore = &resources.Datastore{}
-			})
-
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.DatastoreService.Delete(context.TODO(), *datastore)
+				err = client.DatastoreService.Delete(context.TODO(), resources.Datastore{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -351,8 +333,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreUpdateUnknown
-
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
 					err = errors.ErrNoDatastore
@@ -377,8 +357,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreUpdateNoUser
-
 				datastoreBlueprint = blueprint.CreateUpdateDatastoreBlueprint()
 				if datastoreBlueprint == nil {
 					err = errors.ErrNoDatastoreBlueprint
@@ -459,8 +437,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreChmodUnknown
-
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
 					err = errors.ErrNoDatastore
@@ -479,10 +455,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreChmodNoDatastore
-			})
-
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -556,8 +528,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreChownUnknown
-
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
 					err = errors.ErrNoDatastore
@@ -578,10 +548,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreChownNoDatastore
-			})
-
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -650,8 +616,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreRenameUnknown
-
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
 					err = errors.ErrNoDatastore
@@ -667,10 +631,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreRenameNoDatastore
-			})
-
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -744,8 +704,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 
 		ginkgo.Context("when datastore doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = datastoreDisableUnknown
-
 				datastore = resources.CreateDatastoreWithID(110)
 				if datastore == nil {
 					err = errors.ErrNoDatastore
@@ -761,10 +719,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreDisableNoDatastore
-			})
-
 			ginkgo.It("should return that datastore has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -794,10 +748,6 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 		})
 
 		ginkgo.Context("when datastore doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = datastoreRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given datastore doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -809,14 +759,14 @@ var _ = ginkgo.Describe("Datastore Service", func() {
 	})
 
 	ginkgo.Describe("datastore list", func() {
+		var datastores []*resources.Datastore
+
 		ginkgo.BeforeEach(func() {
 			recName = datastoreList
 		})
 
 		ginkgo.It("should return an array of datastores with full info", func() {
 			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
-
-			var datastores []*resources.Datastore
 
 			datastores, err = client.DatastoreService.List(context.TODO())
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())

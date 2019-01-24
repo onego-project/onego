@@ -22,8 +22,6 @@ var (
 	vnReserveToExisting        = "records/virtualNetwork/reservation/toExisting"
 	vnReserveAsNew             = "records/virtualNetwork/reservation/asNew"
 	vnReserveWrongID           = "records/virtualNetwork/reservation/wrongID"
-	vnReserveEmptyVN           = "records/virtualNetwork/reservation/emptyVN"
-	vnReserveEmptyReservation  = "records/virtualNetwork/reservation/emptyReservation"
 	vnReservationFree          = "records/virtualNetwork/reservation/free"
 )
 
@@ -222,10 +220,6 @@ var _ = ginkgo.Describe("Reservation Service", func() {
 		})
 
 		ginkgo.Context("when v. network is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnReserveEmptyVN
-			})
-
 			ginkgo.It("should not create new virtual network", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -235,10 +229,6 @@ var _ = ginkgo.Describe("Reservation Service", func() {
 		})
 
 		ginkgo.Context("when reservation is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnReserveEmptyReservation
-			})
-
 			ginkgo.It("should not create new virtual network", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
