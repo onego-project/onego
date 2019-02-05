@@ -31,6 +31,9 @@ const (
 	templateDelete        = "records/template/delete"
 	templateDeleteWrongID = "records/template/deleteWrongID"
 
+	templateInstantiate        = "records/template/instantiate"
+	templateInstantiateWrongID = "records/template/instantiateWrongID"
+
 	templateUpdateMerge        = "records/template/updateMerge"
 	templateUpdateReplace      = "records/template/updateReplace"
 	templateUpdateEmptyMerge   = "records/template/updateEmptyMerge"
@@ -298,6 +301,97 @@ var _ = ginkgo.Describe("Template Service", func() {
 
 				err = client.TemplateService.Delete(context.TODO(), resources.Template{}, true)
 				gomega.Expect(err).To(gomega.HaveOccurred())
+			})
+		})
+	})
+
+	ginkgo.Describe("instantiate template", func() {
+		var (
+			template   *resources.Template
+			templateID int
+
+			templateBlueprint *blueprint.TemplateBlueprint
+
+			virtualMachine   *resources.VirtualMachine
+			virtualMachineID int
+			oneVM            *resources.VirtualMachine
+		)
+
+		ginkgo.BeforeEach(func() {
+			templateID = 339
+			template = resources.CreateTemplateWithID(templateID)
+			if template == nil {
+				err = errors.ErrNoTemplate
+			}
+
+			templateBlueprint = blueprint.CreateAllocateTemplateBlueprint()
+			templateBlueprint.SetMemory(1)
+			templateBlueprint.SetCPU(0.25)
+			templateBlueprint.SetVCPU(1)
+		})
+
+		ginkgo.Context("when attributes are set correctly", func() {
+			ginkgo.BeforeEach(func() {
+				recName = templateInstantiate
+			})
+
+			ginkgo.It("should Instantiate a new Virtual Machine", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				virtualMachine, err = client.TemplateService.Instantiate(context.TODO(), *template, "veternik",
+					true, templateBlueprint, false)
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(virtualMachine).ShouldNot(gomega.BeNil())
+
+				// check whether Virtual Machine really exists in OpenNebula
+				virtualMachineID, err = virtualMachine.ID()
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+
+				oneVM, err = client.VirtualMachineService.RetrieveInfo(context.TODO(), virtualMachineID)
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(oneVM.Name()).To(gomega.Equal("veternik"))
+			})
+		})
+
+		ginkgo.Context("when blueprint is empty", func() {
+			ginkgo.It("shouldn't create new virtual machine", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				virtualMachine, err = client.TemplateService.Instantiate(context.TODO(), *template, "noname",
+					false, &blueprint.TemplateBlueprint{}, false)
+				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(virtualMachine).Should(gomega.BeNil())
+			})
+		})
+
+		ginkgo.Context("when template doesn't exist", func() {
+			ginkgo.BeforeEach(func() {
+				recName = templateInstantiateWrongID
+
+				template = resources.CreateTemplateWithID(1000)
+				if template == nil {
+					err = errors.ErrNoTemplate
+				}
+			})
+
+			ginkgo.It("should return that template with given ID doesn't exist", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				virtualMachine, err = client.TemplateService.Instantiate(context.TODO(), *template, "asdf",
+					true, templateBlueprint, true)
+				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(virtualMachine).Should(gomega.BeNil())
+			})
+		})
+
+		ginkgo.Context("when template is empty", func() {
+			ginkgo.It("should return that template has no ID", func() {
+				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
+
+				virtualMachine, err = client.TemplateService.Instantiate(context.TODO(), resources.Template{}, "asdf",
+					true, templateBlueprint, true)
+				gomega.Expect(err).To(gomega.HaveOccurred())
+				gomega.Expect(virtualMachine).Should(gomega.BeNil())
 			})
 		})
 	})
