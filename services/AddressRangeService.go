@@ -15,8 +15,8 @@ type AddressRangeService struct {
 }
 
 type templateAddressRange struct {
-	XMLName xml.Name                `xml:"TEMPLATE"`
-	AR      *resources.AddressRange `xml:"AR"`
+	XMLName xml.Name               `xml:"TEMPLATE"`
+	AR      resources.AddressRange `xml:"AR"`
 }
 
 func (ars *AddressRangeService) manageAddressRange(ctx context.Context, methodName string, vn resources.VirtualNetwork,
@@ -26,7 +26,7 @@ func (ars *AddressRangeService) manageAddressRange(ctx context.Context, methodNa
 		return nil, err
 	}
 
-	arText, err := resources.RenderInterfaceToXMLString(templateAddressRange{AR: &ar})
+	arText, err := resources.RenderInterfaceToXMLString(templateAddressRange{AR: ar})
 	if err != nil {
 		// error should never occur
 		return nil, err

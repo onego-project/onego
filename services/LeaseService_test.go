@@ -19,8 +19,6 @@ import (
 var (
 	vnLeaseHold        = "records/virtualNetwork/lease/hold"
 	vnLeaseHoldWrongVN = "records/virtualNetwork/lease/holdWrongVN"
-	vnLeaseHoldNoVN    = "records/virtualNetwork/lease/holdNoVN"
-	vnLeaseHoldNoIP    = "records/virtualNetwork/lease/holdNoIP"
 
 	vnLeaseRelease        = "records/virtualNetwork/lease/release"
 	vnLeaseReleaseWrongIP = "records/virtualNetwork/lease/releaseWrongIP"
@@ -131,10 +129,6 @@ var _ = ginkgo.Describe("Lease Service", func() {
 		})
 
 		ginkgo.Context("when vnet has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnLeaseHoldNoVN
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -144,10 +138,6 @@ var _ = ginkgo.Describe("Lease Service", func() {
 		})
 
 		ginkgo.Context("when IP array is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = vnLeaseHoldNoIP
-			})
-
 			ginkgo.It("should return an error", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

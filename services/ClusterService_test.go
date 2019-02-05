@@ -23,52 +23,34 @@ const (
 
 	clusterDelete        = "records/cluster/delete"
 	clusterDeleteWrongID = "records/cluster/deleteWrongID"
-	clusterDeleteNoID    = "records/cluster/deleteNoID"
 
 	clusterUpdateMerge        = "records/cluster/updateMerge"
 	clusterUpdateReplace      = "records/cluster/updateReplace"
 	clusterUpdateEmptyMerge   = "records/cluster/updateEmptyMerge"
 	clusterUpdateEmptyReplace = "records/cluster/updateEmptyReplace"
-	clusterUpdateNoUser       = "records/cluster/updateNoUser"
-	clusterUpdateUnknown      = "records/cluster/updateUnknown"
 
-	clusterAddHost          = "records/cluster/addHost"
-	clusterAddNoneHost      = "records/cluster/addNoneHost"
-	clusterAddHostUnknown   = "records/cluster/addHostUnknown"
-	clusterAddHostNoCluster = "records/cluster/addHostNoCluster"
+	clusterAddHost     = "records/cluster/addHost"
+	clusterAddNoneHost = "records/cluster/addNoneHost"
 
-	clusterDelHost          = "records/cluster/delHost"
-	clusterDelNoneHost      = "records/cluster/delNoneHost"
-	clusterDelHostUnknown   = "records/cluster/delHostUnknown"
-	clusterDelHostNoCluster = "records/cluster/delHostNoCluster"
+	clusterDelHost     = "records/cluster/delHost"
+	clusterDelNoneHost = "records/cluster/delNoneHost"
 
-	clusterAddDatastore          = "records/cluster/addDatastore"
-	clusterAddNoneDatastore      = "records/cluster/addNoneDatastore"
-	clusterAddDatastoreUnknown   = "records/cluster/addDatastoreUnknown"
-	clusterAddDatastoreNoCluster = "records/cluster/addDatastoreNoCluster"
+	clusterAddDatastore     = "records/cluster/addDatastore"
+	clusterAddNoneDatastore = "records/cluster/addNoneDatastore"
 
-	clusterDelDatastore          = "records/cluster/delDatastore"
-	clusterDelNoneDatastore      = "records/cluster/delNoneDatastore"
-	clusterDelDatastoreUnknown   = "records/cluster/delDatastoreUnknown"
-	clusterDelDatastoreNoCluster = "records/cluster/delDatastoreNoCluster"
+	clusterDelDatastore     = "records/cluster/delDatastore"
+	clusterDelNoneDatastore = "records/cluster/delNoneDatastore"
 
-	clusterAddVirtualNetwork          = "records/cluster/addVirtualNetwork"
-	clusterAddNoneVirtualNetwork      = "records/cluster/addNoneVirtualNetwork"
-	clusterAddVirtualNetworkUnknown   = "records/cluster/addVirtualNetworkUnknown"
-	clusterAddVirtualNetworkNoCluster = "records/cluster/addVirtualNetworkNoCluster"
+	clusterAddVirtualNetwork     = "records/cluster/addVirtualNetwork"
+	clusterAddNoneVirtualNetwork = "records/cluster/addNoneVirtualNetwork"
 
-	clusterDelVirtualNetwork          = "records/cluster/delVirtualNetwork"
-	clusterDelNoneVirtualNetwork      = "records/cluster/delNoneVirtualNetwork"
-	clusterDelVirtualNetworkUnknown   = "records/cluster/delVirtualNetworkUnknown"
-	clusterDelVirtualNetworkNoCluster = "records/cluster/delVirtualNetworkNoCluster"
+	clusterDelVirtualNetwork     = "records/cluster/delVirtualNetwork"
+	clusterDelNoneVirtualNetwork = "records/cluster/delNoneVirtualNetwork"
 
-	clusterRename          = "records/cluster/rename"
-	clusterRenameEmpty     = "records/cluster/renameEmpty"
-	clusterRenameUnknown   = "records/cluster/renameUnknown"
-	clusterRenameNoCluster = "records/cluster/renameNoCluster"
+	clusterRename      = "records/cluster/rename"
+	clusterRenameEmpty = "records/cluster/renameEmpty"
 
-	clusterRetrieveInfo        = "records/cluster/retrieveInfo"
-	clusterRetrieveInfoUnknown = "records/cluster/retrieveInfoUnknown"
+	clusterRetrieveInfo = "records/cluster/retrieveInfo"
 
 	clusterList = "records/cluster/list"
 )
@@ -214,16 +196,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterDeleteNoID
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.Delete(context.TODO(), *cluster)
+				err = client.ClusterService.Delete(context.TODO(), resources.Cluster{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -343,8 +319,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterUpdateUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -368,8 +342,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterUpdateNoUser
-
 				clusterBlueprint = blueprint.CreateUpdateClusterBlueprint()
 				if clusterBlueprint == nil {
 					err = errors.ErrNoClusterBlueprint
@@ -452,8 +424,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterAddHostUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -469,16 +439,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterAddHostNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.AddHost(context.TODO(), *cluster, *host)
+				err = client.ClusterService.AddHost(context.TODO(), resources.Cluster{}, *host)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -548,8 +512,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterDelHostUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -565,16 +527,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterDelHostNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.DeleteHost(context.TODO(), *cluster, *host)
+				err = client.ClusterService.DeleteHost(context.TODO(), resources.Cluster{}, *host)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -651,8 +607,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterAddDatastoreUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -668,16 +622,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterAddDatastoreNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.AddDatastore(context.TODO(), *cluster, *datastore)
+				err = client.ClusterService.AddDatastore(context.TODO(), resources.Cluster{}, *datastore)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -754,8 +702,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterDelDatastoreUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -771,16 +717,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterDelDatastoreNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.DeleteDatastore(context.TODO(), *cluster, *datastore)
+				err = client.ClusterService.DeleteDatastore(context.TODO(), resources.Cluster{}, *datastore)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -857,8 +797,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterAddVirtualNetworkUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -874,16 +812,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterAddVirtualNetworkNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.AddVirtualNetwork(context.TODO(), *cluster, *virtualNetwork)
+				err = client.ClusterService.AddVirtualNetwork(context.TODO(), resources.Cluster{}, *virtualNetwork)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -960,8 +892,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterDelVirtualNetworkUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -977,16 +907,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterDelVirtualNetworkNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.DeleteVirtualNetwork(context.TODO(), *cluster, *virtualNetwork)
+				err = client.ClusterService.DeleteVirtualNetwork(context.TODO(), resources.Cluster{}, *virtualNetwork)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -1055,8 +979,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 
 		ginkgo.Context("when cluster doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = clusterRenameUnknown
-
 				cluster = resources.CreateClusterWithID(nonExistingClusterID)
 				if cluster == nil {
 					err = errors.ErrNoCluster
@@ -1072,16 +994,10 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterRenameNoCluster
-
-				cluster = &resources.Cluster{}
-			})
-
 			ginkgo.It("should return that cluster has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.ClusterService.Rename(context.TODO(), *cluster, "rex")
+				err = client.ClusterService.Rename(context.TODO(), resources.Cluster{}, "rex")
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -1107,10 +1023,6 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 		})
 
 		ginkgo.Context("when cluster doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = clusterRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given cluster doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -1122,14 +1034,14 @@ var _ = ginkgo.Describe("Cluster Service", func() {
 	})
 
 	ginkgo.Describe("cluster list", func() {
+		var clusters []*resources.Cluster
+
 		ginkgo.BeforeEach(func() {
 			recName = clusterList
 		})
 
 		ginkgo.It("should return an array of clusters with full info", func() {
 			gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
-
-			var clusters []*resources.Cluster
 
 			clusters, err = client.ClusterService.List(context.TODO())
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())

@@ -28,32 +28,25 @@ const (
 	groupAllocate       = "records/group/allocate"
 	groupAllocationFail = "records/group/allocationFail"
 
-	groupDelete      = "records/group/delete"
-	groupDeleteFail  = "records/group/deleteFail"
-	groupDeleteEmpty = "records/group/deleteEmpty"
+	groupDelete     = "records/group/delete"
+	groupDeleteFail = "records/group/deleteFail"
 
-	groupUpdateMerge      = "records/group/updateMerge"
-	groupUpdateReplace    = "records/group/updateReplace"
-	groupUpdateEmpty      = "records/group/updateEmpty"
-	groupUpdateFail       = "records/group/updateFail"
-	groupUpdateGroupEmpty = "records/group/updateGroupEmpty"
+	groupUpdateMerge   = "records/group/updateMerge"
+	groupUpdateReplace = "records/group/updateReplace"
+	groupUpdateFail    = "records/group/updateFail"
 
 	groupRetrieveInfoGroup        = "records/group/retrieveInfoGroup"
 	groupRetrieveInfoGroupUnknown = "records/group/retrieveInfoGroupUnknown"
 
 	groupList = "records/group/list"
 
-	groupAddAdmin           = "records/group/addAdmin"
-	groupAddAdminUnknown    = "records/group/addAdminUnknown"
-	groupAddAdminFail       = "records/group/addAdminFail"
-	groupAddAdminGroupEmpty = "records/group/addAdminGroupEmpty"
-	groupAddAdminUserEmpty  = "records/group/addAdminUserEmpty"
+	groupAddAdmin        = "records/group/addAdmin"
+	groupAddAdminUnknown = "records/group/addAdminUnknown"
+	groupAddAdminFail    = "records/group/addAdminFail"
 
-	groupDelAdmin           = "records/group/delAdmin"
-	groupDelAdminUnknown    = "records/group/delAdminUnknown"
-	groupDelAdminFail       = "records/group/delAdminFail"
-	groupDelAdminGroupEmpty = "records/group/delAdminGroupEmpty"
-	groupDelAdminUserEmpty  = "records/group/delAdminUserEmpty"
+	groupDelAdmin        = "records/group/delAdmin"
+	groupDelAdminUnknown = "records/group/delAdminUnknown"
+	groupDelAdminFail    = "records/group/delAdminFail"
 )
 
 var _ = ginkgo.Describe("Group", func() {
@@ -163,10 +156,6 @@ var _ = ginkgo.Describe("Group", func() {
 		})
 
 		ginkgo.Context("when group is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = groupDeleteEmpty
-			})
-
 			ginkgo.It("should return an error that group is empty", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -222,8 +211,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 			ginkgo.When("when update data is empty", func() {
 				ginkgo.BeforeEach(func() {
-					recName = groupUpdateEmpty
-
 					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
@@ -259,8 +246,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 		ginkgo.Context("when group is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = groupUpdateGroupEmpty
-
 				blueprintGroup = blueprint.CreateUpdateGroupBlueprint()
 				blueprintGroup.SetElement("someTag", "someValue")
 			})
@@ -362,8 +347,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 			ginkgo.When("when user is empty", func() {
 				ginkgo.BeforeEach(func() {
-					recName = groupAddAdminUserEmpty
-
 					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
@@ -394,8 +377,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 		ginkgo.Context("when group is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = groupAddAdminGroupEmpty
-
 				user = resources.CreateUserWithID(idExistingUser)
 			})
 
@@ -447,8 +428,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 			ginkgo.When("when user is empty", func() {
 				ginkgo.BeforeEach(func() {
-					recName = groupDelAdminUserEmpty
-
 					group = resources.CreateGroupWithID(existingGroupID)
 				})
 
@@ -479,8 +458,6 @@ var _ = ginkgo.Describe("Group", func() {
 
 		ginkgo.Context("when group is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = groupDelAdminGroupEmpty
-
 				user = resources.CreateUserWithID(idExistingUser)
 			})
 

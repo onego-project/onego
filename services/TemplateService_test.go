@@ -27,36 +27,28 @@ const (
 
 	templateClone         = "records/template/clone"
 	templateCloneExisting = "records/template/cloneExisting"
-	templateCloneNoID     = "records/template/cloneNoID"
 
 	templateDelete        = "records/template/delete"
 	templateDeleteWrongID = "records/template/deleteWrongID"
-	templateDeleteNoID    = "records/template/deleteNoID"
 
 	templateUpdateMerge        = "records/template/updateMerge"
 	templateUpdateReplace      = "records/template/updateReplace"
 	templateUpdateEmptyMerge   = "records/template/updateEmptyMerge"
 	templateUpdateEmptyReplace = "records/template/updateEmptyReplace"
-	templateUpdateNoUser       = "records/template/updateNoUser"
-	templateUpdateUnknown      = "records/template/updateUnknown"
 
 	templateChmod              = "records/template/chmod"
 	templatePermRequestDefault = "records/template/chmodPermReqDefault"
 	templateChmodUnknown       = "records/template/chmodUnknown"
-	templateChmodNoTemplate    = "records/template/chmodNoTemplate"
 
 	templateChown               = "records/template/chown"
 	templateOwnershipReqDefault = "records/template/chownDefault"
 	templateChownUnknown        = "records/template/chownUnknown"
-	templateChownNoTemplate     = "records/template/chownNoTemplate"
 
-	templateRename           = "records/template/rename"
-	templateRenameEmpty      = "records/template/renameEmpty"
-	templateRenameUnknown    = "records/template/renameUnknown"
-	templateRenameNoTemplate = "records/template/renameNoTemplate"
+	templateRename        = "records/template/rename"
+	templateRenameEmpty   = "records/template/renameEmpty"
+	templateRenameUnknown = "records/template/renameUnknown"
 
-	templateRetrieveInfo        = "records/template/retrieveInfo"
-	templateRetrieveInfoUnknown = "records/template/retrieveInfoUnknown"
+	templateRetrieveInfo = "records/template/retrieveInfo"
 
 	templateListAllPrimaryGroup = "records/template/listAllPrimaryGroup"
 	templateListAllUser         = "records/template/listAllUser"
@@ -239,16 +231,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateCloneNoID
-
-				template = &resources.Template{}
-			})
-
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				clone, err = client.TemplateService.Clone(context.TODO(), *template, "asdfg", true)
+				clone, err = client.TemplateService.Clone(context.TODO(), resources.Template{}, "asdfg", true)
 				gomega.Expect(err).To(gomega.HaveOccurred())
 				gomega.Expect(clone).Should(gomega.BeNil())
 			})
@@ -307,10 +293,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateDeleteNoID
-			})
-
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -433,8 +415,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 
 		ginkgo.Context("when template doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = templateUpdateUnknown
-
 				template = resources.CreateTemplateWithID(nonExistingTemplateID)
 				if template == nil {
 					err = errors.ErrNoTemplate
@@ -459,8 +439,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 
 		ginkgo.Context("when template is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = templateUpdateNoUser
-
 				templateBlueprint = blueprint.CreateUpdateTemplateBlueprint()
 				if templateBlueprint == nil {
 					err = errors.ErrNoTemplateBlueprint
@@ -564,16 +542,10 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateChmodNoTemplate
-
-				template = &resources.Template{}
-			})
-
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.TemplateService.Chmod(context.TODO(), *template, requests.PermissionRequest{})
+				err = client.TemplateService.Chmod(context.TODO(), resources.Template{}, requests.PermissionRequest{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -664,10 +636,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateChownNoTemplate
-			})
-
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -758,10 +726,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateRenameNoTemplate
-			})
-
 			ginkgo.It("should return that template has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -791,10 +755,6 @@ var _ = ginkgo.Describe("Template Service", func() {
 		})
 
 		ginkgo.Context("when template doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = templateRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given template doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

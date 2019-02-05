@@ -19,34 +19,26 @@ import (
 
 const (
 	hostAllocate               = "records/host/allocate"
-	hostAllocateFail           = "records/host/allocateFail"
 	hostAllocateClusterWrongID = "records/host/allocateClusterWrongID"
-	hostAllocateClusterNoID    = "records/host/allocateClusterNoID"
 
 	hostDelete        = "records/host/delete"
 	hostDeleteWrongID = "records/host/deleteWrongID"
-	hostDeleteNoID    = "records/host/deleteNoID"
 
 	hostUpdateMerge        = "records/host/updateMerge"
 	hostUpdateReplace      = "records/host/updateReplace"
 	hostUpdateEmptyMerge   = "records/host/updateEmptyMerge"
 	hostUpdateEmptyReplace = "records/host/updateEmptyReplace"
-	hostUpdateNoUser       = "records/host/updateNoUser"
-	hostUpdateUnknown      = "records/host/updateUnknown"
 
 	hostRename        = "records/host/rename"
 	hostRenameEmpty   = "records/host/renameEmpty"
 	hostRenameUnknown = "records/host/renameUnknown"
-	hostRenameNoHost  = "records/host/renameNoHost"
 
 	hostEnable         = "records/host/enable"
 	hostDisable        = "records/host/disable"
 	hostOffline        = "records/host/offline"
 	hostDisableUnknown = "records/host/disableUnknown"
-	hostDisableNoHost  = "records/host/disableNoHost"
 
-	hostRetrieveInfo        = "records/host/retrieveInfo"
-	hostRetrieveInfoUnknown = "records/host/retrieveInfoUnknown"
+	hostRetrieveInfo = "records/host/retrieveInfo"
 
 	hostList = "records/host/list"
 )
@@ -141,10 +133,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when cluster has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostAllocateClusterNoID
-			})
-
 			ginkgo.It("shouldn't create new host", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -156,10 +144,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when host exists", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostAllocateFail
-			})
-
 			ginkgo.It("shouldn't create new host", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -223,16 +207,10 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when host is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostDeleteNoID
-
-				host = &resources.Host{}
-			})
-
 			ginkgo.It("should return that host has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.HostService.Delete(context.TODO(), *host)
+				err = client.HostService.Delete(context.TODO(), resources.Host{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -345,8 +323,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 
 		ginkgo.Context("when host doesn't exist", func() {
 			ginkgo.BeforeEach(func() {
-				recName = hostUpdateUnknown
-
 				host = resources.CreateHostWithID(110)
 				if host == nil {
 					err = errors.ErrNoHost
@@ -371,8 +347,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 
 		ginkgo.Context("when host is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = hostUpdateNoUser
-
 				hostBlueprint = blueprint.CreateUpdateHostBlueprint()
 				if hostBlueprint == nil {
 					err = errors.ErrNoHostBlueprint
@@ -472,16 +446,10 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when host is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostRenameNoHost
-
-				host = &resources.Host{}
-			})
-
 			ginkgo.It("should return that host has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.HostService.Rename(context.TODO(), *host, "rex")
+				err = client.HostService.Rename(context.TODO(), resources.Host{}, "rex")
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -591,16 +559,10 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when host is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostDisableNoHost
-
-				host = &resources.Host{}
-			})
-
 			ginkgo.It("should return that host has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.HostService.Disable(context.TODO(), *host)
+				err = client.HostService.Disable(context.TODO(), resources.Host{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -626,10 +588,6 @@ var _ = ginkgo.Describe("Host Service", func() {
 		})
 
 		ginkgo.Context("when host doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = hostRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given host doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

@@ -237,7 +237,7 @@ const (
 
 // Graphics represents graphics of Virtual Machine.
 type Graphics struct {
-	Listen         *net.IP
+	Listen         net.IP
 	Password       string
 	Port           *int
 	RandomPassword bool
@@ -653,10 +653,9 @@ func (vm *VirtualMachine) Graphics() (*Graphics, error) {
 		"KEYMAP"})
 
 	// no error when LISTEN is empty (return nil)
-	var ip *net.IP
+	var ip net.IP
 	if parsedStrings[0] != "" {
-		i := net.ParseIP(parsedStrings[0])
-		ip = &i
+		ip = net.ParseIP(parsedStrings[0])
 	}
 
 	// no error when RANDOM_PASSWD is empty (return false)

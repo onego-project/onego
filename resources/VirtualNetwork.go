@@ -17,7 +17,7 @@ type VirtualNetwork struct {
 type AddressRange struct {
 	XMLName    xml.Name `xml:"AR,omitempty"`
 	ID         *int     `xml:"AR_ID,omitempty"`
-	IP         *net.IP  `xml:"IP,omitempty"`
+	IP         net.IP   `xml:"IP,omitempty"`
 	Mac        string   `xml:"MAC,omitempty"`
 	Size       *int     `xml:"SIZE,omitempty"`
 	Type       string   `xml:"TYPE,omitempty"`
@@ -35,13 +35,13 @@ type Reservation struct {
 	AddressRangeID   *int     `xml:"AR_ID,omitempty"`
 	VirtualNetworkID *int     `xml:"NETWORK_ID,omitempty"`
 	Mac              string   `xml:"MAC,omitempty"`
-	IP               *net.IP  `xml:"IP,omitempty"`
+	IP               net.IP   `xml:"IP,omitempty"`
 }
 
 // Lease structure represents Lease in Address Range
 type Lease struct {
 	XMLName          xml.Name `xml:"LEASE,omitempty"`
-	IP               *net.IP  `xml:"IP,omitempty"`
+	IP               net.IP   `xml:"IP,omitempty"`
 	Mac              string   `xml:"MAC,omitempty"`
 	VirtualMachineID *int     `xml:"VM,omitempty"`
 }
@@ -159,7 +159,7 @@ func createAddressRangeFromElement(element *etree.Element) (*AddressRange, error
 
 	ip := net.ParseIP(parsedStrings[3])
 
-	return &AddressRange{ID: &parsedInts[0], IP: &ip, Mac: parsedStrings[0],
+	return &AddressRange{ID: &parsedInts[0], IP: ip, Mac: parsedStrings[0],
 		Size: &parsedInts[1], Type: parsedStrings[1], MacEnd: parsedStrings[2], IPEnd: net.ParseIP(parsedStrings[4]),
 		UsedLeases: &parsedInts[2], Leases: parsedLeases}, nil
 }
@@ -201,8 +201,8 @@ func createLeaseFromElement(element *etree.Element) (*Lease, error) {
 	vm, err := intAttributeFromElement(element, "VM")
 	if err != nil {
 		// not necessary attribute
-		return &Lease{IP: &ip, Mac: mac}, nil
+		return &Lease{IP: ip, Mac: mac}, nil
 	}
 
-	return &Lease{IP: &ip, Mac: mac, VirtualMachineID: &vm}, nil
+	return &Lease{IP: ip, Mac: mac, VirtualMachineID: &vm}, nil
 }

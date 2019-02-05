@@ -14,13 +14,13 @@ type LeaseService struct {
 }
 
 type templateLease struct {
-	XMLName    xml.Name           `xml:"TEMPLATE,omitempty"`
-	LeaseMngmt []*leaseManagement `xml:"LEASES,omitempty"`
+	XMLName    xml.Name          `xml:"TEMPLATE,omitempty"`
+	LeaseMngmt []leaseManagement `xml:"LEASES,omitempty"`
 }
 
 type leaseManagement struct {
 	XMLName xml.Name `xml:"LEASES,omitempty"`
-	IP      *net.IP  `xml:"IP,omitempty"`
+	IP      net.IP   `xml:"IP,omitempty"`
 }
 
 func (ls *LeaseService) manageLease(ctx context.Context, methodName string, vn resources.VirtualNetwork,
@@ -30,9 +30,9 @@ func (ls *LeaseService) manageLease(ctx context.Context, methodName string, vn r
 		return err
 	}
 
-	leases := make([]*leaseManagement, len(ips))
+	leases := make([]leaseManagement, len(ips))
 	for i, ip := range ips {
-		leases[i] = &leaseManagement{IP: &ip}
+		leases[i] = leaseManagement{IP: ip}
 	}
 
 	leaseText, err := resources.RenderInterfaceToXMLString(templateLease{LeaseMngmt: leases})

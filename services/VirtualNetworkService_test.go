@@ -22,36 +22,29 @@ import (
 const (
 	virtualNetworkAllocate               = "records/virtualNetwork/allocate"
 	virtualNetworkAllocateClusterWrongID = "records/virtualNetwork/allocateClusterWrongID"
-	virtualNetworkAllocateClusterNoID    = "records/virtualNetwork/allocateClusterNoID"
 
 	virtualNetworkDelete        = "records/virtualNetwork/delete"
 	virtualNetworkDeleteWrongID = "records/virtualNetwork/deleteWrongID"
-	virtualNetworkDeleteNoID    = "records/virtualNetwork/deleteNoID"
 
 	virtualNetworkUpdateMerge        = "records/virtualNetwork/updateMerge"
 	virtualNetworkUpdateReplace      = "records/virtualNetwork/updateReplace"
 	virtualNetworkUpdateEmptyMerge   = "records/virtualNetwork/updateEmptyMerge"
 	virtualNetworkUpdateEmptyReplace = "records/virtualNetwork/updateEmptyReplace"
-	virtualNetworkUpdateNoUser       = "records/virtualNetwork/updateNoUser"
 	virtualNetworkUpdateUnknown      = "records/virtualNetwork/updateUnknown"
 
-	virtualNetworkRename                 = "records/virtualNetwork/rename"
-	virtualNetworkRenameEmpty            = "records/virtualNetwork/renameEmpty"
-	virtualNetworkRenameUnknown          = "records/virtualNetwork/renameUnknown"
-	virtualNetworkRenameNoVirtualNetwork = "records/virtualNetwork/renameNoVirtualNetwork"
+	virtualNetworkRename        = "records/virtualNetwork/rename"
+	virtualNetworkRenameEmpty   = "records/virtualNetwork/renameEmpty"
+	virtualNetworkRenameUnknown = "records/virtualNetwork/renameUnknown"
 
-	virtualNetworkChmod                 = "records/virtualNetwork/chmod"
-	virtualNetworkPermRequestDefault    = "records/virtualNetwork/chmodPermReqDefault"
-	virtualNetworkChmodUnknown          = "records/virtualNetwork/chmodUnknown"
-	virtualNetworkChmodNoVirtualNetwork = "records/virtualNetwork/chmodNoVirtualNetwork"
+	virtualNetworkChmod              = "records/virtualNetwork/chmod"
+	virtualNetworkPermRequestDefault = "records/virtualNetwork/chmodPermReqDefault"
+	virtualNetworkChmodUnknown       = "records/virtualNetwork/chmodUnknown"
 
-	virtualNetworkChown                 = "records/virtualNetwork/chown"
-	virtualNetworkOwnershipReqDefault   = "records/virtualNetwork/chownDefault"
-	virtualNetworkChownUnknown          = "records/virtualNetwork/chownUnknown"
-	virtualNetworkChownNoVirtualNetwork = "records/virtualNetwork/chownNoVirtualNetwork"
+	virtualNetworkChown               = "records/virtualNetwork/chown"
+	virtualNetworkOwnershipReqDefault = "records/virtualNetwork/chownDefault"
+	virtualNetworkChownUnknown        = "records/virtualNetwork/chownUnknown"
 
-	virtualNetworkRetrieveInfo        = "records/virtualNetwork/retrieveInfo"
-	virtualNetworkRetrieveInfoUnknown = "records/virtualNetwork/retrieveInfoUnknown"
+	virtualNetworkRetrieveInfo = "records/virtualNetwork/retrieveInfo"
 
 	virtualNetworkListAllPrimaryGroup = "records/virtualNetwork/listAllPrimaryGroup"
 	virtualNetworkListAllUser         = "records/virtualNetwork/listAllUser"
@@ -166,10 +159,6 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when cluster has no ID", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkAllocateClusterNoID
-			})
-
 			ginkgo.It("shouldn't create new virtualNetwork", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
@@ -233,16 +222,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when virtual network is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkDeleteNoID
-
-				virtualNetwork = &resources.VirtualNetwork{}
-			})
-
 			ginkgo.It("should return that virtualNetwork has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Delete(context.TODO(), *virtualNetwork)
+				err = client.VirtualNetworkService.Delete(context.TODO(), resources.VirtualNetwork{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -388,8 +371,6 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 
 		ginkgo.Context("when virtualNetwork is empty", func() {
 			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkUpdateNoUser
-
 				virtualNetworkBlueprint = blueprint.CreateUpdateVirtualNetworkBlueprint()
 				if virtualNetworkBlueprint == nil {
 					err = errors.ErrNoVirtualNetworkBlueprint
@@ -489,16 +470,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when virtualNetwork is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkRenameNoVirtualNetwork
-
-				virtualNetwork = &resources.VirtualNetwork{}
-			})
-
 			ginkgo.It("should return that virtualNetwork has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Rename(context.TODO(), *virtualNetwork, "rex")
+				err = client.VirtualNetworkService.Rename(context.TODO(), resources.VirtualNetwork{}, "rex")
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -588,16 +563,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when virtual network is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkChmodNoVirtualNetwork
-
-				virtualNetwork = &resources.VirtualNetwork{}
-			})
-
 			ginkgo.It("should return that virtual network has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Chmod(context.TODO(), *virtualNetwork, requests.PermissionRequest{})
+				err = client.VirtualNetworkService.Chmod(context.TODO(), resources.VirtualNetwork{}, requests.PermissionRequest{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -685,16 +654,10 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when virtualNetwork is empty", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkChownNoVirtualNetwork
-
-				virtualNetwork = &resources.VirtualNetwork{}
-			})
-
 			ginkgo.It("should return that virtualNetwork has no ID", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 
-				err = client.VirtualNetworkService.Chown(context.TODO(), *virtualNetwork, requests.OwnershipRequest{})
+				err = client.VirtualNetworkService.Chown(context.TODO(), resources.VirtualNetwork{}, requests.OwnershipRequest{})
 				gomega.Expect(err).To(gomega.HaveOccurred())
 			})
 		})
@@ -720,10 +683,6 @@ var _ = ginkgo.Describe("Virtual Network Service", func() {
 		})
 
 		ginkgo.Context("when virtual network doesn't exist", func() {
-			ginkgo.BeforeEach(func() {
-				recName = virtualNetworkRetrieveInfoUnknown
-			})
-
 			ginkgo.It("should return that given virtual network doesn't exist", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred()) // no error during BeforeEach
 

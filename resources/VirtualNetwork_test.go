@@ -85,13 +85,12 @@ var _ = ginkgo.Describe("VirtualNetwork", func() {
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
 				id := 5
-				ip := net.ParseIP("10.10.10.10")
 				size := 1
 				usedLeases := 1
 
 				ar0 := objects[0]
 				gomega.Expect(ar0.ID).To(gomega.Equal(&id))
-				gomega.Expect(ar0.IP).To(gomega.Equal(&ip))
+				gomega.Expect(ar0.IP).To(gomega.Equal(net.ParseIP("10.10.10.10")))
 				gomega.Expect(ar0.Mac).To(gomega.Equal("11:22:33:44:55:66"))
 				gomega.Expect(ar0.Size).To(gomega.Equal(&size))
 				gomega.Expect(ar0.Type).To(gomega.Equal("IP4"))
