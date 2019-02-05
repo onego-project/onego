@@ -1,6 +1,7 @@
 package resources
 
 import (
+	"encoding/xml"
 	"net"
 	"strconv"
 	"time"
@@ -247,17 +248,18 @@ type Graphics struct {
 
 // NIC represents Network Interface of VM.
 type NIC struct {
-	AddressRangeID int
-	Bridge         string
-	ClusterIDs     []int
-	IP             net.IP
-	Mac            string
-	MTU            *int
-	Network        string
-	NetworkID      int
-	NicID          int
-	Target         string
-	VnMad          string
+	XMLName        xml.Name `xml:"NIC,omitempty"`
+	AddressRangeID int      `xml:"AR_ID,omitempty"`
+	Bridge         string   `xml:"BRIDGE,omitempty"`
+	ClusterIDs     []int    `xml:"CLUSTER_ID,omitempty"`
+	IP             net.IP   `xml:"IP,omitempty"`
+	Mac            string   `xml:"MAC,omitempty"`
+	MTU            *int     `xml:"MTU,omitempty"`
+	Network        string   `xml:"NETWORK,omitempty"`
+	NetworkID      int      `xml:"NETWORK_ID,omitempty"`
+	NicID          int      `xml:"NIC_ID,omitempty"`
+	Target         string   `xml:"TARGET,omitempty"`
+	VnMad          string   `xml:"VN_MAD,omitempty"`
 }
 
 // OperatingSystem represents OS of VM.
