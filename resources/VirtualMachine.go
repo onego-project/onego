@@ -312,7 +312,7 @@ type History struct {
 	PSTime      *time.Time
 	PETime      *time.Time
 	RSTime      *time.Time
-	REtime      *time.Time
+	RETime      *time.Time
 	ESTime      *time.Time
 	EETime      *time.Time
 	Action      Action
@@ -884,7 +884,7 @@ func createHistoryFromElement(element *etree.Element) (*History, error) {
 		PSTime:      timesWithoutError[0],
 		PETime:      timesWithoutError[1],
 		RSTime:      timesWithoutError[2],
-		REtime:      timesWithoutError[3],
+		RETime:      timesWithoutError[3],
 		ESTime:      timesWithoutError[4],
 		EETime:      timesWithoutError[5],
 	}, nil
