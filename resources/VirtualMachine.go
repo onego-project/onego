@@ -253,6 +253,9 @@ type NIC struct {
 	Bridge         string   `xml:"BRIDGE,omitempty"`
 	ClusterIDs     []int    `xml:"CLUSTER_ID,omitempty"`
 	IP             net.IP   `xml:"IP,omitempty"`
+	IP6Global      net.IP   `xml:"IP6_GLOBAL,omitempty"`
+	IP6Link        net.IP   `xml:"IP6_LINK,omitempty"`
+	IP6Ula         net.IP   `xml:"IP6_ULA,omitempty"`
 	Mac            string   `xml:"MAC,omitempty"`
 	MTU            *int     `xml:"MTU,omitempty"`
 	Network        string   `xml:"NETWORK,omitempty"`
@@ -733,12 +736,7 @@ func createNICFromElement(element *etree.Element) (*NIC, error) {
 		return nil, err
 	}
 
-	// ignore error; create nil attribute
-	var ip net.IP
-	s, err := attributeFromElement(element, "IP")
-	if err == nil {
-		ip = net.ParseIP(s)
-	}
+	parsedIPs := parseIPsFromElementWithoutError(element, []string{"IP", "IP6_GLOBAL", "IP6_LINK", "IP6_ULA"})
 
 	// ignore error; create nil attribute
 	var mtu *int
@@ -757,7 +755,10 @@ func createNICFromElement(element *etree.Element) (*NIC, error) {
 		AddressRangeID: parsedInts[0],
 		Bridge:         parsedStrings[0],
 		ClusterIDs:     clusterIDs,
-		IP:             ip,
+		IP:             parsedIPs[0],
+		IP6Global:      parsedIPs[1],
+		IP6Link:        parsedIPs[2],
+		IP6Ula:         parsedIPs[3],
 		Mac:            parsedStrings[2],
 		MTU:            mtu,
 		Network:        parsedStrings[3],

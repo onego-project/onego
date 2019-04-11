@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
+	"net"
 	"strconv"
 	"strings"
 	"time"
@@ -249,6 +250,24 @@ func parseTimesFromElementWithoutError(element *etree.Element, times []string) [
 		if err == nil && num != 0 {
 			time := time.Unix(int64(num), 0)
 			parsed[i] = &time
+		}
+	}
+
+	return parsed
+}
+
+// parseIPsFromElementWithoutError creates an array of a same length as an incoming array.
+// If the tag (string) from incoming array is found in a given element - the value is added to
+// an outgoing array (on a same position as the tag in incoming array).
+// If the tag (string) is not found in the given element - the outgoing value (on a same position
+// as tag) is default. For IP it is empty byte array.
+func parseIPsFromElementWithoutError(element *etree.Element, ipTags []string) []net.IP {
+	parsed := make([]net.IP, len(ipTags))
+
+	for i, tag := range ipTags {
+		ip, err := attributeFromElement(element, tag)
+		if err == nil && ip != "" {
+			parsed[i] = net.ParseIP(ip)
 		}
 	}
 
